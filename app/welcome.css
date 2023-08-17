@@ -1,0 +1,46 @@
+.welcome--text {
+  /* padding-top: 100px; */
+  /* padding-bottom: 100px; */
+  /* background-color: transparent; */
+  /* background-image: url("./img/greg-torosiants.jpg"); */
+}
+
+@media screen and (max-width: 495px) {
+  .welcome {
+    margin-top: -50px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .welcome {
+    margin-top: -100px;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .welcome {
+    margin-top: -150px;
+  }
+}
+
+.welcome--img {
+  background-image: url("../public/greg-torosiants.jpg");
+}
+
+@media screen and (max-width: 495px) {
+  .welcome-bg-img {
+    margin-top: 50px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .welcome-bg-img {
+    margin-top: 100px;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .welcome-bg-img {
+    margin-top: 150px;
+  }
+}

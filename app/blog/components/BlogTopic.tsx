@@ -13,6 +13,8 @@ export default function BlogTopic({ post, onClick, setHighlightedTags }) {
         // className="blog__topic__body p-1 text-md hover:text-white"
         // className="blog__topic__body p-1 text-md hover:text-[#E9EAEC]"
         onMouseEnter={() => {
+          console.log("setHighlightedTags")
+          console.log(setHighlightedTags)
           setHighlightedTags?.(post.tags);
         }}
         onMouseLeave={() => {

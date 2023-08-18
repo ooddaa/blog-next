@@ -2,16 +2,22 @@ import React, { useState } from "react";
 import Tag from "./Tag";
 import { log, emptyObject } from "../../toolbox";
 import { createStyles } from "@mantine/core";
-import { TagContainer } from "../../types.d.ts";
+import type { TagContainer } from "../../types.d.ts";
 
-const BlogTags: React.FC<TagContainer[]> = ({
+interface BlogTags {
+  tagContainers: string[],
+  highlightedTags: string[],
+  sendTagUp: Function,
+  classNames: string,
+}
+const BlogTags = ({
   tagContainers,
   highlightedTags,
   sendTagUp,
   classNames,
-}) => {
+}: BlogTags) => {
   const { cx } = createStyles(emptyObject)();
-  const defaultClasses = "blog-tags flex flex-wrap";
+  const defaultClasses = "blog-tags flex flex-wrap gap-2";
 
   return (
     <div
@@ -21,7 +27,7 @@ const BlogTags: React.FC<TagContainer[]> = ({
         top: "0",
       }}
     >
-      {tagContainers?.sort().map((tag) => (
+      {tagContainers?.sort().map((tag: string) => (
         <Tag
           tag={tag}
           key={tag}

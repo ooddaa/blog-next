@@ -5,6 +5,7 @@ import React from "react";
 // import AppFooter from "../../layout/Footer";
 import { Text, Highlight } from "@mantine/core";
 import { GradientSpan, Span, Bold, PB4 } from "./toolbox";
+import Tag from "./blog/components/Tag";
 import Link from 'next/link'
 import "./welcome.css";
 
@@ -72,14 +73,10 @@ export default function Welcome(): JSX.Element {
             </Text>
             <section className="my-toys w-full">
               <h2 className="font-semibold pb-4 text-lg">Stack that I&apos;m using daily:</h2>
-              <ul className="flex flex-row gap-4 flex-wrap">
-                <li>TypeScript</li>
-                <li>React</li>
-                <li>Next.js</li>
-                <li>Elixir</li>
-                <li>Phoenix</li>
-                <li>Phoenix LiveView</li>
-                <li>Figma</li>
+              <ul className="flex flex-row flex-wrap">
+                {["TypeScript", "React", "Next.js", "Elixir", "Phoenix", "Phoenix LiveView", "Figma"]
+                 .map(val => <Tag tag={val} key={val} classNames={"p-2 pl-3 pr-3 m-2 h-auto w-max rounded-md text-sm transition delay-50 select-none hover:cursor-pointer shadow-md"}/>)}
+                
               </ul>  
             </section>
         </section>

@@ -1,6 +1,6 @@
 export interface Post {
   id: number;
-  routeName: string;
+  slug: string;
   header: string;
   subheader: string;
   dateCreated: [number, number, number];
@@ -9,6 +9,7 @@ export interface Post {
   timeToThink: string;
   tags: string[];
   body: JSX;
+  version?: string
 }
 
 export interface TagContainer {

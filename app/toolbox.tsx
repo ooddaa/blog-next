@@ -48,7 +48,7 @@ interface Gradient extends Range {
   deg: number,
 }
 interface TailwindClasses {
-  tailwindClasses: string,
+  tailwindClasses?: string,
 }
 
 interface Span {
@@ -58,10 +58,13 @@ interface Span {
   className: string,
   style: { verticalAlign: string, display: string },
   gradient: Gradient  
+  size: string
 }
 
 interface JS extends TailwindClasses {
   colorScheme?: string
+  noCopy?: boolean
+  classNames?: string
 }
 
 interface PB {
@@ -70,7 +73,7 @@ interface PB {
 
 
 /* https://mantine.dev/core/text/ */
-function Span({ children, ...props }: WrapperComponent & Partial<Span>) {
+function Span({ children, ...props }: Partial<WrapperComponent> & Partial<Span>) {
   return (
     <Text component="span" {...props}>
       {children}
@@ -78,7 +81,7 @@ function Span({ children, ...props }: WrapperComponent & Partial<Span>) {
   );
 }
 
-function Bold({ children, ...props }: WrapperComponent) {
+function Bold({ children, ...props }: Partial<WrapperComponent>) {
   return (
     <Span weight={700} {...props}>
       {children}
@@ -86,7 +89,7 @@ function Bold({ children, ...props }: WrapperComponent) {
   );
 }
 
-function Super({ children, ...props }: WrapperComponent) {
+function Super({ children, ...props }: Partial<WrapperComponent>) {
   return (
     <Span
       className="super-scripted"
@@ -102,7 +105,7 @@ function get_weight(props: Props | undefined): number {
   return 600
 }
 
-function GradientSpan({ children, from, to, ...props }: WrapperComponent & Range) {
+function GradientSpan({ children, from, to, ...props }: Partial<WrapperComponent> & Range) {
   return (
     <Span
       variant="gradient"
@@ -119,7 +122,7 @@ function GradientSpan({ children, from, to, ...props }: WrapperComponent & Range
   );
 }
 
-function JS({ children, tailwindClasses, ...props }: WrapperComponent & JS) {
+function JS({ children, tailwindClasses, ...props }: Partial<WrapperComponent> & JS) {
   const { cx } = createStyles(() => ({}))();
   const defaultClasses = "pb-4";
   return (
@@ -136,13 +139,13 @@ function JS({ children, tailwindClasses, ...props }: WrapperComponent & JS) {
   );
 }
 
-function JSDark({ children, tailwindClasses, ...props }: WrapperComponent & TailwindClasses) {
+function JSDark({ children, tailwindClasses, ...props }: Partial<WrapperComponent> & TailwindClasses) {
   return <JS colorScheme="dark" tailwindClasses={tailwindClasses} {...props}>{children}</JS>
 }
 
 
 
-function Emoji({ children, whitespace=true, style, classNames, ...rest }: WrapperComponent & {whitespace: boolean, style: Object, classNames: string}) {
+function Emoji({ children, whitespace=true, style, classNames, ...rest }: Partial<WrapperComponent> & Partial<{whitespace: boolean, style: Object, classNames: string}>) {
   const { cx } = createStyles(() => ({}))();
   return (
     <div
@@ -163,7 +166,7 @@ interface HProps {
   children: any;
   props?: Object;
   style?: Object;
-  tailwindClasses?: string[];
+  tailwindClasses?: string;
 }
 
 const H3: React.FC<HProps> = ({ children, style, tailwindClasses, ...props }) => {
@@ -217,7 +220,7 @@ function treefyPosts(posts: Post[], tree = new Map()): Map<number, number> {
   return tree;
 }
 
-function TLDR({ children, ...props }: WrapperComponent) {
+function TLDR({ children, ...props }: Partial<WrapperComponent>) {
   return (
     <div className="tl-dr pb-16" {...props}>
       <Span
@@ -233,7 +236,7 @@ function TLDR({ children, ...props }: WrapperComponent) {
 }
 
 
-function P({ children, pb, tailwindClasses, ...props }: WrapperComponent & TailwindClasses & PB) {
+function P({ children, pb, tailwindClasses, ...props }: Partial<WrapperComponent> & TailwindClasses & Partial<PB>) {
   const { cx } = createStyles(() => ({}))();
   const defaultClasses = `pb-${pb ?? 0}`;
   return (
@@ -249,7 +252,7 @@ function P({ children, pb, tailwindClasses, ...props }: WrapperComponent & Tailw
 }
 
 
-function PB8({ children, tailwindClasses, ...props }: WrapperComponent & TailwindClasses) {
+function PB8({ children, tailwindClasses, ...props }: Partial<WrapperComponent> & TailwindClasses) {
   return (
     <P
     pb={8}
@@ -259,7 +262,7 @@ function PB8({ children, tailwindClasses, ...props }: WrapperComponent & Tailwin
   );
 }
 
-function PB4({ children, tailwindClasses, ...props }: WrapperComponent & TailwindClasses) {
+function PB4({ children, tailwindClasses, ...props }: Partial<WrapperComponent> & TailwindClasses) {
   return (
     <P
     pb={4}
@@ -269,7 +272,7 @@ function PB4({ children, tailwindClasses, ...props }: WrapperComponent & Tailwin
   );
 }
 
-function M({ children, pb, tailwindClasses, ...props }: WrapperComponent & TailwindClasses & PB) {
+function M({ children, pb, tailwindClasses, ...props }: Partial<WrapperComponent> & TailwindClasses & PB) {
   const { cx } = createStyles(() => ({}))();
   const defaultClasses = `pb-${pb ?? 0}`;
   return (
@@ -284,14 +287,14 @@ function M({ children, pb, tailwindClasses, ...props }: WrapperComponent & Tailw
   );
 }
 
-function MB8({ children, tailwindClasses, ...props }: WrapperComponent & TailwindClasses) {
+function MB8({ children, tailwindClasses, ...props }: Partial<WrapperComponent> & TailwindClasses) {
   return (
     <M pb={8} tailwindClasses={tailwindClasses} {...props}>
       {children}
     </M>
   );
 }
-function MB4({ children, tailwindClasses, ...props }: WrapperComponent & TailwindClasses) {
+function MB4({ children, tailwindClasses, ...props }: Partial<WrapperComponent> & TailwindClasses) {
   return (
     <M pb={4} tailwindClasses={tailwindClasses} {...props}>
       {children}
@@ -303,7 +306,7 @@ interface A {
   href: string
   alt: string,
 }
-function WebLink({ children, tailwindClasses, href, alt, ...props }: WrapperComponent & TailwindClasses & A) {
+function WebLink({ children, tailwindClasses, href, alt, ...props }: Partial<WrapperComponent> & TailwindClasses & A) {
   return (<a href={href} className={tailwindClasses || "text-sky-700 hover:underline"}>{children}</a>);
   // return (<a href={href} alt={alt} className={tailwindClasses || "text-sky-700 hover:underline"}>{children}</a>);
 }

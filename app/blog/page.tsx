@@ -16,9 +16,9 @@ export default function Blog({ _posts, postId }) {
   /* State
   ________________________________________________________________*/
 
-  const [currentPostId, setCurrentPostId] = useState(null);
-  const [previousPostId, setPreviousPostId] = useState(null);
-  const [nextPostId, setNextPostId] = useState(null);
+  // const [currentPostId, setCurrentPostId] = useState(null);
+  // const [previousPostId, setPreviousPostId] = useState(null);
+  // const [nextPostId, setNextPostId] = useState(null);
   const [highlightedTags, setHighlightedTags] = useState([]);
 
   const [filteredPosts, setFilteredPosts] = useState(posts ?? []);
@@ -34,32 +34,32 @@ export default function Blog({ _posts, postId }) {
     window.scrollTo({ top: 0 });
   }, []);
 
-  function handlePostNavigation(currentPostId_) {
-    /* update currentPost */
-    setCurrentPostId(currentPostId_);
+  // function handlePostNavigation(currentPostId_) {
+  //   /* update currentPost */
+  //   setCurrentPostId(currentPostId_);
 
-    /* calculate previous */
-    if (isNaN(currentPostId_) || currentPostId_ === 0) {
-      setPreviousPostId(null);
-    } else {
-      setPreviousPostId(currentPostId_ - 1);
-    }
+  //   /* calculate previous */
+  //   if (isNaN(currentPostId_) || currentPostId_ === 0) {
+  //     setPreviousPostId(null);
+  //   } else {
+  //     setPreviousPostId(currentPostId_ - 1);
+  //   }
 
-    /* calculate next */
-    if (isNaN(currentPostId_) || currentPostId_ >= posts.length - 1) {
-      // console.log(posts.length);
-      setNextPostId(null);
-    } else {
-      setNextPostId(currentPostId_ + 1);
-    }
-  }
+  //   /* calculate next */
+  //   if (isNaN(currentPostId_) || currentPostId_ >= posts.length - 1) {
+  //     // console.log(posts.length);
+  //     setNextPostId(null);
+  //   } else {
+  //     setNextPostId(currentPostId_ + 1);
+  //   }
+  // }
 
-  useEffect(() => {
-    /* init previousPostId & nextPostId */
-    if (posts && posts.length && isNaN(postId) === false) {
-      handlePostNavigation(postId);
-    }
-  });
+  // useEffect(() => {
+  //   /* init previousPostId & nextPostId */
+  //   if (posts && posts.length && isNaN(postId) === false) {
+  //     handlePostNavigation(postId);
+  //   }
+  // });
 
   function generateTagContainers(posts): TagContainer[] {
     /**
@@ -84,19 +84,19 @@ export default function Blog({ _posts, postId }) {
     return rv;
   }
 
-  if (posts?.length && isNaN(postId) === false) {
-    return (
-      <Center className="flex-row">
-        <div>
-          <BlogPost post={posts[postId]} />
-          <BlogPostNavigation
-            previousPost={posts[previousPostId]}
-            nextPost={posts[nextPostId]}
-          />
-        </div>
-      </Center>
-    );
-  }
+  // if (posts?.length && isNaN(postId) === false) {
+  //   return (
+  //     <Center className="flex-row">
+  //       <div>
+  //         <BlogPost post={posts[postId]} />
+  //         <BlogPostNavigation
+  //           previousPost={posts[previousPostId]}
+  //           nextPost={posts[nextPostId]}
+  //         />
+  //       </div>
+  //     </Center>
+  //   );
+  // }
 
   function getClickedTag(tag) {
     /* Tag gets clicked, Blog knows about it. */
@@ -162,7 +162,7 @@ export default function Blog({ _posts, postId }) {
         <MantineHeader links={links}></MantineHeader>
         {BlogTOC({
           posts: filteredPosts,
-          handlePostNavigation,
+          // handlePostNavigation,
           setHighlightedTags,
           classNames: ["pt-24"],
         })}

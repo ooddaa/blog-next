@@ -123,10 +123,10 @@ export default function MantineHeader({ links }: HeaderSearchProps) {
 
   return (
     <Header
-      className={cx(
-        "bg-transparent",
-        window.location.pathname === "/blog" && ["border-0"] // styling blog from here ;)
-      )}
+      // className={cx(
+      //   "bg-transparent",
+      //   // window.location.pathname === "/blog" && ["border-0"] // styling blog from here ;)
+      // )}
       height={HEADER_HEIGHT}
       mb={120}
       style={{ marginBottom: 0 }}

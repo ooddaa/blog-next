@@ -1,16 +1,17 @@
 import { Button } from "@mantine/core";
 import Link from "next/link";
+import type { Post } from "../../types"
 
 /* https://mantine.dev/core/button/ */
-
-export default function BlogPostNavigation({ previousPost, nextPost }) {
+interface BlogPostNavigation { previousPost: Post, nextPost: Post }
+export default function BlogPostNavigation({ previousPost, nextPost }: BlogPostNavigation) {
   return (
-    <div className="blog-post-navigation">
+    <div className="blog-post-navigation w-full flex flex-row justify-between pt-6">
       <div className="previous-blog-post">
         {previousPost && (
           <Button
             component={Link}
-            href={`/blog/${previousPost?.routeName}`}
+            href={`/blog/${previousPost?.slug}`}
             variant="outline"
             color="orange"
           >
@@ -22,7 +23,7 @@ export default function BlogPostNavigation({ previousPost, nextPost }) {
         {nextPost && (
           <Button
             component={Link}
-            href={`/blog/${nextPost?.routeName}`}
+            href={`/blog/${nextPost?.slug}`}
             variant="outline"
             color="orange"
           >

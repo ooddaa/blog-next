@@ -33,7 +33,7 @@ function fun() {
 
 const stub = {
   id: 0,
-  routeName: "routeName",
+  slug: "slug",
   header: "header",
   subheader: "subheader",
   dateCreated: [2022, 2, 10],
@@ -48,10 +48,10 @@ const SpongeBob = (
     SpongeBob
   </GradientSpan>
 );
-const posts = [
+export default [
   {
     id: 9,
-    routeName: "object-to-graph-mapping-tool",
+    slug: "object-to-graph-mapping-tool",
     header: "Object-To-Graph mapping tool",
     subheader: "What made me want to create knowledge graphs",
     dateCreated: [2022, 2, 10],
@@ -209,7 +209,7 @@ const posts = [
   },
   {
     id: 1,
-    routeName: "setting-up-yahoo-prices-api-on-heroku",
+    slug: "setting-up-yahoo-prices-api-on-heroku",
     header: "Setting up Yahoo Prices API on Heroku",
     subheader: "Without the docs, it's unusable.",
     dateCreated: [2022, 3, 5],
@@ -439,7 +439,7 @@ def get_prices(tickers, attach_prices=False): ...`}
   },
   {
     id: 2,
-    routeName: "git-stash",
+    slug: "git-stash",
     header: "git stash to the rescue",
     subheader:
       "Haven't thought it through before making changes on this branch? No biggie - git stash it!",
@@ -519,7 +519,7 @@ $ git commit -am "stuff that should have been on anotherBranch"`}
   },
   {
     id: 3,
-    routeName: "how-i-stopped-worrying-and-started-to-love-open-source",
+    slug: "how-i-stopped-worrying-and-started-to-love-open-source",
     header: "How I stopped worrying and started to love open source",
     subheader: "post 3 subheader",
     dateCreated: [2022, 3, 23],
@@ -684,7 +684,7 @@ $ git commit -am "stuff that should have been on anotherBranch"`}
   },
   {
     id: 4,
-    routeName: "future-posts",
+    slug: "future-posts",
     header: "Future posts",
     subheader: "What I need to write about",
     dateCreated: [2022, 3, 23],
@@ -715,7 +715,7 @@ $ git commit -am "stuff that should have been on anotherBranch"`}
   },
   {
     id: 5,
-    routeName: "using-mantine-prism-to-highlight-code",
+    slug: "using-mantine-prism-to-highlight-code",
     header: "Using Mantine Prism to highlight code",
     subheader: "'Mantine pwns!' S1E1",
     dateCreated: [2022, 4, 2],
@@ -815,7 +815,7 @@ $ git commit -am "stuff that should have been on anotherBranch"`}
   },
   {
     id: 6,
-    routeName: "setting-document-event-listeners-with-React-useEffect-hook",
+    slug: "setting-document-event-listeners-with-React-useEffect-hook",
     header: "Setting document event listeners with React useEffect hook",
     subheader: "Dependency array is key",
     dateCreated: [2022, 4, 5],
@@ -930,8 +930,8 @@ useEffect(() => {
         </MB4>
         <MB4>
         <ol>
-            <li>Line 3. We ask the browser to fire a <a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/keydown_event" alt='link to document keydown event for reference'>Keydown event and provide a function that will be called with that event as the only argument - in our case we call it <Code>handleKeyDown</Code></a></li>
-            <li>Lines 4 and 5. Clean up. If the component within which we are setting this functionality is ever removed from the DOM (unmounted), this is how we tell useEffect what to do to clean things up. This is the equivalent of using <Code>componentWillUnmount</Code> lifecycle method from React class component, which is called immediately <a href="https://reactjs.org/docs/react-component.html#componentwillunmount" alt="reference link to componentWillUnmount">before the component is destroyed</a>. Here we simply don't want our event listeners to clutter and will clean them up, tidy tidy tidy up.</li>
+            <li>Line 3. We ask the browser to fire a <a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/keydown_event">Keydown event and provide a function that will be called with that event as the only argument - in our case we call it <Code>handleKeyDown</Code></a></li>
+            <li>Lines 4 and 5. Clean up. If the component within which we are setting this functionality is ever removed from the DOM (unmounted), this is how we tell useEffect what to do to clean things up. This is the equivalent of using <Code>componentWillUnmount</Code> lifecycle method from React class component, which is called immediately <a href="https://reactjs.org/docs/react-component.html#componentwillunmount" >before the component is destroyed</a>. Here we simply don't want our event listeners to clutter and will clean them up, tidy tidy tidy up.</li>
             <li>Line 7. Performance optimization. To make useEffect efficient, we may provide a dependecy array - if nothing in this array changes, useEffect will skip and not perform its actions, adding and removing listeners in this case. <a href="https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects">Check this tip</a></li>
           </ol>
         </MB4>
@@ -941,7 +941,7 @@ useEffect(() => {
   },
   {
     id: 7,
-    routeName: "git-stash-vs-git-reset",
+    slug: "git-stash-vs-git-reset",
     header: "git stash vs git reset",
     subheader: "why oh why do I not stash enough?",
     dateCreated: [2022, 4, 22],
@@ -1105,7 +1105,7 @@ useEffect(() => {
   },
   {
     id: 8,
-    routeName: "git-clean",
+    slug: "git-clean",
     header: "Removing untracked files with git clean",
     subheader: "Cleaning untracked files",
     dateCreated: [2022, 4, 23],
@@ -1155,7 +1155,7 @@ useEffect(() => {
   },
   {
     id: 9,
-    routeName: "routeName",
+    slug: "rant-1",
     header: "Rant #1. Balancing Housekeeping and Exploration: Maximizing Results under Time Constraints",
     subheader: "",
     dateCreated: [2022, 5, 13],
@@ -1212,7 +1212,7 @@ it taught me to devalue the results of my work. If I became accustomed to starti
   },
   {
     id: 10,
-    routeName: "improve-code-organization-in-phoenix-liveview",
+    slug: "improve-code-organization-in-phoenix-liveview",
     header: "Improve code organisation with embed_templates/2 in Phoenix LiveView",
     subheader: "Extract .heex markup into separate files",
     dateCreated: [2023, 6, 8],
@@ -1291,7 +1291,7 @@ end
   },
   {
     id: 11,
-    routeName: "use-custom-fonts-with-phoenix-liveview",
+    slug: "use-custom-fonts-with-phoenix-liveview",
     header: "Use Custom Fonts with Phoenix LiveView to get rid of FOUT",
     subheader: "hint: .ttf are evil, use .woff2",
     dateCreated: [2023, 6, 10],
@@ -1534,7 +1534,7 @@ By following these steps, you've successfully integrated the "Inter" font into y
   },
   {
     id: 12,
-    routeName: "aoc-2021-d6",
+    slug: "aoc-2021-d6",
     header: "Advent Of Code: 2021, Day 6",
     subheader: "--- Day 6: Lanternfish ---",
     dateCreated: [2023, 6, 15],
@@ -1846,9 +1846,9 @@ To sum up, I liked the genetic algo approach (granted, this task doesn't leave m
 //   posts.push({
 //     ...stub,
 //     id: i,
-//     routeName: `routeName${i}`,
+//     slug: `slug${i}`,
 //     tags: [`tag${i}`],
 //   });
 // }
 
-export default posts;
+

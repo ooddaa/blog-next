@@ -1,6 +1,9 @@
 import Link from "next/link";
 import { log } from "../../toolbox";
-export default function BlogTopic({ post, onClick, setHighlightedTags }) {
+import type { Post } from "../../types"
+
+interface BlogTopic { post: Post, onClick: Function, setHighlightedTags: Function }
+export default function BlogTopic({ post, onClick, setHighlightedTags }: BlogTopic) {
   const day = post.dateCreated[2];
   return (
     /* palette https://coolors.co/ff4a19-e9eaec-fabc3c-fa7d5a-fa592d */
@@ -10,19 +13,14 @@ export default function BlogTopic({ post, onClick, setHighlightedTags }) {
       </div>
       <div
         className="blog__topic__body p-1 text-md flex items-center"
-        // className="blog__topic__body p-1 text-md hover:text-white"
-        // className="blog__topic__body p-1 text-md hover:text-[#E9EAEC]"
-        onMouseEnter={() => {
-          console.log("setHighlightedTags")
-          console.log(setHighlightedTags)
-          setHighlightedTags?.(post.tags);
-        }}
-        onMouseLeave={() => {
-          setHighlightedTags?.([]);
-        }}
+        onMouseEnter={() => {setHighlightedTags?.(post.tags)}}
+        onMouseLeave={() => {setHighlightedTags?.([])}}
       >
         {
-          <Link href={post.routeName} onClick={() => onClick(post.id)}>
+          <Link  
+            href={`/blog/${post.slug}`} 
+            onClick={() => onClick(post.id)}
+          >
             {post.header}
           </Link>
         }

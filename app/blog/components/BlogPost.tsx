@@ -1,7 +1,5 @@
-import PropTypes from "prop-types";
-// import { Fragment } from "react";
 import { resolveMonth, Span, Emoji } from "../../toolbox";
-// import { Text, Image } from "@mantine/core";
+import type { Post } from "../../types"
 import MantineHeader from "./MantineHeader";
 
 const links = [
@@ -27,59 +25,50 @@ const links = [
   },
 ];
 
-const propTypes = {
-  defaultHeader: PropTypes.string,
-  post: PropTypes.object,
-};
-const defaultProps = {
-  defaultHeader: "Default Header",
-};
 
-function BlogPost({ post, defaultHeader }) {
+interface BlogPost {
+  post: Post,
+  defaultHeader?: string
+}
+export default function BlogPost({ post, defaultHeader }: BlogPost) {
+  defaultHeader = defaultHeader ?? "Oops, no header 🫣"
   const {
     header,
-    // subheader,
     dateCreated,
     body,
     author,
     timeToRead,
     version,
-    // timeToThink,
   } = post;
   const [year, month, day] = dateCreated;
   return (
     <>
       <MantineHeader links={links}></MantineHeader>
     
-    <div className="blog-post">
-      <div className="blog-post__header">
-        <div className="log-post__header__title pb-8 font-bold text-6xl">
-          <h1>{header || defaultHeader}</h1>
+      <div className="blog-post py-6 sm:py-24">
+        <div className="blog-post__header">
+          <div className="log-post__header__title pb-8 font-bold text-4xl sm:text-6xl text-center">
+            <h1>{header || defaultHeader}</h1>
+          </div>
 
-        </div>
-
-        <div className="blog-post__header__author">
-          <div className="flex flex-row gap-8 justify-center items-center border-t">
-            <div> <Span className="oda">{author}</Span> </div>
-            <div> 
-              {day} {resolveMonth(month)},{" "}{year}
-            </div>
-            <div>
-              {timeToRead} read
-            </div>
-            {version ? <div>version: {version}</div> : ""}
-            <div>
+          <div className="blog-post__header__author">
+            <div className="flex flex-row gap-8 justify-center items-center border-t text-sm sm:text-base text-slate-500">
+              <div> <Span className="oda">{author}</Span> </div>
+              <div> 
+                {day} {resolveMonth(month)},{" "}{year}
+              </div>
+              <div>
+                {timeToRead} read
+              </div>
+              {version ? <div>version: {version}</div> : ""}
+              <div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div className="blog-post__body">{body}</div>
-    </div>
+      <div className="blog-post__body pt-6 sm:pt-24">{body}</div>
+    </div>  
     </>
   );
 }
 
-BlogPost.propTypes = propTypes;
-BlogPost.defaultProps = defaultProps;
-
-export default BlogPost;

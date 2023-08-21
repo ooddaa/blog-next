@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Tag from "./Tag";
 import { log, emptyObject } from "../../toolbox";
 import { createStyles } from "@mantine/core";
-import type { TagContainer } from "../../types";
 
 interface BlogTags {
   tagContainers: string[],

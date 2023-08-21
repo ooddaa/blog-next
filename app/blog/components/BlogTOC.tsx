@@ -14,7 +14,7 @@ import { IconCircleX } from "@tabler/icons-react";
 
 type BlogTOCparams = {
   posts: Post[],
-  handlePostNavigation: Function,
+  handlePostNavigation?: Function,
   setHighlightedTags: Function,
   classNames: string[],
 }
@@ -72,7 +72,6 @@ export default function BlogTOC({
               return a.dateCreated[2] - b.dateCreated[2];
             }
           )}
-          onClick={handlePostNavigation}
           setHighlightedTags={setHighlightedTags}
         />
       );

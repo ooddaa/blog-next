@@ -1,82 +1,45 @@
 "use client"
 import { useEffect, useState } from "react";
-import { Center } from "@mantine/core";
-import BlogPost from "./components/BlogPost";
-import BlogPostNavigation from "./components/BlogPostNavigation";
 import BlogTOC from "./components/BlogTOC";
 import BlogTags from "./components/BlogTags";
 import posts from "./components/posts";
 import { log } from "../toolbox";
-import type { TagContainer } from "../types";
+import type { TagContainer, Post } from "../types";
 import flatten from "lodash/flatten";
 import identity from "lodash/identity";
 import MantineHeader from "./components/MantineHeader";
 
-export default function Blog({ _posts, postId }) {
+export default function Blog() {
   /* State
   ________________________________________________________________*/
 
-  // const [currentPostId, setCurrentPostId] = useState(null);
-  // const [previousPostId, setPreviousPostId] = useState(null);
-  // const [nextPostId, setNextPostId] = useState(null);
   const [highlightedTags, setHighlightedTags] = useState([]);
-
   const [filteredPosts, setFilteredPosts] = useState(posts ?? []);
-  const [clickedTags, setClickedTags] = useState(new Set());
+  const [clickedTags, setClickedTags] = useState<Set<string>>(new Set());
 
   /* !state
   ________________________________________________________________*/
 
   /* init  */
   useEffect(() => {
-    /* scroll to top */
-    // window.scrollTo({ top: 0, behavior: "smooth" });
     window.scrollTo({ top: 0 });
   }, []);
 
-  // function handlePostNavigation(currentPostId_) {
-  //   /* update currentPost */
-  //   setCurrentPostId(currentPostId_);
-
-  //   /* calculate previous */
-  //   if (isNaN(currentPostId_) || currentPostId_ === 0) {
-  //     setPreviousPostId(null);
-  //   } else {
-  //     setPreviousPostId(currentPostId_ - 1);
-  //   }
-
-  //   /* calculate next */
-  //   if (isNaN(currentPostId_) || currentPostId_ >= posts.length - 1) {
-  //     // console.log(posts.length);
-  //     setNextPostId(null);
-  //   } else {
-  //     setNextPostId(currentPostId_ + 1);
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   /* init previousPostId & nextPostId */
-  //   if (posts && posts.length && isNaN(postId) === false) {
-  //     handlePostNavigation(postId);
-  //   }
-  // });
-
-  function generateTagContainers(posts): TagContainer[] {
+  function generateTagContainers(posts: Post[]): string[] {
     /**
-     * @todo this also might be solved via adding refs to each
-     * Tag but atm I have no idea how to do it.
-     * @param {Set} acc
+     * @todo this also might be solved via adding refs to each Tag.
+     * @param {Set<string>} acc
      * @param {Post} post
      */
-    function postsToTags(acc, post) {
+    function postsToTags(acc: Set<string>, post: Post) {
       post?.tags?.forEach((elm) => acc.add(elm));
       return acc;
     }
 
-    const allTags: Set = posts.reduce(postsToTags, new Set());
+    const allTags: Set<string> = posts.reduce(postsToTags, new Set());
     const arr = Array.from(allTags.values());
-    const rv: TagContainer[] = flatten(
-      arr.map((tag) => {
+    const rv: string[] = flatten(
+      arr.map((tag: string) => {
         /** @todo custom React Hook function to provide refs? */
         return [tag /* , useRef(tag) */];
       })
@@ -84,21 +47,7 @@ export default function Blog({ _posts, postId }) {
     return rv;
   }
 
-  // if (posts?.length && isNaN(postId) === false) {
-  //   return (
-  //     <Center className="flex-row">
-  //       <div>
-  //         <BlogPost post={posts[postId]} />
-  //         <BlogPostNavigation
-  //           previousPost={posts[previousPostId]}
-  //           nextPost={posts[nextPostId]}
-  //         />
-  //       </div>
-  //     </Center>
-  //   );
-  // }
-
-  function getClickedTag(tag) {
+  function getClickedTag(tag: string) {
     /* Tag gets clicked, Blog knows about it. */
 
     if (clickedTags.has(tag)) {
@@ -125,7 +74,7 @@ export default function Blog({ _posts, postId }) {
     setFilteredPosts(filtered);
 
     //////////////////// FUN ////////////////////
-    function isInClickedTags(x) {
+    function isInClickedTags(x: string) {
       return clickedTags.has(x);
     }
   }
@@ -156,27 +105,22 @@ export default function Blog({ _posts, postId }) {
     <div className="blog flex flex-col lg:flex-row">
 
       {/* TABLE OF CONTENTS */}
-      {/* <div className="left basis-full pb-48 sm:basis-3/5 bg-[#fd5e47]"> */}
-      {/* <div className="left basis-full pb-48 sm:basis-3/5 bg-[#E9EAEC]"> */}
       <div className="left basis-full pb-48 sm:basis-3/5 bg-baby-powder min-h-screen">
         <MantineHeader links={links}></MantineHeader>
         {BlogTOC({
           posts: filteredPosts,
-          // handlePostNavigation,
           setHighlightedTags,
           classNames: ["pt-24"],
         })}
       </div>
 
       {/* TAGS */}
-      {/* <div className="right basis-2/5 pb-24 bg-[#E9EAEC]"> */}
-      {/* <div className="right basis-2/5 pb-24 bg-[#E4EAF1]"> */}
       <div className="right basis-2/5 pb-24 bg-white">
         <BlogTags
           tagContainers={generateTagContainers(posts)}
           highlightedTags={highlightedTags}
           sendTagUp={getClickedTag}
-          classNames={["pt-24 w-96 mx-auto h-max p-max"]}
+          classNames="pt-24 w-96 mx-auto h-max p-max"
         />
       </div>
     </div>

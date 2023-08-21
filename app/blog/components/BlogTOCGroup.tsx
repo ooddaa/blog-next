@@ -6,10 +6,9 @@ interface BlogTOCGroup {
   year: number, 
   month: number, 
   posts: Post[], 
-  onClick: Function, 
   setHighlightedTags: Function }
   
-function BlogTOCGroup({ year, month, posts, onClick, setHighlightedTags }: BlogTOCGroup) {
+function BlogTOCGroup({ year, month, posts, setHighlightedTags }: BlogTOCGroup) {
   return (
     <div className="blog__toc-group flex-col p-10">
       <div className="blog__toc-group__head ">
@@ -20,7 +19,6 @@ function BlogTOCGroup({ year, month, posts, onClick, setHighlightedTags }: BlogT
           <BlogTopic
             key={post.id}
             post={post}
-            onClick={onClick}
             setHighlightedTags={setHighlightedTags}
           />
         ))}

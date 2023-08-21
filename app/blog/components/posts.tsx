@@ -17,6 +17,7 @@ import {
   TLDR,
   WebLink,
 } from "../../toolbox";
+import type { Post } from "../../types";
 import { Code, Text, Blockquote, Center, List } from "@mantine/core";
 import Link from "next/link";
 import { Prism } from "@mantine/prism";
@@ -1839,7 +1840,7 @@ To sum up, I liked the genetic algo approach (granted, this task doesn't leave m
 </Text>
     ),
   },
-];
+] as Post[]
 
 /* add posts */
 // for (let i = 100; i <= 130; i++) {

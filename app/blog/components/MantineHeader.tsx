@@ -3,15 +3,12 @@ import {
   Header,
   Menu,
   Group,
-  Center,
   Burger,
   Container,
   Transition,
   Paper,
 } from "@mantine/core";
 import { useToggle } from "@mantine/hooks";
-import { IconChevronCompactDown } from "@tabler/icons-react";
-import Link from 'next/link'
 import { log } from "../../toolbox";
 
 export const HEADER_HEIGHT = 64;
@@ -96,18 +93,6 @@ export default function MantineHeader({ links }: HeaderSearchProps) {
         <Menu
           key={link.label}
           trigger="hover"
-          delay={0}
-          transitionDuration={0}
-          placement="end"
-          gutter={1}
-          control={
-            <Link href={link.link} className={classes.link}>
-              <Center>
-                <span className={classes.linkLabel}>{link.label}</span>
-                <IconChevronCompactDown size={12} />
-              </Center>
-            </Link>
-          }
         >
           {menuItems}
         </Menu>
@@ -123,10 +108,6 @@ export default function MantineHeader({ links }: HeaderSearchProps) {
 
   return (
     <Header
-      // className={cx(
-      //   "bg-transparent",
-      //   // window.location.pathname === "/blog" && ["border-0"] // styling blog from here ;)
-      // )}
       height={HEADER_HEIGHT}
       mb={120}
       style={{ marginBottom: 0 }}

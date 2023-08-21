@@ -36,6 +36,7 @@ interface Props {
 
 interface WrapperComponent {
   children: React.ReactNode,
+  // children: string | string[] | React.ReactNode | React.ReactNode[],
   props?: Props
 }
 
@@ -122,7 +123,8 @@ function GradientSpan({ children, from, to, ...props }: Partial<WrapperComponent
   );
 }
 
-function JS({ children, tailwindClasses, ...props }: Partial<WrapperComponent> & JS) {
+function JS({ children, tailwindClasses, ...props }: any) {
+// function JS({ children, tailwindClasses, ...props }: Partial<WrapperComponent> & JS) {
   const { cx } = createStyles(() => ({}))();
   const defaultClasses = "pb-4";
   return (
@@ -130,6 +132,7 @@ function JS({ children, tailwindClasses, ...props }: Partial<WrapperComponent> &
       className={cx(
         tailwindClasses ? [defaultClasses, tailwindClasses] : defaultClasses
       )}
+      
       language="javascript"
       withLineNumbers
       {...props}
@@ -228,7 +231,7 @@ function TLDR({ children, ...props }: Partial<WrapperComponent>) {
         gradient={{ from: "indigo", to: "cyan", deg: 45 }}
         weight={600}
       >
-        TL/DR:{" "}
+        <>TL/DR:{" "}</>
       </Span>
       {children}
     </div>

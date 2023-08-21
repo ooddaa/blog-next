@@ -20,11 +20,9 @@ import {
 import type { Post } from "../../types";
 import { Code, Text, Blockquote, Center, List } from "@mantine/core";
 import Link from "next/link";
+import Image from "next/image";
 import { Prism } from "@mantine/prism";
-import { Prism as PrismRenderer } from 'prism-react-renderer';
-
-// (typeof global !== 'undefined' ? global : window).Prism = PrismRenderer;
-// import('prismjs/components/prism-elixir');
+// import { Prism as PrismRenderer } from 'prism-react-renderer';
 
 const codeSnippet = `const a = 1;
 function fun() {
@@ -84,37 +82,37 @@ export default [
           The key architectual decision was made to design a platform which
           would help ensure that there are no copies of the same Node. A Node
           would constitue whatever user deemed a <Bold>mental entity </Bold> to
-          which they already attached a "uniquness" attribute in their minds.
+          which they already attached a &quot;uniquness&quot; attribute in their minds.
         </MB8>
 
         <H3>For example</H3>
 
         <MB8>
           Suppose there is a CEO, {SpongeBob}, in our organization. All
-          employees have the same "unique" {SpongeBob} in mind when they talk
+          employees have the same &quot;unique&quot; {SpongeBob} in mind when they talk
           about him in the pub after work. But when it comes to representing{" "}
-          {SpongeBob} outside of employee's collective mind, say, writing an
+          {SpongeBob} outside of employee&apos;s collective mind, say, writing an
           email with some details/attributes of {SpongeBob}, then each employee
-          might refer to their "copy" of these attributes, located wherever (on
+          might refer to their &quot;copy&quot; of these attributes, located wherever (on
           their desktops/in their emails/in folders on Sharepoint/on pages of
           Confluence etc).
         </MB8>
         <MB8>
-          What's important here is that regardless of the quality and
+          What&apos;s important here is that regardless of the quality and
           consistency of this attribute data, there is not an equivalent digital
           representation of {SpongeBob} that can easily be referred to by all
-          employees should they need to "speak" of him digitally. There is
+          employees should they need to &quot;speak&quot; of him digitally. There is
           seldom an SST representation of {SpongeBob} and as the result, a lot
           of time is spent searching for the latest updated version of{" "}
-          {SpongeBob}'s attributes (long phone calls / emails to chase /
+          {SpongeBob}&apos;s attributes (long phone calls / emails to chase /
           searching by text string and not by the meaning - {SpongeBob}-ness).
         </MB8>
 
         <MB8>
-          The essence, the "CEO"-ness is in fact transient -current CEO might
+          The essence, the &quot;CEO&quot;-ness is in fact transient -current CEO might
           step down and another person can become a new CEO. In this case
           everyone would make essential modifications to the notion of the
-          "current CEO". But {SpongeBob} won't go anywhere - it will persist in
+          &quot;current CEO&quot;. But {SpongeBob} won&apos;t go anywhere - it will persist in
           the EKG as a new Chairsponge.
         </MB8>
 
@@ -140,8 +138,8 @@ export default [
 
         <MB8>
           It was obvious that the solutions to these questions (99% of time that
-          would be a source document, or colleague's advice) resided within my
-          colleague's minds or on their desktops/emails. We did have an old and
+          would be a source document, or colleague&apos;s advice) resided within my
+          colleague&apos;s minds or on their desktops/emails. We did have an old and
           limited database that had some records of some legal entities and
           natural persons - but to use that knowledge it had to be checked and
           double-checked with colleagues first.
@@ -157,7 +155,7 @@ export default [
           work.
         </MB8>
 
-        <H3>Touch it if it's broken</H3>
+        <H3>Touch it if it&apos;s broken</H3>
         <MB4>
           A simple solution was to agree to share all such hard-earned
           knowledge, but:
@@ -212,7 +210,7 @@ export default [
     id: 1,
     slug: "setting-up-yahoo-prices-api-on-heroku",
     header: "Setting up Yahoo Prices API on Heroku",
-    subheader: "Without the docs, it's unusable.",
+    subheader: "Without the docs, it&apos;s unusable.",
     dateCreated: [2022, 3, 5],
     timeToRead: "2 min",
     timeToThink: "10 min",
@@ -246,17 +244,17 @@ export default [
         <H3>So</H3>
         <MB8>
           K, after a hard trading day, copy-pastes her option combos, strangles
-          and whatnot data to Sheets from Interactive Brokers' TWS.
-          Unfortunately, IB's option trade reports do not come with a precise
-          price of the underlying at the moment of option trade's execution.
+          and whatnot data to Sheets from Interactive Brokers&apos; TWS.
+          Unfortunately, IB&apos;s option trade reports do not come with a precise
+          price of the underlying at the moment of option trade&apos;s execution.
         </MB8>
-        <MB4>Let's say she has this record:</MB4>
+        <MB4>Let&apos;s say she has this record:</MB4>
         <MB4>
             <JS noCopy colorScheme="dark">{`AMD [STOCK PRICE ???] 19/11/2020 11:43:35 BTO LONG CALL +3 AMD NOV27'20 93 CALL 0.57 3.59`}</JS>
         </MB4>
         <MB8>
           It would be handy to know how much AMD traded for at 11:43:35 on
-          November 19, 2020, right? Ok, maybe we aren't that fastidious and can
+          November 19, 2020, right? Ok, maybe we aren&apos;t that fastidious and can
           round time down to 11:43.
         </MB8>
         <MB8>
@@ -264,7 +262,7 @@ export default [
           API. ...of which no documentation in human-readable format exists...
         </MB8>
         <MB8>
-          Ran Aroussi published a nice Python package - <a href="https://pypi.org/project/yfinance/" alt="link to yfinance package">yfinance</a>. Many thanks,
+          Ran Aroussi published a nice Python package - <a href="https://pypi.org/project/yfinance/">yfinance</a>. Many thanks,
           Ran! We are going to use this package to set up our simple Yahoo! Prices
           REST API on Heroku.
         </MB8>
@@ -276,7 +274,7 @@ export default [
             <li>launch a Python Yahoo Prices API on Heroku,</li>
             <li>call it from the Sheets and</li>
             <li>
-              automatically update K's trading logs with underlying prices.
+              automatically update K&apos;s trading logs with underlying prices.
             </li>
           </ol>
         </div>
@@ -291,11 +289,12 @@ export default [
         </div>
         <MB4>Where each Ticker is:</MB4>
         <div className="pb--2rem">
-          <Code block language="python">{`[
+          {/* <Code block language="python">{`[ */}
+          <Code block>{`[
     ticker: str, 
     # price may be skipped for POST request, add null in Postman
     price: null, 
-    # at the moment of writing this post, it's hard to remember
+    # at the moment of writing this post, it&apos;s hard to remember
     # why I split time into two lists like this.         
     [
       year:int, 
@@ -318,7 +317,7 @@ export default [
         <div className="pb--2rem">to each Ticker.</div>
 
         <div className="three-days-later pb--2rem">
-          <img
+          <Image
             className="rounded-lg"
             src="/img/3dayslater.jpeg"
             alt="Some time has passed"
@@ -350,16 +349,16 @@ export default [
           response, which is 😬
         </div>
 
-        <MB4>Let's investigate, shall we 🕵🏻‍♂️</MB4>
+        <MB4>Let&apos;s investigate, shall we 🕵🏻‍♂️</MB4>
         <div className="pb--2rem">
           <Code block>$ heroku logs -app=yahooprices --tail</Code>
         </div>
 
         <MB4>
-          Lo and behold, we've got ourselves a bug!
+          Lo and behold, we&quot;ve got ourselves a bug!
         </MB4>
         <div className="yahoo-prices-bug pb--2rem">
-          <img
+          <Image
             className="rounded-lg"
             src="/img/ypb.png"
             alt="Screenshot of Heroku logs"
@@ -427,7 +426,7 @@ def get_prices(tickers, attach_prices=False): ...`}
           </Code>
         </div>
 
-        <H3>I'll have a takeaway, please 🍟 </H3>
+        <H3>I&apos;ll have a takeaway, please 🍟 </H3>
         <div className="pb--3rem">
           <ol>
             <li>Write more WHY-comments in your code.</li>
@@ -443,7 +442,7 @@ def get_prices(tickers, attach_prices=False): ...`}
     slug: "git-stash",
     header: "git stash to the rescue",
     subheader:
-      "Haven't thought it through before making changes on this branch? No biggie - git stash it!",
+      "Haven&apos;t thought it through before making changes on this branch? No biggie - git stash it!",
     dateCreated: [2022, 3, 12],
     author: "oda",
     timeToRead: "3 min",
@@ -452,7 +451,7 @@ def get_prices(tickers, attach_prices=False): ...`}
     body: (
       <Text className="leading-7">
         <TLDR>
-          If you practice everyone's favourite{" "}
+          If you practice everyone&apos;s favourite{" "}
           <Bold>
             <i>code first - think later</i>
           </Bold>{" "}
@@ -595,10 +594,10 @@ $ git commit -am "stuff that should have been on anotherBranch"`}
               </MB4>
               Pushing to main branch forces me to focus on solving an issue
               within the restricted timespan (I like those green commits, I do).
-              But at the same time I realise I don't want to push garbage, so a
+              But at the same time I realise I don&apos;t want to push garbage, so a
               this becomes a battle against{" "}
-              <strong>Unrelenting Standards</strong> (ie "it's better now and
-              imperfect than perfect and never").
+              <strong>Unrelenting Standards</strong> (ie &quot;it&apos;s better now and
+              imperfect than perfect and never&quot;).
             </li>
 
             <li className="pb-12">
@@ -615,7 +614,7 @@ $ git commit -am "stuff that should have been on anotherBranch"`}
               <MB4>
                 I want my work to be something that I am proud of. The only sure
                 way to get there for me is to incrementally improve on my work.
-                Since "incrementally" means "step by step over time" - I ran
+                Since &quot;incrementally&quot; means &quot;step by step over time&quot; - I ran
                 into the old{" "}
                 <Blockquote className="" cite="- everyone">
                   <Bold>WHAT_THE_HELL_IS_THIS_DOING_HERE ??</Bold>
@@ -646,8 +645,8 @@ $ git commit -am "stuff that should have been on anotherBranch"`}
               <MB4>
                 This is the biggest one for me. I think open source allows ideas
                 to compete. Even if they compete only within my own head,
-                because, let's get real for a sec, no one is going to go through
-                my repos with any level of attention. If they do, I'd be chaffed
+                because, let&apos;s get real for a sec, no one is going to go through
+                my repos with any level of attention. If they do, I&apos;d be chaffed
                 to bits to listen to their comments (after a couple of deep
                 breaths that is).
               </MB4>
@@ -655,7 +654,7 @@ $ git commit -am "stuff that should have been on anotherBranch"`}
               grown into something usable by actual humans. Pushing it out there
               in the public gives it at least a chance (however small). There is
               lots of work to do after just simple <Code>git push</Code> but
-              without the first step, there won't be any others.
+              without the first step, there won&apos;t be any others.
             </li>
           </ol>
         </div>
@@ -728,7 +727,7 @@ $ git commit -am "stuff that should have been on anotherBranch"`}
       <Text className="leading-7">
         <p>
           First thing that I discovered after starting this blog is that it is
-          not exactly easy to present a code snippet so that it doesn't look
+          not exactly easy to present a code snippet so that it doesn&apos;t look
           ugly af. And I consider myself an <i>anti-ugly-af</i> guy most of the
           time.
         </p>
@@ -747,7 +746,7 @@ $ git commit -am "stuff that should have been on anotherBranch"`}
           <pre>
             <code>
               <span style={{ color: "green" }}>
-                // to highlight code like this
+                {'// to highlight code like this'}
               </span>
               <br />
               <span style={{ color: "blue" }}>const</span> a = 1;
@@ -762,7 +761,7 @@ $ git commit -am "stuff that should have been on anotherBranch"`}
               {`}`}
               <br />
               <span style={{ color: "green" }}>
-                // I had to write it like this{" "}
+                {'// I had to write it like this'}{" "}
               </span>
               <br />
               {`<pre>
@@ -801,8 +800,8 @@ $ git commit -am "stuff that should have been on anotherBranch"`}
         </div>
 
         <PB8>
-          Or use <Code>colorScheme="dark"</Code> to make it dark like{" "}
-          <a href="https://www.imdb.com/name/nm3211470/">Rober Eggers's</a>{" "}
+          Or use <Code>colorScheme=&quot;dark&quot;</Code> to make it dark like{" "}
+          <a href="https://www.imdb.com/name/nm3211470/">Rober Eggers&apos;s</a>{" "}
           movies:
         </PB8>
 
@@ -810,7 +809,7 @@ $ git commit -am "stuff that should have been on anotherBranch"`}
           {codeSnippet}
         </JS>
 
-        <H3>Isn't it lovely? 💥</H3>
+        <H3>Isn&apos;t it lovely? 💥</H3>
       </Text>
     ),
   },
@@ -865,7 +864,7 @@ $ git commit -am "stuff that should have been on anotherBranch"`}
         <MB4>
           {/* <Text> */}
           Last time I used the <Code>useEffect</Code> hook, it was to initialize
-          my Component's state. It looked quite straightforward:
+          my Component&apos;s state. It looked quite straightforward:
           {/* </Text> */}
         </MB4>
         <MB4>
@@ -888,7 +887,7 @@ useEffect(initState, []);
         <MB4>
           Important detail here is the empty array passed as the second argument.
           This sets the <Code>useEffect</Code> to fire only once per the
-          Component's lifecycle. Namely - right after the Component has been
+          Component&apos;s lifecycle. Namely - right after the Component has been
           rendered to the DOM.
         </MB4>
         <MB4>
@@ -909,7 +908,7 @@ useEffect(initState, []);
         </MB4>
 
         <MB4>
-          Apparently, I needed to grab user's key strokes so I had to listen to <Code>keydown</Code> events.
+          Apparently, I needed to grab user&apos;s key strokes so I had to listen to <Code>keydown</Code> events.
         </MB4>
 
         <MB4>
@@ -927,12 +926,12 @@ useEffect(() => {
         </JSDark>
 
         <MB4>
-          Let me explain what's going on here:
+          Let me explain what&apos;s going on here:
         </MB4>
         <MB4>
         <ol>
             <li>Line 3. We ask the browser to fire a <a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/keydown_event">Keydown event and provide a function that will be called with that event as the only argument - in our case we call it <Code>handleKeyDown</Code></a></li>
-            <li>Lines 4 and 5. Clean up. If the component within which we are setting this functionality is ever removed from the DOM (unmounted), this is how we tell useEffect what to do to clean things up. This is the equivalent of using <Code>componentWillUnmount</Code> lifecycle method from React class component, which is called immediately <a href="https://reactjs.org/docs/react-component.html#componentwillunmount" >before the component is destroyed</a>. Here we simply don't want our event listeners to clutter and will clean them up, tidy tidy tidy up.</li>
+            <li>Lines 4 and 5. Clean up. If the component within which we are setting this functionality is ever removed from the DOM (unmounted), this is how we tell useEffect what to do to clean things up. This is the equivalent of using <Code>componentWillUnmount</Code> lifecycle method from React class component, which is called immediately <a href="https://reactjs.org/docs/react-component.html#componentwillunmount" >before the component is destroyed</a>. Here we simply don&apos;t want our event listeners to clutter and will clean them up, tidy tidy tidy up.</li>
             <li>Line 7. Performance optimization. To make useEffect efficient, we may provide a dependecy array - if nothing in this array changes, useEffect will skip and not perform its actions, adding and removing listeners in this case. <a href="https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects">Check this tip</a></li>
           </ol>
         </MB4>
@@ -965,7 +964,7 @@ useEffect(() => {
         <PB8>
           on what kind of garbage code you are throwing away. If you are 100%
           sure it should perish, then <Code>git reset --hard</Code> and never
-          look back. But what if you're wrong and you've just binned a code that
+          look back. But what if you&apos;re wrong and you&quot;ve just binned a code that
           might worth at least 50kcal ??
         </PB8>
         <H3>Let me share my example.</H3>
@@ -977,8 +976,8 @@ useEffect(() => {
           >
             Netlify
           </a>
-          . The build was failing because by default Netlify's build
-          configuration was set to treat React's warnings as errors. Two plans
+          . The build was failing because by default Netlify&apos;s build
+          configuration was set to treat React&apos;s warnings as errors. Two plans
           were obvious, I should either:
         </P>
         <PB8>
@@ -986,7 +985,7 @@ useEffect(() => {
             <li className="mb-0">
               Correct the codebase - get rid of warnings; or
             </li>
-            <li>Correct Netlify's config - make it ignore warnings.</li>
+            <li>Correct Netlify&apos;s config - make it ignore warnings.</li>
           </ol>
         </PB8>
         <H3>1. Dealing with warnings</H3>
@@ -996,9 +995,9 @@ useEffect(() => {
             Setting document event listeners with React useEffect hook
           </Link>{" "}
           blogpost, I used a <Code>useEffect</Code> hooks to set up document
-          listeners and React's linter warned me:
+          listeners and React&apos;s linter warned me:
           <Center className="pt-4">
-            <img
+            <Image
               className="rounded-lg"
               src="/img/missingDependency.png"
               alt=""
@@ -1021,7 +1020,7 @@ useEffect(() => {
           function definitions inside useEffect hook so that its dependencies do
           not change on each render. As per the suggestion:
           <Center className="pt-4 pb-4">
-            <img
+            <Image
               className="rounded-lg"
               src="/img/wrapInuseCallback.png"
               alt=""
@@ -1044,21 +1043,21 @@ useEffect(() => {
   useEffect(() => {
     reset();
   }, [reset]);`}</JSDark>
-          Again, as per Create-react-app's suggestion:
+          Again, as per Create-react-app&apos;s suggestion:
           <Center className="pt-4 pb-4">
-            <img
+            <Image
               className="rounded-lg"
               src="/img/addResetAsDependency.png"
               alt=""
             />
           </Center>
           Which went horribly wrong - the app just kept re-setting its state,
-          because that's what <Code>reset()</Code> is for. But nevermind.
+          because that&apos;s what <Code>reset()</Code> is for. But nevermind.
           Important thing here is that I missed the fact that I broke the app
-          following compiler's advice and commited a bug. Then, after I wrangled
-          all warnings and was ready to show Netlify who's the boss, I quickly
+          following compiler&apos;s advice and commited a bug. Then, after I wrangled
+          all warnings and was ready to show Netlify who&apos;s the boss, I quickly
           peeked at whether the app was actually doing what it supposed to do.
-          Which it wasn't.
+          Which it wasn&apos;t.
         </PB8>
         <PB8>
           My quick panic reaction was that it must have been the current latest
@@ -1080,11 +1079,11 @@ useEffect(() => {
           <JS noCopy colorScheme="dark">{`$ git stash save wrangleDeps`}</JS>
         </P>
         <PB8>
-          which would've discarded all the changes in the current working tree
-          anyways, <Bold>AND</Bold> I'd have access to the work I had done.
+          which would&apos;ve discarded all the changes in the current working tree
+          anyways, <Bold>AND</Bold> I&apos;d have access to the work I had done.
           Which turned out to be useful and not related to the bug that I
           caught. The sad part - now I need to do the wrangling again. But this
-          time I'll
+          time I&apos;ll
         </PB8>
 
         <PB8>
@@ -1126,7 +1125,7 @@ useEffect(() => {
           <Code>git stash</Code> and, failing that,{" "}
           <Code>git reset --hard</Code>. To my surprise neither worked - my new
           .tsx copies of .jsx files remained in the folders.{" "}
-          <Code>git status</Code> called them "untracked files" and refused just
+          <Code>git status</Code> called them &quot;untracked files&quot; and refused just
           simply forget about them.
         </PB8>
         <PB8>
@@ -1137,7 +1136,7 @@ useEffect(() => {
         </PB8>
         <PB8>
           Actually first I do a dry-run to see which files will be removed -{" "}
-          <Code>git clean -d -n</Code>. All seems fine, let's go berserk on
+          <Code>git clean -d -n</Code>. All seems fine, let&apos;s go berserk on
           these .tsx pesky unwanted untracked red-colored files.
         </PB8>
         <PB8>
@@ -1171,40 +1170,40 @@ useEffect(() => {
     ],
     body: <Text className="leading-7">
       <TLDR>
-      In the end of the day, choosing the right combination of "Housekeeping" vs "Exploration" depends on what I suck at. I should attack what bores me the most. This way I'll grab the biggest gain per unit of effort. 
+      In the end of the day, choosing the right combination of &quot;Housekeeping&quot; vs &quot;Exploration&quot; depends on what I suck at. I should attack what bores me the most. This way I&apos;ll grab the biggest gain per unit of effort. 
       </TLDR>
       <H2>Intro</H2>
-      I often find myself pondering over a common dilemma: How do I strike a balance between completing old projects and tasks, which often involve dealing with technical debt, versus starting new endeavors? What guidelines should I follow? Even when I have only 30 minutes to spare, should I dedicate that time to incrementing progress on existing projects or venture into something from my "Need to try before I die" list?
+      I often find myself pondering over a common dilemma: How do I strike a balance between completing old projects and tasks, which often involve dealing with technical debt, versus starting new endeavors? What guidelines should I follow? Even when I have only 30 minutes to spare, should I dedicate that time to incrementing progress on existing projects or venture into something from my &quot;Need to try before I die&quot; list?
       <PB8></PB8>
-      While there's no definitive answer, the approach may depend on the long-term goals I want to achieve. Surprisingly, focusing on seemingly less exciting or rewarding projects can yield more positive results than anticipated. Personally, I place a high value on competence, and because of this iterating over past work offers me a multiplier effect in terms of assessing its value.
+      While there&apos;s no definitive answer, the approach may depend on the long-term goals I want to achieve. Surprisingly, focusing on seemingly less exciting or rewarding projects can yield more positive results than anticipated. Personally, I place a high value on competence, and because of this iterating over past work offers me a multiplier effect in terms of assessing its value.
 
       <PB8></PB8>
-      In simple words - it turns out that at this point of my life the best solution for me is to spend 2/3 of my work time improving on the existing stuff, iterating over what I have done ("housekeeping") and the rest - 1/3 - to do something completely new and creative. 
+      In simple words - it turns out that at this point of my life the best solution for me is to spend 2/3 of my work time improving on the existing stuff, iterating over what I have done (&quot;housekeeping&quot;) and the rest - 1/3 - to do something completely new and creative. 
       <PB8></PB8>
       <PB8></PB8>
 
       <H2>Example of the Learning Process</H2>
-      Let me draw a parallel from my school days. I recall how I disliked the two-stage approach to completing homework: the first draft followed by the "clean" version for the teacher. In an attempt to save time, which I'd spend on "Exploration", I often skipped working on the draft version of my home assignment and jumped straight into creating the final version. 
+      Let me draw a parallel from my school days. I recall how I disliked the two-stage approach to completing homework: the first draft followed by the &quot;clean&quot; version for the teacher. In an attempt to save time, which I&apos;d spend on &quot;Exploration&quot;, I often skipped working on the draft version of my home assignment and jumped straight into creating the final version. 
       <PB8></PB8>
-      However, this approach overlooked the crucial aspect of repetition in the learning process. As the saying goes, "practice makes it perfect." The requirement for a draft was not solely about ensuring the readability of the final version for the teacher ("that's how I explained it to myself"); it was also intended to foster a valuable learning experience — an opportunity to experiment and refine my work by iterating over it in a "sandbox" environment. Unfortunately, by rushing to finish quickly, I missed the chance to become comfortable and respectful of the iterative method of producing quality work. So my "Housekeeping" sucked a lot.
+      However, this approach overlooked the crucial aspect of repetition in the learning process. As the saying goes, &quot;practice makes it perfect.&quot; The requirement for a draft was not solely about ensuring the readability of the final version for the teacher (&quot;that&apos;s how I explained it to myself&quot;); it was also intended to foster a valuable learning experience — an opportunity to experiment and refine my work by iterating over it in a &quot;sandbox&quot; environment. Unfortunately, by rushing to finish quickly, I missed the chance to become comfortable and respectful of the iterative method of producing quality work. So my &quot;Housekeeping&quot; sucked a lot.
       <PB8></PB8>
-      On the upside, I heavily invested into "Exploration" so I was constantly engaged into creative/explorative/testing/breaking activities. Through which I learned other useful skills - "perseverance" - when stuff doesn't work out the first time, keep going until it does. 
+      On the upside, I heavily invested into &quot;Exploration&quot; so I was constantly engaged into creative/explorative/testing/breaking activities. Through which I learned other useful skills - &quot;perseverance&quot; - when stuff doesn&apos;t work out the first time, keep going until it does. 
       <PB8></PB8>
       <PB8></PB8>
 
-      <H2>Drawbacks of the "Do-It-In-One-Go" Approach</H2>
+      <H2>Drawbacks of the &quot;Do-It-In-One-Go&quot; Approach</H2>
       There are a few reasons why this Do-It-In-One-Go approach is not ideal. 
       <PB8></PB8>
       <Span className="font-bold">Firstly, </Span>
 it taught me to devalue the results of my work. If I became accustomed to starting from scratch without hesitation, it implied that my previous efforts were not worth saving and improving upon. I could always start anew. 
       <PB8></PB8>
-      <Span className="font-bold">Secondly, </Span> complex systems are rarely created in a single attempt. Instead, they are built by piecing together simple blocks and iteratively combining them into increasingly complex structures. Mistaking a complicated, non-functional system for a functioning complex system often arises from a "let's write this post in one go" mentality, which fails to account for the importance of incremental progress. And access to that is what I missed by not spending enough time carefully drilling through the fundamentals of most of my home assignments. 
+      <Span className="font-bold">Secondly, </Span> complex systems are rarely created in a single attempt. Instead, they are built by piecing together simple blocks and iteratively combining them into increasingly complex structures. Mistaking a complicated, non-functional system for a functioning complex system often arises from a &quot;let&apos;s write this post in one go&quot; mentality, which fails to account for the importance of incremental progress. And access to that is what I missed by not spending enough time carefully drilling through the fundamentals of most of my home assignments. 
       <PB8></PB8>
-      I was optimising for "Exploration" behaviour aka "chasing dopamine". 
+      I was optimising for &quot;Exploration&quot; behaviour aka &quot;chasing dopamine&quot;. 
       <PB8></PB8>
       <PB8></PB8>
       <H2>Conclusion</H2>
-      In conclusion, finding the right balance between housekeeping activities, which involve addressing existing projects or tasks, and exploration, which entails starting new endeavors, is a constant challenge. And this challenge is well seen at school. However, by recognizing the value of incremental work and the benefits of repetition in the learning process, we can make more informed choices. So, the next time I have a limited amount of time or resources, I'd consider the potential positive outcomes of incrementing on "less dopamine-promising" projects rather than solely focusing on the allure of new ventures. 
+      In conclusion, finding the right balance between housekeeping activities, which involve addressing existing projects or tasks, and exploration, which entails starting new endeavors, is a constant challenge. And this challenge is well seen at school. However, by recognizing the value of incremental work and the benefits of repetition in the learning process, we can make more informed choices. So, the next time I have a limited amount of time or resources, I&apos;d consider the potential positive outcomes of incrementing on &quot;less dopamine-promising&quot; projects rather than solely focusing on the allure of new ventures. 
       <PB8></PB8>
       <PB8></PB8>
       <H2>Remember: </H2>
@@ -1237,7 +1236,7 @@ it taught me to devalue the results of my work. If I became accustomed to starti
           Put .heex into templates
         </H2>
         <MB8>
-        To address this issue, we can employ the <a href="https://hexdocs.pm/phoenix_live_view/Phoenix.Component.html#embed_templates/2" alt="link to embed_templates docs" className="text-sky-700 hover:underline">embed_templates/2</a> function provided by Phoenix LiveView. By placing our .heex files into separate template files and importing (or embedding) them into our module, we can achieve better code organization and improve readability.
+        To address this issue, we can employ the <a href="https://hexdocs.pm/phoenix_live_view/Phoenix.Component.html#embed_templates/2"  className="text-sky-700 hover:underline">embed_templates/2</a> function provided by Phoenix LiveView. By placing our .heex files into separate template files and importing (or embedding) them into our module, we can achieve better code organization and improve readability.
         </MB8>
 
         {/* <H3>So</H3> */}
@@ -1250,9 +1249,10 @@ it taught me to devalue the results of my work. If I became accustomed to starti
 |-- my_module_template.html.heex
 `}</JS>
 <MB4>
-Inside our my_module.ex file, we can use the embed_templates/2 function to import all .heex files from the current folder. Here's an example:
+Inside our my_module.ex file, we can use the embed_templates/2 function to import all .heex files from the current folder. Here&apos;s an example:
 </MB4>
-<Prism block language="elixir">{`defmodule MyModule do
+{/* <Prism block language="elixir">{`defmodule MyModule do */}
+<Prism language="typescript">{`defmodule MyModule do
   embed_templates "*"    # This will grab all .heex files in the current folder
 
   def my_module_template(assigns)
@@ -1271,7 +1271,8 @@ end
         <MB4>
         We can now provide attributes that the component expects to get, improving the organization and readability of our code.
         </MB4>
-        <Prism block language="elixir">{`defmodule MyModule do
+        {/* <Prism block language="elixir">{`defmodule MyModule do */}
+        <Prism language="typescript" >{`defmodule MyModule do
   embed_templates "*"     # This will grab all .heex files in the current folder
 
   attr :name, :string, required: true     # we need a name
@@ -1280,10 +1281,10 @@ end
 
 end
 `}</Prism>
-<MB4></MB4>
+    <MB4></MB4>
 
-        <a href="https://hexdocs.pm/phoenix_live_view/Phoenix.Component.html#module-attributes" alt="link to embed_templates docs" className="text-sky-700 hover:underline">Attributes</a> are a great tool to use when you want to document the expected usage of the component. Which is always a good practice. 
-<MB4></MB4>
+        <a href="https://hexdocs.pm/phoenix_live_view/Phoenix.Component.html#module-attributes" className="text-sky-700 hover:underline">Attributes</a> are a great tool to use when you want to document the expected usage of the component. Which is always a good practice. 
+    <MB4></MB4>
 
         By separating our markup into individual template files and utilizing the embed_templates/2 function, we can achieve a cleaner and more maintainable codebase in Phoenix LiveView.
 
@@ -1312,15 +1313,15 @@ end
     body: (
       <Text className="leading-7">
         <TLDR>
-          <Code>:phoenix, "~> 1.7.2"</Code>
-          <Code>:phoenix_live_view, "~> 0.18.18"</Code>
+          <Code>:phoenix, &quot;~&gt; 1.7.2&quot;</Code>
+          <Code>:phoenix_live_view, &quot;~&gt; 0.18.18&quot;</Code>
           <PB4></PB4>
         <WebLink href="https://www.zachleat.com/web/webfont-glossary/#fout" alt="Flash Of Unstyled Text link">FOUT</WebLink> or <b>Flash Of Unstyled Text</b> is a pesky bug that really makes my OCD sad. 
           To get rid of it, I needed to stop linking Google Fonts from cdn and instead, provide them as ready-to-use assets. This way client does not need to wait precious milliseconds while fonts are downloaded and no FOUT occurs. 
 
         The process of downloading and using custom fonts for Phoenix LiveView seems a bit involved at first and it helps to have a step-by-step guide at hand to start with. 
         <PB4></PB4>
-        <img
+        <Image
             className="rounded-lg"
             src="/img/fout.gif"
             alt="FOUT bug"
@@ -1329,7 +1330,7 @@ end
       
         <H2>Introduction</H2>
 
-Managing fonts efficiently is essential for creating visually appealing and consistent designs. In this blog post, we'll explore a systematic approach to download, convert, and integrate fonts into your project using Google Fonts as an example. By following these step-by-step instructions, you'll be able to optimize font loading, eliminate Flash of Unstyled Text (FOUT), and enhance the overall user experience.
+Managing fonts efficiently is essential for creating visually appealing and consistent designs. In this blog post, we&apos;ll explore a systematic approach to download, convert, and integrate fonts into your project using Google Fonts as an example. By following these step-by-step instructions, you&apos;ll be able to optimize font loading, eliminate Flash of Unstyled Text (FOUT), and enhance the overall user experience.
 <PB8></PB8>
 <PB8></PB8>
 
@@ -1337,14 +1338,14 @@ Managing fonts efficiently is essential for creating visually appealing and cons
 
 <H3>1. Downloading Fonts from Google Fonts</H3>
 
-Visit the <WebLink href="https://fonts.google.com/specimen/Inter?query=Inter">Google Fonts website</WebLink>.
-Select the desired font, in this case, "Inter."
+Visit the <WebLink href="https://fonts.google.com/specimen/Inter?query=Inter" alt="link to google fonts website">Google Fonts website</WebLink>.
+Select the desired font, in this case, &quot;Inter&quot;.
 Click the download font family button to save the font files to your computer.
 <PB8></PB8>
 
 <H3>2. Converting Font Files</H3>
 
-This is the most important bit that took me a while to figure out. It turns out that Phoenix LiveView is not friendly to .ttf that you get from GoogleFonts. Therefore, convert the downloaded .ttf font file to .woff2 format using a tool like <WebLink href="https://cloudconvert.com/ttf-to-woff2">CloudConvert</WebLink>.
+This is the most important bit that took me a while to figure out. It turns out that Phoenix LiveView is not friendly to .ttf that you get from GoogleFonts. Therefore, convert the downloaded .ttf font file to .woff2 format using a tool like <WebLink href="https://cloudconvert.com/ttf-to-woff2" alt="link to CloudConvert website">CloudConvert</WebLink>.
 <PB8></PB8>
 
 <H3>3. Creating Font Folder</H3>
@@ -1390,7 +1391,7 @@ my_awesome_project/
 
 <H3>4. Adding Font CSS</H3>
 
-In the <Code>my_awesome_project/assets/fonts/inter/inter.css</Code> file, define the <WebLink href="https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face">@font-face rule</WebLink> to specify font properties and paths for both the <Code>.woff2</Code> font file (and, optionally <Code>.woff</Code> for weird old browsers).
+In the <Code>my_awesome_project/assets/fonts/inter/inter.css</Code> file, define the <WebLink href="https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face" alt="link to font-face rule">@font-face rule</WebLink> to specify font properties and paths for both the <Code>.woff2</Code> font file (and, optionally <Code>.woff</Code> for weird old browsers).
 <PB4></PB4>
 Result:
 <PB4></PB4>
@@ -1406,7 +1407,7 @@ Result:
 
 <H3>5. Configuring esbuild</H3>
 
-Locate the "config.exs" file in your project:
+Locate the &quot;config.exs&quot; file in your project:
 <PB4></PB4>
 <JS noCopy colorScheme="dark">{`
 my_awesome_project/
@@ -1452,13 +1453,13 @@ default: [
 `}</JS>
 
 <PB4></PB4>
-<Code>--loader</Code> option tells esbuild how to treat .woff2 extetion files. In this case no special treatment needed, esbuild will copy it, adding a unique identifier, to make sure we can later update it on the client, should it need to change, ie perform a <WebLink href="https://sparkbox.com/foundry/browser_cache_busting_explained">cash bust</WebLink>.
+<Code>--loader</Code> option tells esbuild how to treat .woff2 extetion files. In this case no special treatment needed, esbuild will copy it, adding a unique identifier, to make sure we can later update it on the client, should it need to change, ie perform a <WebLink href="https://sparkbox.com/foundry/browser_cache_busting_explained" alt="cache bust explaination">cache bust</WebLink>.
 
 
 <PB8></PB8>
 <H3>6. Extending Tailwind Configuration</H3>
 
-To be able to use our new font as a TailwindCSS class <Code>className="font-inter"</Code> instead of the usual <Code>className="font-[Inter]"</Code> we could extend <Code>tailwind.config.js</Code> file.
+To be able to use our new font as a TailwindCSS class <Code>className=&quot;font-inter&quot;</Code> instead of the usual <Code>className=&quot;font-[Inter]&quot;</Code> we could extend <Code>tailwind.config.js</Code> file.
 <PB4></PB4>
 <JS noCopy colorScheme="dark">{`
 my_awesome_project/
@@ -1467,7 +1468,7 @@ my_awesome_project/
       |-- tailwind.config.js
 `}</JS>
 
-Under the <Code>fontFamily</Code> section, add the "Inter" font as an option, along with a fallback font if desired:
+Under the <Code>fontFamily</Code> section, add the &quot;Inter&quot; font as an option, along with a fallback font if desired:
 <PB4></PB4>
 Before:
 <PB4></PB4>
@@ -1494,7 +1495,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        inter: ['Inter', 'system-ui'],
+        inter: ['Inter', &apos;system-ui'],
       }
     }
   }
@@ -1504,7 +1505,7 @@ module.exports = {
 <PB8></PB8>
 <H3>7. Linking Font Stylesheet</H3>
 
-In your project's root HTML file (e.g., <Code>root.html.heex</Code>), add a link to the font's CSS file <Code>my_awesome_project/assets/fonts/inter/inter.css</Code>.
+In your project&apos;s root HTML file (e.g., <Code>root.html.heex</Code>), add a link to the font&apos;s CSS file <Code>my_awesome_project/assets/fonts/inter/inter.css</Code>.
 Ensure that the link is placed before any content that requires the font like this, ie above the <Code>app.css</Code>:
 <PB4></PB4>
 <JS noCopy colorScheme="dark">{`
@@ -1517,19 +1518,19 @@ Ensure that the link is placed before any content that requires the font like th
 ...
 `}</JS>
 
-<Bold>Fun fact: <Code>~p"/assets/fonts/Inter/inter.css"</Code> path (note the upcased <Code>Inter</Code>) would also work locally, but it will take away a couple of hours of your time, when you deploy to <WebLink href="https://fly.io/docs/speedrun/">fly.io</WebLink> (or elsewhere?) and find that your fonts aren't available as assets 🫣. I'll write another another blogpost about deploying to fly.io in future. </Bold>
+<Bold>Fun fact: <Code>~p&quot;/assets/fonts/Inter/inter.css&quot;</Code> path (note the upcased <Code>Inter</Code>) would also work locally, but it will take away a couple of hours of your time, when you deploy to <WebLink href="https://fly.io/docs/speedrun/" alt="link to fly.io website">fly.io</WebLink> (or elsewhere?) and find that your fonts aren&apos;t available as assets 🫣. I&apos;ll write another another blogpost about deploying to fly.io in future. </Bold>
 
 <PB8></PB8>
 <H3>8. Optimizing Font Loading</H3>
 
 Congratulations! All should work now! 
-By linking the font stylesheet, you've pre-loaded the fonts, reducing the likelihood of FOUT (Flash of Unstyled Text).
+By linking the font stylesheet, you&apos;ve pre-loaded the fonts, reducing the likelihood of FOUT (Flash of Unstyled Text).
 
-For further optimization, consider loading the entire font family as base64-encoded data. Refer to the <WebLink href="https://www.zachleat.com/web/comprehensive-webfonts/#critical-foft-with-data-uri">expert advice</WebLink> for detailed instructions.
+For further optimization, consider loading the entire font family as base64-encoded data. Refer to the <WebLink href="https://www.zachleat.com/web/comprehensive-webfonts/#critical-foft-with-data-uri" alt="link to zachleat's website">expert advice</WebLink> for detailed instructions.
 
 <PB8></PB8>
 <H3>Conclusion</H3>
-By following these steps, you've successfully integrated the "Inter" font into your project, ensuring a consistent and visually pleasing user experience. By optimizing font loading and eliminating FOUT, you've taken a crucial step toward enhancing your design's overall impact. Enjoy the benefits of a well-managed font system, providing a polished and professional touch to your web projects.
+By following these steps, you&apos;ve successfully integrated the &quot;Inter&quot; font into your project, ensuring a consistent and visually pleasing user experience. By optimizing font loading and eliminating FOUT, you&apos;ve taken a crucial step toward enhancing your design&apos;s overall impact. Enjoy the benefits of a well-managed font system, providing a polished and professional touch to your web projects.
 </Text>
     ),
   },
@@ -1552,7 +1553,7 @@ By following these steps, you've successfully integrated the "Inter" font into y
     body: (
       <Text className="leading-7">
         <TLDR>
-        <WebLink href="https://adventofcode.com/2021/day/6">Lanternfish</WebLink> grow exponentially! As does any population
+        <WebLink href="https://adventofcode.com/2021/day/6" alt="link to Lanternfish problem">Lanternfish</WebLink> grow exponentially! As does any population
           that just procreates over and over. They must be immortal or something... 
 
           The best approach for this task is to use a genetic algorithm, that evolves a population over a number of generations. Of course I did not start with it 😂
@@ -1560,7 +1561,7 @@ By following these steps, you've successfully integrated the "Inter" font into y
       
         <H2>Introduction</H2>
 
-        Genetic algorithms are something I never expected to use in my day-to-day Elixir. <WebLink href="https://www.youtube.com/watch?v=NWXSiZ-vi-o">This talk</WebLink> by Sean Moriarity introduced me to the concept and I immediately ordered Sean's book: <WebLink href="https://www.amazon.co.uk/Genetic-Algorithms-Elixir-Problems-Evolution/dp/168050794X/ref=sr_1_1?crid=3E31871QHHXAX&keywords=Sean+Moriarity&qid=1686837419&sprefix=sean+moriarty%2Caps%2C137&sr=8-1">Genetic Algorithms in Elixir: Solve Problems Using Evolution</WebLink>. I mean, who wouldn't want Mother Nature to help you out with Advent Of Code, for example? Yep!
+        Genetic algorithms are something I never expected to use in my day-to-day Elixir. <WebLink href="https://www.youtube.com/watch?v=NWXSiZ-vi-o" alt="link to youtube talk">This talk</WebLink> by Sean Moriarity introduced me to the concept and I immediately ordered Sean&apos;s book: <WebLink href="https://www.amazon.co.uk/Genetic-Algorithms-Elixir-Problems-Evolution/dp/168050794X/ref=sr_1_1?crid=3E31871QHHXAX&keywords=Sean+Moriarity&qid=1686837419&sprefix=sean+moriarty%2Caps%2C137&sr=8-1" alt="link to Amazon">Genetic Algorithms in Elixir: Solve Problems Using Evolution</WebLink>. I mean, who wouldn&apos;t want Mother Nature to help you out with Advent Of Code, for example? Yep!
 
 <PB8></PB8>
 <PB8></PB8>
@@ -1612,7 +1613,7 @@ defmodule Fish do
   end
 
   def procreate(population) do
-    # that's where the nature does its thing
+    # that&apos;s where the nature does its thing
   end
 
   def count(population) do
@@ -1665,7 +1666,7 @@ end
 
 <PB8></PB8>
 <H3>2. Select Parents</H3>
-Step two: find out how many parents we will work with. In our case it's easy - just pick the "0" age bucket (0 days left to have sex of its life, assuming they give birth immediately... hm what's the gestation period of lanternfish??). Anyways...
+Step two: find out how many parents we will work with. In our case it&apos;s easy - just pick the {"0"} age bucket (0 days left to have sex of its life, assuming they give birth immediately... hm what&apos;s the gestation period of lanternfish??). Anyways...
 <PB4></PB4>
 <JS noCopy colorScheme="dark">{`
 defmodule Fish do
@@ -1691,8 +1692,8 @@ between old and new states:
   <li><Code>reset parents</Code></li>
 </ul>
 <PB4></PB4>
-Horrible function name that only captures a part of what's going on - is a 
-signature move of mine. Let's move on:
+Horrible function name that only captures a part of what&apos;s going on - is a 
+signature move of mine. Let&apos;s move on:
 <PB4></PB4>
 
 <JS noCopy colorScheme="dark">{`
@@ -1701,9 +1702,9 @@ defmodule Fish do
   ...
 
   @doc"""
-  I'm going to do all "generation moving forward" actions in one
+  I&apos;m going to do all "generation moving forward" actions in one
   place. It should really be called "evolve(population)" but 
-  I'm bad at naming things until it's too late. 
+  I'm bad at naming things until it&apos;s too late. 
   """
   def procreate(population) do
     # get the parents == they also represent the number of children
@@ -1724,7 +1725,7 @@ end
 
 <PB8></PB8>
 <H3>4. Count and run</H3>
-Fuf, hopefully we have not run into a pesky <Code>n+1</Code> problem here, so let's wrap up with counting and termination criteria. 
+Fuf, hopefully we have not run into a pesky <Code>n+1</Code> problem here, so let&apos;s wrap up with counting and termination criteria. 
 <PB4></PB4>
 
 <JS noCopy colorScheme="dark">{`
@@ -1755,7 +1756,7 @@ end
 <PB8></PB8>
 
 <H3>The whole thing</H3>
-Also on my <WebLink href="https://github.com/ooddaa/advent_of_code/blob/main/2021/elixir/day-06/day-06.livemd">Github</WebLink>.
+Also on my <WebLink href="https://github.com/ooddaa/advent_of_code/blob/main/2021/elixir/day-06/day-06.livemd" alt="link to Github website">Github</WebLink>.
 <PB4></PB4>
 
 <JS noCopy colorScheme="dark">{`
@@ -1795,7 +1796,7 @@ defmodule Fish do
   @doc"""
   I'm going to do all "generation moving forward" actions in one
   place. It should really be called "evolve(population)" but 
-  I'm bad at naming things until it's too late. 
+  I'm bad at naming things until it&apos;s too late. 
   """
   def procreate(population) do
     # get the parents == they also represent the number of children
@@ -1834,9 +1835,9 @@ end
 
 <PB8></PB8>
 <H3>Conclusion</H3>
-This gave me answer in no time, as all this algo does is adding groups of fish and creating a few maps along the way. What it definitely doesn't do is creating loooooooong lists, iterating over them, incrementing each element, ie it works with <Code>populations</Code>, evolving them over a number of generations. Each population is very efficiently represented as a collection of <Code>{"{agent, size}"}</Code> buckets. These tuples are perfect as they can be worked with by Enum and Map modules with no fuzz at all. 
+This gave me answer in no time, as all this algo does is adding groups of fish and creating a few maps along the way. What it definitely doesn&apos;t do is creating loooooooong lists, iterating over them, incrementing each element, ie it works with <Code>populations</Code>, evolving them over a number of generations. Each population is very efficiently represented as a collection of <Code>{"{agent, size}"}</Code> buckets. These tuples are perfect as they can be worked with by Enum and Map modules with no fuzz at all. 
 <PB4></PB4>
-To sum up, I liked the genetic algo approach (granted, this task doesn't leave many other choices tbf), as it helps to clearly state the problem and offers an intuitive step-by-step approach that we all know from Mother Nature herself.
+To sum up, I liked the genetic algo approach (granted, this task doesn&apos;t leave many other choices tbf), as it helps to clearly state the problem and offers an intuitive step-by-step approach that we all know from Mother Nature herself.
 </Text>
     ),
   },

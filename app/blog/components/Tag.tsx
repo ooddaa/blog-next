@@ -6,7 +6,7 @@ export interface Tag {
   tag: string, 
   classNames?: string, 
   highlightedTags?: string[], 
-  sendTagUp: Function
+  sendTagUp?: Function
 }
 export default function Tag({ tag, classNames, highlightedTags, sendTagUp }: Tag) {
   const useStyles = createStyles(() => ({}));
@@ -14,18 +14,24 @@ export default function Tag({ tag, classNames, highlightedTags, sendTagUp }: Tag
   const [clicked, setClicked] = useState(false);
 
   function handleClick(e: React.MouseEvent<HTMLDivElement>) {
-    sendTagUp(tag);
+    if (sendTagUp !== undefined) {
+      sendTagUp(tag);
+    }
     if (!clicked) {
-      /* user selects tag  */
-      e.target.style.backgroundColor = "#D0D6B3"; 
-      e.target.style.boxShadow =
-        "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)";
-      setClicked(true);
+      /* user selects tag */
+      if (e.target instanceof HTMLElement) {
+        e.target.style.backgroundColor = "#D0D6B3"; 
+        e.target.style.boxShadow =
+          "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)";
+        setClicked(true);
+      }
     } else {
-      /* user de-selects tag  */
-      e.target.style.backgroundColor = "transparent";
-      e.target.style.boxShadow = null;
-      setClicked(false);
+      if (e.target instanceof HTMLElement) {
+        /* user de-selects tag */
+        e.target.style.backgroundColor = "transparent";
+        e.target.style.boxShadow = "";
+        setClicked(false);
+      }
     }
   }
 

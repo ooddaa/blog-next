@@ -1,18 +1,22 @@
 "use client"
-// import Image from 'next/image'
 
-import React from "react";
-// import AppFooter from "../../layout/Footer";
-import { Text, Highlight } from "@mantine/core";
-import { GradientSpan, Span, Bold, PB4 } from "./toolbox";
+import React, {useEffect, useState} from "react";
+import { Text } from "@mantine/core";
+import { GradientSpan, Span } from "./toolbox";
 import Tag from "./blog/components/Tag";
 import Link from 'next/link'
 import "./welcome.css";
 
 export default function Welcome(): JSX.Element {
+  const [innerWidth, setInnerWidth] = useState<number>(0)
+
+  useEffect(()=> {
+    setInnerWidth(window.innerWidth)
+  }, [])
+
   return (
     <div className={`welcome w-screen h-screen relative`}>
-      {window.innerWidth > 400 ? <div className="welcome--img bg-top absolute top-[156px] left-0 w-full h-[calc(100%-156px)] -z-10"></div> : ""}
+      {innerWidth > 400 ? <div className="welcome--img bg-top absolute top-[156px] left-0 w-full h-[calc(100%-156px)] -z-10"></div> : ""}
       
         <section className="w-full h-full lg:h-screen flex flex-col lg:flex-row">
         
@@ -21,7 +25,7 @@ export default function Welcome(): JSX.Element {
             <div
                 className="max-sm:min-h-[128px] pt-24 text-[36px] lg:text-[64px] font-bold lg:font-semibold flex flex-row justify-center items-center text-center"
             > 
-              {window.innerWidth <= 400 ? "Dmitry Vikhorev" : "Dmitry 'Oda' Vikhorev"}
+              {innerWidth <= 400 ? "Dmitry Vikhorev" : "Dmitry 'Oda' Vikhorev"}
             </div>
 
               <div className="text-[18px] max-sm:pb-12 lg:pt-24 font-medium flex flex-col justify-center items-center gap-4 relative">

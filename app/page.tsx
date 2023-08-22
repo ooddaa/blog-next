@@ -18,10 +18,10 @@ export default function Welcome(): JSX.Element {
     <div className={`welcome w-screen h-screen relative`}>
       {innerWidth > 400 ? <div className="welcome--img bg-top absolute top-[156px] left-0 w-full h-[calc(100%-156px)] -z-10"></div> : ""}
       
-        <section className="w-full h-full lg:h-screen flex flex-col lg:flex-row">
+      <section className="w-full h-full lg:h-screen flex flex-col lg:flex-row">
         
-          {/* header */}
-          <section className="h-[300px] pt-12 lg:pt-48 lg:h-full w-full lg:w-1/2 bg-green-800/50 flex flex-col justify-center items-center lg:justify-start text-slate-900">
+        {/* left */}
+        <section className="h-[300px] pt-12 lg:pt-48 lg:h-full w-full lg:w-1/2 bg-green-800/50 flex flex-col justify-center items-center lg:justify-start text-slate-900">
             <div
                 className="max-sm:min-h-[128px] pt-24 text-[36px] lg:text-[64px] font-bold lg:font-semibold flex flex-row justify-center items-center text-center"
             > 
@@ -47,7 +47,8 @@ export default function Welcome(): JSX.Element {
             </div>
         </section>
 
-        <section className="bio welcome-last-text w-full lg:w-1/2 flex flex-col justify-start items-center p-12">
+        {/* right */}
+        <section className="w-full lg:w-1/2 flex flex-col justify-start items-center p-12">
             <Text size="lg">
               <div className="pb-4">
                 Over the past decade, I worked as:
@@ -86,13 +87,13 @@ export default function Welcome(): JSX.Element {
         </section>
       </section>
 
-      {/* <section className="welcome--img bg-center h-[1000px] w-full">
-        <div className="welcome-footer h-full flex flex-col justify-end items-center">
-          <AppFooter classes=""></AppFooter>
-        </div>
-      </section> */}
+      <div className="bg-transparent h-[16px] px-4 my-4 absolute bottom-0">
+        <p className="text-gray-500 text-sm"> 
+          made with 👾 by <span className="oda text-amber-500">oda</span> | photo by{" "}
+          <a href="https://unsplash.com/photos/cBhk90BuOeU">Greg Torosiants</a>
+        </p>
+      </div>
     </div>
-  // </div>
   );
 }
 

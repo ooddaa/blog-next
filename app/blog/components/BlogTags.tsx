@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import Tag from "./Tag";
 import { log, emptyObject } from "../../toolbox";
 import { createStyles } from "@mantine/core";
+// import { useRouter } from "next/navigation";
 
 interface BlogTags {
   tagContainers: string[],
@@ -15,6 +16,7 @@ const BlogTags = ({
   sendTagUp,
   classNames,
 }: BlogTags) => {
+  // const router = useRouter()
   const { cx } = createStyles(emptyObject)();
   const defaultClasses = "blog-tags flex flex-wrap gap-2";
 
@@ -25,7 +27,12 @@ const BlogTags = ({
         position: "sticky",
         top: "0",
       }}
-    >
+    > 
+    <div>
+    {/* <button onClick={() => router.push("/blog")}>
+      clear all tags
+    </button> */}
+    </div>
       {tagContainers?.sort().map((tag: string) => (
         <Tag
           tag={tag}

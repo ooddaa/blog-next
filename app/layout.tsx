@@ -10,7 +10,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={manrope.className}>{children}</body>
+      <body className={manrope.className}>
+        {/* <div className="bg-[#f9fafc]"> */}
+          {children}
+          {/* </div> */}
+      </body>
     </html>
   )
 }

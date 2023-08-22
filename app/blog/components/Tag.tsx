@@ -1,19 +1,21 @@
 import { useState } from "react";
 import { Center, createStyles } from "@mantine/core";
+import { isFunction } from "lodash";
 import { log } from "../../toolbox";
 
 export interface Tag {
   tag: string, 
   classNames?: string, 
   highlightedTags?: string[], 
-  sendTagUp?: Function
+  sendTagUp?: Function,
+  handleClick?: Function
 }
-export default function Tag({ tag, classNames, highlightedTags, sendTagUp }: Tag) {
+export default function Tag({ tag, classNames, highlightedTags, sendTagUp, handleClick }: Tag) {
   const useStyles = createStyles(() => ({}));
   const { cx } = useStyles();
   const [clicked, setClicked] = useState(false);
 
-  function handleClick(e: React.MouseEvent<HTMLDivElement>) {
+  function defaultHandleClick(e: React.MouseEvent<HTMLDivElement>) {
     if (sendTagUp !== undefined) {
       sendTagUp(tag);
     }
@@ -44,7 +46,7 @@ export default function Tag({ tag, classNames, highlightedTags, sendTagUp }: Tag
         "bg-orchid-pink" : 
         "bg-transparent"
       )}
-      onClick={handleClick}
+      onClick={isFunction(handleClick) ? handleClick : defaultHandleClick}
     >
       {tag}
     </Center>

@@ -4,16 +4,19 @@ import BlogTOC from "./components/BlogTOC";
 import BlogTags from "./components/BlogTags";
 import posts from "./components/posts";
 import { log } from "../toolbox";
-import type { TagContainer, Post } from "../types";
+import type { Post } from "../types";
 import flatten from "lodash/flatten";
 import identity from "lodash/identity";
 import MantineHeader from "./components/MantineHeader";
+import { useSearchParams } from 'next/navigation'
 
 export default function Blog() {
+  const searchParams = useSearchParams()
+  const selectedTags = searchParams.getAll('tag')
   /* State
   ________________________________________________________________*/
 
-  const [highlightedTags, setHighlightedTags] = useState([]);
+  const [highlightedTags, setHighlightedTags] = useState(selectedTags || []);
   const [filteredPosts, setFilteredPosts] = useState(posts ?? []);
   const [clickedTags, setClickedTags] = useState<Set<string>>(new Set());
 
@@ -23,6 +26,8 @@ export default function Blog() {
   /* init  */
   useEffect(() => {
     window.scrollTo({ top: 0 });
+    let filteredPosts = filterPostsByTags(highlightedTags, posts)
+    setFilteredPosts(filteredPosts)
   }, []);
 
   function generateTagContainers(posts: Post[]): string[] {
@@ -78,6 +83,17 @@ export default function Blog() {
       return clickedTags.has(x);
     }
   }
+
+  /**
+   * User selects tags and blog filters posts that refer to these tags.
+   * Selected tags may come from Welcome page as well as from within Blog.  
+   */
+  function filterPostsByTags(tags: string[], posts: Post[]): Post[] {
+    if (tags.length == 0) return posts
+    return posts
+      .filter(post => intersection(post.tags, tags).size != 0)
+  }
+
   const links = [
     {
       link: "/",
@@ -126,3 +142,14 @@ export default function Blog() {
     </div>
   );
 }
+
+function intersection(a: any, b: any) {
+  const setA = new Set(a), setB = new Set(b), _intersection = new Set();
+  for (const elem of setB) if (setA.has(elem)) _intersection.add(elem);
+  return _intersection;
+}
+// function intersection(setA: Set<any>, setB: Set<any>) {
+//   const _intersection = new Set();
+//   for (const elem of setB) if (setA.has(elem)) _intersection.add(elem);
+//   return _intersection;
+// }

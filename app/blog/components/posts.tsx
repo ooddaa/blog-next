@@ -691,7 +691,7 @@ $ git commit -am "stuff that should have been on anotherBranch"`}
     author: "oda",
     timeToRead: "3 min",
     timeToThink: "hours and hours",
-    tags: ["googlesheets", "Mantine.dev"],
+    tags: ["googlesheets", "Mantine.dev", "Next.js", "Figma", "Phoenix LiveView"],
     body: (
       <Text className="leading-7">
         <ol>

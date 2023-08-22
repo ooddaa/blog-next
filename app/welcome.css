@@ -18,6 +18,7 @@
 
 .welcome--img {
   background-image: url("../public/greg-torosiants.jpg");
+  /* opacity: .75; */
 }
 
 .noise--img {

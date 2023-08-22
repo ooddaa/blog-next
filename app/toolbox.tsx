@@ -314,9 +314,15 @@ function WebLink({ children, tailwindClasses, href, alt, ...props }: Partial<Wra
   // return (<a href={href} alt={alt} className={tailwindClasses || "text-sky-700 hover:underline"}>{children}</a>);
 }
 
-
-
 const emptyObject = () => ({});
+
+function Code({ children, block, ...props }: Partial<WrapperComponent> & TailwindClasses & { block?: boolean}) {
+  return (
+    <Span className={`flex-inline justify-center items-center bg-gray-100 rounded px-2 py-1 text-base font-light text-gray-800 border ${block ? "block" : ""}`} {...props}>
+      {children}
+    </Span>
+  );
+}
 
 export {
   log,
@@ -340,5 +346,6 @@ export {
   MB8,
   MB4,
   emptyObject,
-  WebLink
+  WebLink,
+  Code
 };

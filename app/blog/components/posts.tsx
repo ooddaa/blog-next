@@ -16,13 +16,16 @@ import {
   MB4,
   TLDR,
   WebLink,
+  Code
 } from "../../toolbox";
 import type { Post } from "../../types";
-import { Code, Text, Blockquote, Center, List } from "@mantine/core";
+import { Text, Blockquote, Center, List } from "@mantine/core";
 import Link from "next/link";
 import Image from "next/image";
 import { Prism } from "@mantine/prism";
-// import { Prism as PrismRenderer } from 'prism-react-renderer';
+import { Open_Sans } from 'next/font/google'
+
+const open_sans = Open_Sans({ subsets: ["latin"] })
 
 const codeSnippet = `const a = 1;
 function fun() {
@@ -39,8 +42,9 @@ const stub = {
   author: "author",
   timeToRead: "timeToRead",
   timeToThink: "timeToThink",
+  ersion: "0.0.1",
   tags: [],
-  body: <Text className="leading-7"></Text>,
+  body:  <div className={open_sans.className + " text-base/6 sm:text-xl/8"}> </div>
 };
 const SpongeBob = (
   <GradientSpan from="yellow" to="orange">
@@ -317,11 +321,12 @@ export default [
         <div className="pb--2rem">to each Ticker.</div>
 
         <div className="three-days-later pb--2rem">
-          <Image
+          {/* <Image
             className="rounded-lg"
+            fill={true}
             src="/img/3dayslater.jpeg"
             alt="Some time has passed"
-          />
+          /> */}
         </div>
         <p>
           As I am writing this, a month has passed since I launched the stuff
@@ -358,11 +363,11 @@ export default [
           Lo and behold, we&quot;ve got ourselves a bug!
         </MB4>
         <div className="yahoo-prices-bug pb--2rem">
-          <Image
+          {/* <Image
             className="rounded-lg"
             src="/img/ypb.png"
             alt="Screenshot of Heroku logs"
-          />
+          /> */}
         </div>
         <MB4>🤔 ???</MB4>
         <MB4>
@@ -425,6 +430,8 @@ def get_prices(tickers, attach_prices=False): ...`}
 }`}
           </Code>
         </div>
+        
+        <PB8/>
 
         <H3>I&apos;ll have a takeaway, please 🍟 </H3>
         <div className="pb--3rem">
@@ -997,11 +1004,11 @@ useEffect(() => {
           blogpost, I used a <Code>useEffect</Code> hooks to set up document
           listeners and React&apos;s linter warned me:
           <Center className="pt-4">
-            <Image
+            {/* <Image
               className="rounded-lg"
               src="/img/missingDependency.png"
               alt=""
-            />
+            /> */}
           </Center>
         </PB8>
         <PB8>
@@ -1020,11 +1027,11 @@ useEffect(() => {
           function definitions inside useEffect hook so that its dependencies do
           not change on each render. As per the suggestion:
           <Center className="pt-4 pb-4">
-            <Image
+            {/* <Image
               className="rounded-lg"
               src="/img/wrapInuseCallback.png"
               alt=""
-            />
+            /> */}
           </Center>
           It was a bit of struggle. But then I was all set - no warnings from
           compiler. Yas!
@@ -1045,11 +1052,11 @@ useEffect(() => {
   }, [reset]);`}</JSDark>
           Again, as per Create-react-app&apos;s suggestion:
           <Center className="pt-4 pb-4">
-            <Image
+            {/* <Image
               className="rounded-lg"
               src="/img/addResetAsDependency.png"
               alt=""
-            />
+            /> */}
           </Center>
           Which went horribly wrong - the app just kept re-setting its state,
           because that&apos;s what <Code>reset()</Code> is for. But nevermind.
@@ -1321,11 +1328,11 @@ end
 
         The process of downloading and using custom fonts for Phoenix LiveView seems a bit involved at first and it helps to have a step-by-step guide at hand to start with. 
         <PB4></PB4>
-        <Image
+        {/* <Image
             className="rounded-lg"
             src="/img/fout.gif"
             alt="FOUT bug"
-          />
+          /> */}
         </TLDR>
       
         <H2>Introduction</H2>
@@ -1723,7 +1730,7 @@ defmodule Fish do
 end
 `}</JS>
 
-<PB8></PB8>
+<PB8 />
 <H3>4. Count and run</H3>
 Fuf, hopefully we have not run into a pesky <Code>n+1</Code> problem here, so let&apos;s wrap up with counting and termination criteria. 
 <PB4></PB4>
@@ -1838,9 +1845,136 @@ end
 This gave me answer in no time, as all this algo does is adding groups of fish and creating a few maps along the way. What it definitely doesn&apos;t do is creating loooooooong lists, iterating over them, incrementing each element, ie it works with <Code>populations</Code>, evolving them over a number of generations. Each population is very efficiently represented as a collection of <Code>{"{agent, size}"}</Code> buckets. These tuples are perfect as they can be worked with by Enum and Map modules with no fuzz at all. 
 <PB4></PB4>
 To sum up, I liked the genetic algo approach (granted, this task doesn&apos;t leave many other choices tbf), as it helps to clearly state the problem and offers an intuitive step-by-step approach that we all know from Mother Nature herself.
-</Text>
+      </Text>
     ),
   },
+  {
+    id: 12,
+    slug: "rewriting-blog-to-nextjs",
+    header: "Transitioning from Create-React-App to Next.js 13",
+    subheader: "blog wrought right",
+    dateCreated: [2023, 8, 22],
+    author: "oda",
+    ersion: "0.0.1",
+    timeToRead: "5 min",
+    timeToThink: "however long you want",
+    tags: ["Next.js", "TypeScript", "Bun", "asdf", "Figma"],
+    body: <div className={open_sans.className + " text-base/6 sm:text-xl/8"}>
+      <TLDR>
+        After not touching my old blog, scaffolded with <Code>create-react-app</Code>, for a long while, I decided it was time to jazz it up a bit. By <Code>a bit</Code> I mean <Code>let&apos;s not rewrite it again from scratch in Elixir</Code> (I&apos;ll do it another time). So <WebLink href="https://nextjs.org/" alt="link to Next.js website">Next.js 13</WebLink>, here we go!    
+        <PB4 />
+        I was pleasantly surprised with Next.js 13, especially its new <WebLink href="https://nextjs.org/docs/app/building-your-application/routing#the-app-router" alt="link to App router docs">App Router</WebLink> and, overall, the quality of the documentation.  
+        
+        It took me no more than 5 minutes to solve the hiccups that I ran into - all thanks to the sane documentation. Well, typical Typescript&apos;s moaning aside that is. 
+        <PB4 />
+        In fact, it feels like I deleted more code than I wrote and everything still works fine 😂
+      </TLDR>
+
+      <H2>Part 1</H2>
+As I sat down to rewrite my blog, I found myself facing a familiar challenge in the JS/TS landscape. After a year spent in the realm of Elixir, Phoenix, and LiveView, I braced myself for the return to the world of JavaScript. However, armed with determination and a newfound excitement, I embarked on the journey of transforming my blog from a Create-React-App to a Next.js 13 application. Little did I know that this transition would not only reignite my interest in TypeScript but also showcase the brilliance of Next.js.
+<PB8/>
+<PB4/>
+
+<H2>Freshen up the environment</H2>
+The first step was to ensure I had the right tools for the task at hand. I swiftly installed the latest version of Node.js (20.5.1) using the heavenly <WebLink href="https://asdf-vm.com/" alt="link to asdf">asdf</WebLink>. 
+<PB4/>
+<JS noCopy colorScheme="dark">{`
+// install asdf plugin for Node.js and 
+$ asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git
+// list what's available to be installed 
+$ asdf list-all nodejs
+// pick a version and install it
+$ asdf install nodejs 20.5.1
+// to see which versions are installed on your machine 
+$ ls ~/.asdf/installs/nodejs/
+`}</JS>
+<PB4/>
+
+Ok, why not treat ourselves while we&apos;re at it? I mean install <WebLink href="https://bun.sh/" alt="link to Bun website">Bun</WebLink> to speed up local development.
+<PB4/>
+<JS noCopy colorScheme="dark">{`
+// install asdf plugin for Bun and 
+$ asdf plugin add bun
+// list what's available to be installed 
+$ asdf list-all bun
+// pick a version and install it
+$ asdf install bun 0.7.3
+// to see which versions are installed on your machine 
+$ ls ~/.asdf/installs/bun/
+`}</JS>
+<PB4/>
+Now to run my blog with <Code>Node.js 20.5.1</Code> or <Code>Bun 0.7.3</Code> all I have to do is:
+<PB4/>
+<JS noCopy colorScheme="dark">{`
+// create a .tool-versions file in the 
+// project root folder with the nodejs version
+$ echo "nodejs 20.5.1" > .tool-versions
+$ echo "bun 0.7.3" >> .tool-versions
+`}</JS>
+<PB4/>
+
+With this, I was ready to dive into the world of Next.js. Gone were the days of struggling with the Node.js module system; this time, I was determined to conquer it.
+<PB8/>
+<PB4/>
+
+<H3>Documentation</H3>
+My experience with Elixir had taught me the value of well-written documentation, and I was pleasantly surprised to find that Next.js shared the same sentiment. Navigating the the Next.js API documentation and the changelogs became a breeze, reminiscent of my days with Elixir.
+<PB8/>
+<PB4/>
+
+<H3>ECMAScript 2023</H3>
+Next on the agenda was catching up with the latest developments in the JavaScript world. A quick glance at the new features in ECMAScript 2023 (ES14) revealed some welcome <WebLink href="https://www.infoworld.com/article/3703571/all-the-new-features-in-ecmascript-2023-es14.html" alt="link to article">additions</WebLink>, including the handy <Code>Array.toReversed</Code> and <Code>Array.toSorted</Code> methods which create new arrays so, at least here, you can forget about mutability. Wow, has JS been moving in the direction of functional programming lately? I hope so.
+<PB8/>
+<PB4/>
+
+<H3>Create Next App</H3>
+With a clear vision in mind, I embarked on the process of transforming my blog. The journey began with a simple command: 
+<PB4/>
+<JS noCopy colorScheme="dark">{`
+// create the project, agree to all defaults
+$ npm create-next-app@latest
+`}</JS>
+<PB4/>
+The default setup was seamless, providing me with a solid foundation to build upon. Delving into the Next.js documentation, I navigated the intricacies of the App Router, folder structure, and other key components.
+<PB8/>
+<PB4/>
+
+<H3>Freshen up the landing page</H3>
+As I copied over my Welcome page and toolbox utility from the old project to the new, TypeScript types became a priority. Thankfully, TypeScript&apos;s compatibility with Next.js allowed me to fix types with ease. Additionally, I streamlined the Welcome page&apos;s structure, opting for a simpler and more visually appealing design with a touch of green.
+<PB4/>
+In addition, I put in some background noise to make green portion look more textured and interesting. The noise was generated in Figma with awesome <WebLink href="https://www.figma.com/community/plugin/1138854718618193875/Noise-%26-Texture" alt="link to Noise and Texture Figma plugin">Noise & Texture plugin</WebLink>.
+<PB8/>
+<PB4/>
+
+<H3>Deploy to Heroku</H3>
+With my welcome page and blog content finally ready, it was time to deploy my creation to the cloud. Heroku was the chosen platform for this task. Why not Versel, I hear you ask. Well, prosaically, my old blog was running on Heroku, so &quot;the shortest road is the one you know&quot;. Following a straightforward process, I created a new app named &quot;oda-blog-next&quot; and linked it to my repository. A simple git push heroku main later, my Next.js blog was live.
+<PB4/>
+<JS noCopy colorScheme="dark">{`
+// create a new project
+$ heroku create oda-blog-next
+// link to repo
+$ heroku git:remote -a oda-blog-next
+// go online
+$ git push heroku main
+`}</JS>
+<PB4/>
+As the final touch, I pointed my custom domain, www.ooddaa.co, to the new blog app. For that to happen I removed the custom domain from the old blog app, added it to the new one, updated DNS records at GoDaddy, and secured it with an SSL certificate auto-managed by Heroku.
+<PB8/>
+<PB4/>
+
+
+<H3>Not so fast, TypeScript here</H3>
+
+Of course, a transition of this magnitude wasn&apos;t without its challenges. When I said <Code>was live</Code>, well, it wasn&apos;t until I wrestled all the errors that TS threw at me. Admittedly some of the problems were dealt with in a drastic way, <Code>just delete this crap cmon</Code>, some required learning from the <WebLink href="https://www.youtube.com/watch?v=lMfGp29Ht8c&list=PLIvujZeVDLMx040-j1W4WFs1BxuTGdI_b" alt="link to Matt Pocock youtube playlist">masters themselves</WebLink>. Felt good though, once the project compiled. It does, doesn&apos;t it 😁
+<PB8/>
+<PB4/>
+
+<H3>Kudos where kudos due</H3>
+In conclusion, my venture from Create-React-App to Next.js 13 turned out to be not painfull at all, rather surprisingly I say. I would attribute it to the quality documentation and, well, 13th edition of software done by people way smarter than me, kudos to them!  
+<PB8/>
+
+    </div>,
+  }
 ] as Post[]
 
 /* add posts */

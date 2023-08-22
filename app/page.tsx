@@ -15,11 +15,10 @@ export default function Welcome(): JSX.Element {
   }, [])
 
   return (
-    <div className={`welcome w-screen h-screen relative bg-[#f9fafc] -z-20`}>
-      {innerWidth > 400 ? <div className="welcome--img bg-top absolute top-[156px] left-0 w-full h-[calc(100%-156px)] -z-10"></div> : ""}
+    <div className={`welcome w-screen h-full sm:h-screen relative bg-[#f9fafc] -z-20`}>
+      {innerWidth > 600 ? <div className="welcome--img bg-top absolute top-[156px] left-0 w-full h-[calc(100%-156px)] -z-10"></div> : ""}
       
       <div className="w-full sm:h-screen flex flex-col lg:flex-row">
-      {/* <div className="w-full flex flex-col lg:flex-row"> */}
         
         {/* left */}
         <div className="h-[300px] pt-12 lg:pt-48 lg:h-full w-full lg:w-1/2 bg-green-800/50 flex flex-col justify-center items-center lg:justify-start text-slate-900">
@@ -49,8 +48,9 @@ export default function Welcome(): JSX.Element {
         </div>
 
         {/* right */}
-        <div className="w-full lg:w-1/2 flex flex-col justify-start items-center p-12">
-            <Text size="lg">
+        <div className="w-full lg:w-1/2 flex flex-col justify-start items-center p-6 lg:p-24">
+            {/* bio */}
+            <div className="w-full">
               <div className="pb-4">
                 {/* I worked as: */}
                 <ul className="pt-4">
@@ -62,37 +62,32 @@ export default function Welcome(): JSX.Element {
                 </ul>
               </div>
               <div className="pb-4">
-                I get a knack out of finding out how things work, usually by breaking them up 😂.
+                I get a knack out of finding out how things work, usually by breaking them up 😂
               </div>
               <div className="pb-4">
-                whilst keeping records and writing things down so I don&apos;t forget.
+                whilst keeping records and writing things down so I don&apos;t forget
               </div>
-              {/* <div className="pb-4">
-              I have a bunch of designs, notes, projects, code, googlesheets and business ideas. I would like to keep playing with them and learn more. 
-              </div> */}
               <div className="pb-4">
-              if you find anything interesting here, send an <a className="underline text-blue-500" href="mailto:ooddaa@gmail.com">email</a> or message me on <a className="underline text-blue-500" href="https://discordapp.com/users/774603540278673419">Discord</a>.
+              if you find anything interesting here, send an <a className="underline text-blue-500" href="mailto:ooddaa@gmail.com">email</a> or message me on <a className="underline text-blue-500" href="https://discordapp.com/users/774603540278673419">Discord</a>
               </div>
               <div className="pb-4">
               this is my sandbox, everyone&lsquo;s welcome, BYOT
               </div>
               <div className="mb-8">
-                I also like <a className="underline text-purple-950" href="https://rogergracie.com/">BJJ</a> and think that capital letters are overrated.
+                I like <a className="underline text-purple-950" href="https://rogergracie.com/">BJJ</a> and think that capital letters are overrated
               </div>
-            </Text>
-            <div className="my-toys w-full">
-              {/* <h2 className="font-semibold pb-4 text-lg">Stack that I&apos;m using daily:</h2> */}
+            </div>
+            {/* toys */}
+            <div className="w-full">
               <ul className="flex flex-row flex-wrap gap-2">
                 {["TypeScript", "React", "Next.js", "Elixir", "Phoenix", "Figma", "Phoenix LiveView", ]
                  .map(val => <Tag tag={val} key={val} classNames={"p-2 pl-3 pr-3 h-auto w-max rounded-md text-sm transition delay-50 select-none hover:cursor-pointer shadow-md"}/>)}
-                
               </ul>  
             </div>
         </div>
       </div>
 
-      <div className="bg-transparent h-[16px] px-4 my-4 max-sm:py-4 sm:absolute sm:bottom-0">
-      {/* <div className="bg-transparent px-4"> */}
+      <div className="bg-transparent h-[16px] px-4 my-4 max-sm:py-4 lg:absolute lg:bottom-0">
         <p className="text-gray-500 text-sm"> 
           made with 👾 by <span className="oda text-amber-500">oda</span> | photo by{" "}
           Greg Torosiants

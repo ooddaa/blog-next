@@ -7,7 +7,7 @@ import { log } from "../toolbox";
 import type { Post } from "../types";
 import flatten from "lodash/flatten";
 import identity from "lodash/identity";
-import MantineHeader from "./components/MantineHeader";
+import MantineHeader from "../components/MantineHeader";
 import { useSearchParams } from 'next/navigation'
 
 export default function Blog() {

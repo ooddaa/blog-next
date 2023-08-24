@@ -1,6 +1,6 @@
 import { resolveMonth, Span, Emoji } from "../../toolbox";
 import type { Post } from "../../types"
-import MantineHeader from "./MantineHeader";
+import MantineHeader from "../../components/MantineHeader";
 
 const links = [
   {

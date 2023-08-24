@@ -1,0 +1,26 @@
+table {
+  margin: auto;
+  margin-top: 100px;
+  border-collapse: collapse;
+  font-size: 18px;
+}
+
+th,
+td {
+  width: 200px;
+  padding: 16px 24px;
+  text-align: left;
+}
+
+thead th {
+  background-color: #087f5b;
+  color: white;
+}
+
+tr:nth-child(odd) {
+  background-color: rgb(227, 227, 227);
+}
+
+tr:nth-child(even) {
+  background-color: white;
+}

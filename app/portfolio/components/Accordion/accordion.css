@@ -1,0 +1,119 @@
+body {
+  font-family: "Inter", sans-serif;
+}
+
+:root {
+  --accordeon-width: 600px;
+  --accordeon__head--id-width: 30px;
+  --accordeon__head--id-margin: 15px;
+  --accordeon__head--text-margin: 15px;
+  --accordeon-padding: 25px;
+}
+
+.accordeon {
+  /* height: 100vh; */
+  /* width: auto; */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  /* justify-content: center; */
+  align-items: center;
+  gap: 20px;
+}
+
+.accordeon__elm {
+  width: var(--accordeon-width);
+  box-shadow: 0 0 32px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  border-radius: 5px;
+}
+
+.accordeon__head {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 500;
+  font-size: 1.25rem;
+}
+
+.accordeon-left {
+  display: flex;
+  flex-direction: row;
+}
+
+.accordeon__head--id {
+  width: var(--accordeon__head--id-width);
+  margin: var(--accordeon__head--id-margin);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: lightgrey
+}
+
+.accordeon__head--text {
+  margin: var(--accordeon__head--text-margin);
+
+}
+
+.accordeon__head--btn {
+  width: var(--accordeon__head--id-width);
+  margin: var(--accordeon__head--id-margin);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: green
+}
+
+.accordeon__body {
+  height: auto;
+  width: var(--accordeon-width);
+  padding: var(--accordeon-padding);
+  background-color: white;
+}
+
+.open .accordeon__body {
+  display: block
+}
+
+.open .top-green-border {
+  background-color: green;
+  height: 4px;
+}
+
+.closed .accordeon__body {
+  display: none;
+}
+
+.closed .top-green-border {
+  background-color: transparent;
+  height: 4px;
+}
+
+.accordeon__body .content {
+  padding-left: calc(var(--accordeon__head--id-width) + var(--accordeon__head--id-margin)*2 + var(--accordeon__head--text-margin) - var(--accordeon-padding));
+  padding-right: 40px;
+}
+
+.accordeon__body .content ul {
+  display: flex;
+  flex-direction: column;
+  /* gap: 12px; */
+  list-style-type: disc;
+  margin-block-start: 1rem;
+  margin-block-end: 1rem;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  color: grey
+}
+
+.accordeon__body .content li {
+  margin-bottom: 0;
+}
+
+.text-green {
+  color: green
+}
+
+

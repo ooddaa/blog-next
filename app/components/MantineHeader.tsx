@@ -9,7 +9,6 @@ import {
   Paper,
 } from "@mantine/core";
 import { useToggle } from "@mantine/hooks";
-import { log } from "../../toolbox";
 
 export const HEADER_HEIGHT = 64;
 

@@ -63,13 +63,10 @@ export default [
     timeToThink: "10min",
     tags: ["knowledge graphs", "Mango", "Neo4j"],
     body: (
-      <Text className="leading-7">
+      <div className={open_sans.className + " text-base/6 sm:text-xl/8"}>
         <TLDR>
-          <Bold>
-            Property-rich Knowledge Graphs can provide criticall
-            machine-readable context for humans to build useful real-world
-            services.
-          </Bold>
+            Property-rich Knowledge Graphs provide
+            machine-readable context critical for AI understand humans.
         </TLDR>
 
         <H3>Single Source of Truth</H3>
@@ -202,12 +199,7 @@ export default [
           recognize Knowledge Sharing as a critical value-generating activity of
           the 21 century.
         </MB8>
-        <MB8>
-          <GradientSpan from="blue" to="purple">
-            That is why I want to help solve Knowledge Management for Enterprises
-          </GradientSpan>
-        </MB8>
-      </Text>
+      </div>
     ),
   },
   {
@@ -231,7 +223,7 @@ export default [
       "Interactive Brokers",
     ],
     body: (
-      <Text className="leading-7">
+      <div className={open_sans.className + " text-base/6 sm:text-xl/8"}>
         <TLDR>
           Setting up a REST API on Heroku to retreive Yahoo! Finance stock prices as close as possible to daily option trades is easier if you write some documentation.
           Well, any software maintenance is easier with documentation. DOCUMENTATION!
@@ -441,7 +433,7 @@ def get_prices(tickers, attach_prices=False): ...`}
             <li>Test all the time.</li>
           </ol>
         </div>
-      </Text>
+      </div>
     ),
   },
   {
@@ -456,7 +448,7 @@ def get_prices(tickers, attach_prices=False): ...`}
     timeToThink: "4.5 min",
     tags: ["git"],
     body: (
-      <Text className="leading-7">
+      <div className={open_sans.className + " text-base/6 sm:text-xl/8"}>
         <TLDR>
           If you practice everyone&apos;s favourite{" "}
           <Bold>
@@ -521,7 +513,7 @@ $ git commit -am "stuff that should have been on anotherBranch"`}
         <div>
           We now have appropriately positioned and accounted for our code. 🥳
         </div>
-      </Text>
+      </div>
     ),
   },
   {
@@ -535,7 +527,7 @@ $ git commit -am "stuff that should have been on anotherBranch"`}
     timeToThink: "3 min",
     tags: ["open source", "GitHub", "BitBucket", "git push"],
     body: (
-      <Text className="leading-7">
+      <div className={open_sans.className + " text-base/6 sm:text-xl/8"}>
         <div className="blog-post__body__tldr">
           <div className="pb--2rem">
             <Span
@@ -675,7 +667,7 @@ $ git commit -am "stuff that should have been on anotherBranch"`}
           myself as a professional.
         </div>
         <div className="subscript">
-          <Text color="grey">
+          <div color="grey">
             <Emoji>
               <Super>🍉</Super>
             </Emoji>
@@ -684,9 +676,9 @@ $ git commit -am "stuff that should have been on anotherBranch"`}
               rivately <Bold>I</Bold>dentifiable <Bold>D</Bold>ata from your
               public repo before you push!
             </i>
-          </Text>
+          </div>
         </div>
-      </Text>
+      </div>
     ),
   },
   {
@@ -700,7 +692,7 @@ $ git commit -am "stuff that should have been on anotherBranch"`}
     timeToThink: "hours and hours",
     tags: ["googlesheets", "Mantine.dev", "Next.js", "Figma", "Phoenix LiveView"],
     body: (
-      <Text className="leading-7">
+      <div className={open_sans.className + " text-base/6 sm:text-xl/8"}>
         <ol>
           <li>
             1.{" "}
@@ -717,7 +709,7 @@ $ git commit -am "stuff that should have been on anotherBranch"`}
           <li>3. add links to whatever I mention in my posts</li>
         </ol>
         <p></p>
-      </Text>
+      </div>
     ),
   },
   {
@@ -731,7 +723,7 @@ $ git commit -am "stuff that should have been on anotherBranch"`}
     timeToThink: "15 min",
     tags: ["Mantine.dev", "CSS-in-JS", "Styled components", "React"],
     body: (
-      <Text className="leading-7">
+      <div className={open_sans.className + " text-base/6 sm:text-xl/8"}>
         <p>
           First thing that I discovered after starting this blog is that it is
           not exactly easy to present a code snippet so that it doesn&apos;t look
@@ -817,7 +809,7 @@ $ git commit -am "stuff that should have been on anotherBranch"`}
         </JS>
 
         <H3>Isn&apos;t it lovely? 💥</H3>
-      </Text>
+      </div>
     ),
   },
   {
@@ -831,7 +823,7 @@ $ git commit -am "stuff that should have been on anotherBranch"`}
     timeToThink: "10min",
     tags: ["react", "useEffect", "useState"],
     body: (
-      <Text className="leading-7">
+      <div className={open_sans.className + " text-base/6 sm:text-xl/8"}>
         <TLDR>
         The most important thing to remember here is that <Code>useEffect</Code> hook runs its logic (produces effects) <Bold>ON EVERY RENDER</Bold>. But there are simple techniques to fine-tune this behaviour: 
         <div className="pt-4">
@@ -863,16 +855,16 @@ $ git commit -am "stuff that should have been on anotherBranch"`}
           <Code>{`<input>`}</Code> tag.
         </div>
         <div className="pb--2rem">
-          <Text>
+          <div>
             I figured I could grab keyboard events and take it from there.
-          </Text>
+          </div>
         </div>
 
         <MB4>
-          {/* <Text> */}
+          {/* <div> */}
           Last time I used the <Code>useEffect</Code> hook, it was to initialize
           my Component&apos;s state. It looked quite straightforward:
-          {/* </Text> */}
+          {/* </div> */}
         </MB4>
         <MB4>
           <JSDark>{`// note the empty [] passed as the second argument
@@ -943,7 +935,7 @@ useEffect(() => {
           </ol>
         </MB4>
 
-      </Text>
+      </div>
     ),
   },
   {
@@ -957,7 +949,7 @@ useEffect(() => {
     timeToThink: "2min",
     tags: ["git", "Netlify", "DevOps"],
     body: (
-      <Text className="leading-7">
+      <div className={open_sans.className + " text-base/6 sm:text-xl/8"}>
         <TLDR>
           Yesterday, after ditching a bunch of useful code because I thought it
           contained a bug which it did not, I made a rule to:
@@ -1107,7 +1099,7 @@ useEffect(() => {
           My plan now is to correct the <Code>reset</Code> as a dependency
           mistake and then follow Option 2 - make Netlify ignore my warnings.{" "}
         </P>
-      </Text>
+      </div>
     ),
   },
   {
@@ -1121,7 +1113,7 @@ useEffect(() => {
     timeToThink: "2min",
     tags: ["git", "TypeScript"],
     body: (
-      <Text className="leading-7">
+      <div className={open_sans.className + " text-base/6 sm:text-xl/8"}>
         <TLDR>
           My brave attempt to turn my JavaScript Create-React-App into a
           TypeScript one by simply renaming all .jsx files into .tsx did not
@@ -1157,7 +1149,7 @@ useEffect(() => {
           now I discovered that these two do not touch untracked files which
           have to be forcefully removed with <Code>git clean -d -f</Code>{" "}
         </PB8>
-      </Text>
+      </div>
     ),
   },
   {
@@ -1175,7 +1167,7 @@ useEffect(() => {
       "tech debt",
       "efficiency"
     ],
-    body: <Text className="leading-7">
+    body: <div className={open_sans.className + " text-base/6 sm:text-xl/8"}>
       <TLDR>
       In the end of the day, choosing the right combination of &quot;Housekeeping&quot; vs &quot;Exploration&quot; depends on what I suck at. I should attack what bores me the most. This way I&apos;ll grab the biggest gain per unit of effort. 
       </TLDR>
@@ -1215,7 +1207,7 @@ it taught me to devalue the results of my work. If I became accustomed to starti
       <PB8></PB8>
       <H2>Remember: </H2>
       true competence is cultivated through a combination of revisiting old ground and exploring new horizons.
-    </Text>,
+    </div>,
   },
   {
     id: 10,
@@ -1234,7 +1226,7 @@ it taught me to devalue the results of my work. If I became accustomed to starti
       "Phoenix LiveView"
     ],
     body: (
-      <Text className="leading-7">
+      <div className={open_sans.className + " text-base/6 sm:text-xl/8"}>
         <TLDR>
         One of the challenges we often face when working with Phoenix LiveView is the growing size of module files due to the inclusion of .heex markup. With logic and views combined in a single file, it becomes difficult to read and work with the code.
         </TLDR>
@@ -1295,7 +1287,7 @@ end
 
         By separating our markup into individual template files and utilizing the embed_templates/2 function, we can achieve a cleaner and more maintainable codebase in Phoenix LiveView.
 
-      </Text>
+      </div>
     ),
   },
   {
@@ -1318,7 +1310,7 @@ end
       ".woff2"
     ],
     body: (
-      <Text className="leading-7">
+      <div className={open_sans.className + " text-base/6 sm:text-xl/8"}>
         <TLDR>
           <Code>:phoenix, &quot;~&gt; 1.7.2&quot;</Code>
           <Code>:phoenix_live_view, &quot;~&gt; 0.18.18&quot;</Code>
@@ -1538,7 +1530,7 @@ For further optimization, consider loading the entire font family as base64-enco
 <PB8></PB8>
 <H3>Conclusion</H3>
 By following these steps, you&apos;ve successfully integrated the &quot;Inter&quot; font into your project, ensuring a consistent and visually pleasing user experience. By optimizing font loading and eliminating FOUT, you&apos;ve taken a crucial step toward enhancing your design&apos;s overall impact. Enjoy the benefits of a well-managed font system, providing a polished and professional touch to your web projects.
-</Text>
+</div>
     ),
   },
   {
@@ -1558,7 +1550,7 @@ By following these steps, you&apos;ve successfully integrated the &quot;Inter&qu
       "genetic algorithms",
     ],
     body: (
-      <Text className="leading-7">
+      <div className={open_sans.className + " text-base/6 sm:text-xl/8"}>
         <TLDR>
         <WebLink href="https://adventofcode.com/2021/day/6" alt="link to Lanternfish problem">Lanternfish</WebLink> grow exponentially! As does any population
           that just procreates over and over. They must be immortal or something... 
@@ -1845,7 +1837,7 @@ end
 This gave me answer in no time, as all this algo does is adding groups of fish and creating a few maps along the way. What it definitely doesn&apos;t do is creating loooooooong lists, iterating over them, incrementing each element, ie it works with <Code>populations</Code>, evolving them over a number of generations. Each population is very efficiently represented as a collection of <Code>{"{agent, size}"}</Code> buckets. These tuples are perfect as they can be worked with by Enum and Map modules with no fuzz at all. 
 <PB4></PB4>
 To sum up, I liked the genetic algo approach (granted, this task doesn&apos;t leave many other choices tbf), as it helps to clearly state the problem and offers an intuitive step-by-step approach that we all know from Mother Nature herself.
-      </Text>
+      </div>
     ),
   },
   {

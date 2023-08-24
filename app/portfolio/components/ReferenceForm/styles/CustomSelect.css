@@ -1,0 +1,11 @@
+.custom-select {
+  position: relative;
+}
+.custom-select--options-list {
+  position: absolute;
+  top: 40px;
+}
+
+.custom-select--option {
+  box-sizing: border-box;
+}

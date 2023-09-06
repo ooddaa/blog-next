@@ -1,7 +1,7 @@
 import React from 'react'
 import { useRouter } from 'next/navigation'
 import { GradientSpan } from '../toolbox'
-import Tag from '../blog/components/Tag'
+import Tag from '../blogqqwe/components/Tag'
 
 export default function Intro() {
   const router = useRouter()

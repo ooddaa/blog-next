@@ -25,6 +25,9 @@ export default function Navbar({ innerWidth }: NavbarProps) {
             {" "}
             <Span color="grey">|</Span>{" "}
             <Link href="/playground">playground</Link>
+            {" "}
+            <Span color="grey">|</Span>{" "}
+            <a href="https://ooddaa.s3.eu-west-2.amazonaws.com/Dmitry+Vikhorev+-+CV.pdf" target="_blank">resume</a>
           </div>
       </div>
     </div>

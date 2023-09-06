@@ -12,7 +12,7 @@ export default function Katcher() {
       <PB4/> 
       Have a look, register and get yourself a great job in Life Sciences!
       <PB4/>
-      go check it out 👉 <a href="https://katcher.bio"><GradientSpan from="green" to="blue">
+      go check it out 👉 <a href="https://www.katcher.bio"><GradientSpan from="green" to="blue">
     Katcher
   </GradientSpan></a>
     </div>

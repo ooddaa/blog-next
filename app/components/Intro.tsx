@@ -13,11 +13,12 @@ export default function Intro() {
           <ul className="py-4">
             <li><GradientSpan from="red" to="orange">Business Developer</GradientSpan></li>
             <li><GradientSpan from="orange" to="yellow">Software Engineer</GradientSpan></li>
-            <li><GradientSpan from="yellow" to="green">Full time dad</GradientSpan></li>
-            <li><GradientSpan from="green" to="blue">English teacher</GradientSpan></li>
-            <li><GradientSpan from="blue" to="purple">Entrepreneur</GradientSpan></li>
+            <li><GradientSpan from="yellow" to="green">English teacher</GradientSpan></li>
+            <li><GradientSpan from="green" to="blue">Entrepreneur</GradientSpan></li>
+            <li><GradientSpan from="blue" to="purple">Full time dad</GradientSpan></li>
           </ul>
         </div>
+        <div className="tracking-wide">
         <div className="pb-2">
           I get a kick out of finding out how things work, usually by breaking them up 😂
         </div>
@@ -30,15 +31,16 @@ export default function Intro() {
         <div className="mb-8">
           I like <a className="underline text-purple-950" href="https://rogergracie.com/">BJJ</a> and think that capital letters are overrated
         </div>
+        </div>
       </div>
       {/* toys */}
       <div className="w-full">
         <ul className="flex flex-row flex-wrap gap-2">
-          {["TypeScript", "React", "Next.js", "Elixir", "Phoenix", "Figma", "Phoenix LiveView", ]
+          {["TypeScript", "React", "Next.js", "Elixir", "Phoenix", "Phoenix LiveView", "Figma" ]
           .map(val => <Tag 
             tag={val} 
             key={val} 
-            classNames={"p-2 pl-3 pr-3 h-auto w-max rounded-md text-sm transition delay-50 select-none hover:cursor-pointer shadow-md"}
+            classNames={"p-2 pl-3 pr-3 h-auto w-max rounded-md text-sm transition delay-50 select-none hover:cursor-pointer shadow-md active:scale-[.98]"}
             handleClick={() => router.push(`/blog?tag=${val}`)}
             />)}
         </ul>  

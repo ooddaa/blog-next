@@ -3,11 +3,29 @@ import { Text, createStyles } from "@mantine/core";
 import { Prism } from "@mantine/prism";
 
 import type { Post } from "./types.d.ts";
+import { isString, isNumber } from "lodash";
 
 const log = (...args: any) => console.log(...args);
 
 function reverseString(str: string): string {
   return str.split("").reverse().join("");
+}
+
+function parseDateToNumbers(date: string|number): number[] {
+  // 7 September 2023
+  // "20230907" -> [2023, 9, 7]
+  // 20230907 -> [2023, 9, 7]
+
+  if (isString(date)) return parseStringDate(date)
+  if (isNumber(date)) return parseStringDate(date.toString())
+  throw new Error(`parseDateToNumbers: date must be string|number.\ndate:${date}`)
+}
+
+function parseStringDate(str: string): number[] {
+  const year = Number.parseInt(str.substring(0, 4))
+  const month = Number.parseInt(str.substring(4, 2))
+  const day = Number.parseInt(str.substring(6, 2))
+  return [year, month, day]
 }
 
 function resolveMonth(num: number, config: { short?: boolean } = {}): string {
@@ -327,6 +345,7 @@ function Code({ children, block, ...props }: Partial<WrapperComponent> & Tailwin
 export {
   log,
   reverseString,
+  parseDateToNumbers,
   resolveMonth,
   Span,
   Bold,

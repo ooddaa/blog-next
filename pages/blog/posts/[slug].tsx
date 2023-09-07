@@ -4,9 +4,10 @@ import { MDXRemote } from 'next-mdx-remote'
 import { serialize } from 'next-mdx-remote/serialize'
 import rehypePrettyCode from 'rehype-pretty-code'
 import dynamic from 'next/dynamic'
-import Head from 'next/head'
+import Header from '../components/Header'
 import Link from 'next/link'
 import path from 'path'
+import { TLDR } from '@/app/toolbox'
 // import CustomLink from '../../components/CustomLink'
 import Layout from '../components/layout'
 import { postFilePaths, POSTS_PATH } from '../../../utils/mdxUtils'
@@ -25,6 +26,7 @@ const components = {
 }
 
 export default function PostPage({ source, frontMatter }) {
+  console.log(frontMatter)
   return (
     <Layout>
       <header>
@@ -34,12 +36,19 @@ export default function PostPage({ source, frontMatter }) {
           </Link>
         </nav>
       </header>
-      <div className="post-header">
-        <h1>{frontMatter.title}</h1>
+      {/* <div className="post-header"> */}
+        <Header 
+          title={frontMatter.title}
+          author={frontMatter.author}
+          timeToRead={frontMatter.timeToRead}
+          version={frontMatter.version}
+          date={frontMatter.date}
+          />
+        <TLDR>{frontMatter.tldr}</TLDR>
         {frontMatter.description && (
           <p className="description">{frontMatter.description}</p>
         )}
-      </div>
+      {/* </div> */}
       <main>
         <MDXRemote {...source} components={components} />
       </main>

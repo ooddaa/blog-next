@@ -39,7 +39,7 @@ const useStyles = createStyles((theme) => ({
 }));
 
 interface TableOfContentsProps {
-  links: { label: string; link: string; order: number }[];
+  links: { label: string; link: string; order: number, new?: boolean }[];
   active: string;
   onClick: (link: string) => void;
 }
@@ -56,7 +56,7 @@ export default function TableOfContents({ links, active, onClick }: TableOfConte
         paddingLeft: `${item.order * 1}rem`
       }}
     >
-{item.label}
+{ item.new ? renderNewLabel(item.label) : item.label }
     </div>
   ));
 
@@ -69,4 +69,13 @@ export default function TableOfContents({ links, active, onClick }: TableOfConte
       {items}
     </div>
   );
+}
+
+function renderNewLabel(label: string): JSX.Element {
+  return (
+    <div className='flex flex-row justify-between items-center'>
+    <span>{label}</span> 
+    <span className="text-sm text-red-500 rounded-xl  px-2">new</span>
+    </div>
+  )
 }

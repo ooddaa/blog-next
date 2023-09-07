@@ -120,7 +120,7 @@ const links = [
   { label: "Pagination", link: "Pagination", order: 1 },
   { label: "Table", link: "Table", order: 1 },
   { label: "Resizable", link: "Resizable", order: 1 },
-  { label: "Katcher", link: "Katcher", order: 1 },
+  { label: "Katcher", link: "Katcher", order: 1, new: true },
   // { label: "Desktop", link: "Desktop", order: 1 },
 ];
 

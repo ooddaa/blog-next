@@ -243,7 +243,7 @@ function treefyPosts(posts: Post[], tree = new Map()): Map<number, number> {
 
 function TLDR({ children, ...props }: Partial<WrapperComponent>) {
   return (
-    <div className="tl-dr pb-16" {...props}>
+    <div className="tl-dr p-6 mb-16 bg-slate-50 rounded-md border" {...props}>
       <Span
         variant="gradient"
         gradient={{ from: "indigo", to: "cyan", deg: 45 }}
@@ -251,6 +251,7 @@ function TLDR({ children, ...props }: Partial<WrapperComponent>) {
       >
         TL/DR
       </Span>
+      <PB4/>
       {children}
     </div>
   );
@@ -351,6 +352,12 @@ function Code({ children, block, ...props }: Partial<WrapperComponent> & Tailwin
   );
 }
 
+function SpongeBob() {
+  return <GradientSpan from="yellow" to="orange">
+     SpongeBob
+   </GradientSpan>
+ }
+
 export {
   log,
   reverseString,
@@ -376,5 +383,6 @@ export {
   MB4,
   emptyObject,
   WebLink,
-  Code
+  Code,
+  SpongeBob
 };

@@ -1,0 +1,225 @@
+---
+id: 1
+title: Setting up Yahoo Prices API on Heroku
+subtitle: WTFD (write documentation please)
+author: Dmitry "Oda" Vikhorev 
+date: 20220305
+timeToRead: 5min
+version: 0.1
+tags: [
+      "python",
+      "api",
+      "REST",
+      "postman",
+      "heroku",
+      "documentation",
+      "yahoo finance",
+      "options trading",
+      "Interactive Brokers",
+    ]
+---
+
+<TLDR>
+Setting up a REST API on Heroku to retreive Yahoo! Finance stock prices as close as possible to daily option trades is easier if you write some documentation.
+Well, any software maintenance is easier with documentation. DOCUMENTATION!
+</TLDR>
+
+##  What do you do when your wife trades US stock options?
+        
+You try to stay out of it as much as possble 😂. But how can I say no when my dear wife, K, asks me to help her add US stocks prices to her option trading log, which she runs on Google Sheets?
+<PB8/>
+
+### So
+
+K, after a hard trading day, copy-pastes her option combos, strangles
+and whatnot data to Sheets from Interactive Brokers' TWS.
+Unfortunately, IB's option trade reports do not come with a precise
+price of the underlying at the moment of option trade's execution.
+<PB8/>
+
+Let's say she has this record:
+<PB4/>
+
+```
+AMD [STOCK PRICE ???] 19/11/2020 11:43:35 
+BTO LONG CALL +3 
+AMD NOV27'20 93 CALL 0.57 3.59
+```
+<PB8/>
+
+It would be handy to know how much AMD traded for at 11:43:35 on November 19, 2020, right? 
+Ok, maybe we aren't that fastidious and can round time down to 11:43.
+<PB8/>
+  
+If so, then the easiest way to get stock prices is to use YahooPrices
+API. ...of which no documentation in human-readable format exists...
+<PB8/>
+
+Ran Aroussi published a nice Python package - <a href="https://pypi.org/project/yfinance/">yfinance</a>. Many thanks, Ran! We are going to use this package to set up our simple Yahoo! Prices REST API on Heroku.
+<PB8/>
+
+### The plan:
+-  <Code>1. Launch a Python Yahoo Prices API on Heroku,</Code>
+-  <Code>2. Call it from Google Sheets and</Code>
+-  <Code>3. Update K's trading logs with underlying prices.</Code>
+<PB4/>
+
+### Step 1. Set up the Prices API
+The API is now accessible on <a href="https://yahooprices.herokuapp.com">Heroku</a>. To use it - simply POST with an application/json body set as follows:
+<PB4/>
+
+```
+{ "data": Ticker[] }
+```
+<PB2/>
+
+Where each Ticker is:
+<PB4/>
+
+```
+[
+  ticker: str, 
+  # price may be skipped for POST request, add null in Postman
+  price: null, 
+  # at the moment of writing this post, it's hard to remember
+  # why I split time into two lists like this.         
+  [
+    year:int, 
+    month:int, 
+    day:int
+  ], 
+  [
+    hour:int, 
+    min:int, 
+    sec:int
+  ]
+]
+```    
+<PB8/>
+If it all goes right, Yahoo Prices API will add a
+<PB4/>
+        
+```
+price: float
+```
+<PB4/>
+to each Ticker.
+<PB8/>
+
+## To the future!
+<Image
+  className="rounded mx-auto"
+  width={800}
+  height={800}
+  src="/3dayslater.jpeg"
+  alt=""
+/>
+<PB4/>
+As I am writing this, a month has passed since I launched the stuff
+above, and I hardly can remember how things were arranged!
+        
+I am sending a POST request with Postman to <a href="https://yahooprices.herokuapp.com">Heroku</a> with a properJSON:
+<PB4/> 
+
+```json
+{ 
+  "data": [
+    ["AMD", null, [2022, 3, 10], [15, 0, 0]]
+  ]
+}
+```
+<PB4/>
+
+But get a
+<a href="https://www.lifewire.com/500-internal-server-error-explained-2622938">500 Internal Server Error</a>
+response, which is 😬
+<PB4/>
+
+Let's investigate, shall we 🕵🏻‍♂️
+<PB4/>
+          
+```
+$ heroku logs -app=yahooprices --tail
+```
+<PB4/>
+
+Lo and behold, we&quot;ve got ourselves a bug!
+<PB4/>
+        
+<Image
+  className="rounded mx-auto"
+  width={800}
+  height={800}
+  src="/ypb.png"
+  alt=""
+/>
+
+<PB4/>
+🤔 ???
+<PB4/>
+        
+Ah yes, it all comes back to me now - the last feature that I added
+was to allow for all prices from the query to be returned as part of
+the response. Then users could sort themselves out should the main
+timestamp not be available. I did it by adding a new route:
+<PB4/>
+```
+POST https://yahooprices.herokuapp.com/allPrices
+```
+<PB4/>
+
+But in so doing, I forgot to set a default value to the new argument
+<PB4/>
+        
+```
+attach_prices=False
+```
+<PB4/>
+        
+of the underlying function that handles data requests for both routes.
+I should have done like this:
+<PB4/>
+        
+```
+# yahoo.py 
+def get_prices(tickers, attach_prices=False): ...
+```
+<PB4/>
+
+Now, when users call the old route:
+<PB4/>
+        
+```
+POST https://yahooprices.herokuapp.com/
+```
+<PB4/>
+
+they get
+<PB4/>
+
+```json
+{
+  "data": [
+    [
+      "AMD",
+      105.810302734375,
+      [
+        2022,
+        3,
+        10
+      ],
+      [
+        15,
+        0,
+        0
+      ]
+    ]
+  ]
+}
+```
+<PB8/>
+
+### I'll have a takeaway, please 🍟 
+<Code>Write more WHY-comments in your code.</Code>
+<Code>Set sensible defaults.</Code>
+<Code>Test all the time.</Code>

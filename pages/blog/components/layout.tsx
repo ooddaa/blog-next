@@ -1,11 +1,11 @@
-import { Open_Sans } from 'next/font/google'
+import { Libre_Franklin } from 'next/font/google'
 
-const open_sans = Open_Sans({ subsets: ["latin"] })
+const font = Libre_Franklin({ subsets: ["latin"], weight: ["400", "500", "700", "900"] })
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <div className={["wrapper", open_sans.className, "w-full sm:w-2/5 mx-auto text-base/6 sm:text-lg/8"].join(" ")}>{children}</div>
+      <div className={["wrapper", font.className, "w-full max-sm:px-4 sm:w-2/5 mx-auto text-base/6 sm:text-lg/8"].join(" ")}>{children}</div>
       <style jsx global>{`
         code {
           font-family: 'Menlo';

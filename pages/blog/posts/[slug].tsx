@@ -5,12 +5,12 @@ import { serialize } from 'next-mdx-remote/serialize'
 import rehypePrettyCode from 'rehype-pretty-code'
 import dynamic from 'next/dynamic'
 import Header from '../components/Header'
-import Link from 'next/link'
+import Image from 'next/image'
 import path from 'path'
-import { TLDR, PB2, PB4, PB8, MB4, Code, H2 } from '@/app/toolbox'
-// import CustomLink from '../../components/CustomLink'
+import { TLDR, PB2, PB4, PB8, MB4, Code, H2, H3, Bold, SpongeBob, WebLink, Span } from '@/app/toolbox'
 import Layout from '../components/layout'
 import { postFilePaths, POSTS_PATH } from '../../../utils/mdxUtils'
+import { Text, Blockquote, Center, List } from "@mantine/core";
 import type { InferGetStaticPropsType, GetStaticProps } from 'next'
 
 
@@ -19,19 +19,25 @@ import type { InferGetStaticPropsType, GetStaticProps } from 'next'
 // to handle import statements. Instead, you must include components in scope
 // here.
 const components = {
-  // a: CustomLink,
   // // It also works with dynamically-imported components, which is especially
   // // useful for conditionally loading components for certain routes.
   // // See the notes in README.md for more details.
   // TestComponent: dynamic(() => import('../../components/TestComponent')),
-  // Head,
   h2: H2,
+  h3: H3,
   MB4,
   PB2,
   PB4,
   PB8,
   TLDR, 
-  Code
+  Code,
+  Bold,
+  List,
+  SpongeBob,
+  WebLink,
+  Blockquote,
+  Span,
+  Image
 }
 
 export default function PostPage({ source, frontMatter }: InferGetStaticPropsType<typeof getStaticProps>) {
@@ -50,7 +56,7 @@ export default function PostPage({ source, frontMatter }: InferGetStaticPropsTyp
         <p className="description">{frontMatter.description}</p>
       )}
       <main>
-        <MDXRemote {...source} components={components} />
+        <MDXRemote {...source} components={components}/>
       </main>
       <div className='footer w-full h-12'></div>
     </Layout>

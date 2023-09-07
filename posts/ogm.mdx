@@ -1,0 +1,117 @@
+---
+id: 9
+title: Object-To-Graph mapping tool
+subtitle: What made me want to create knowledge graphs
+author: Dmitry "Oda" Vikhorev 
+date: 20220210
+timeToRead: 5min
+version: 0.2
+tags: ["knowledge graphs", "Mango", "Neo4j"]
+---
+
+<TLDR>
+In engineering an Enterprise Knowledge Graph (EKG) that holds identity data the key challenge from the start was how to ascertain the uniquness of data.
+</TLDR>
+
+## Single Source of Truth
+How to make sure that the data supplied to the EKG could be accessed as a Single Source of Truth (<Bold>SST</Bold>) for its users?
+<PB8/>
+
+The key architectual decision was made to design a platform which
+would help ensure that there are no copies of the same Node. A Node
+would constitue whatever user deemed a <Bold>mental entity </Bold> to
+which they already attached a &quot;uniquness&quot; attribute in their minds.
+<PB8/>
+
+## For example
+Suppose there is a CEO, <SpongeBob/>, in our organization. All
+employees have the same &quot;unique&quot; <SpongeBob/> in mind when they talk
+about him in the pub after work. But when it comes to representing{" "}
+<SpongeBob/> outside of employee&apos;s collective mind, say, writing an
+email with some details/attributes of <SpongeBob/>, then each employee
+might refer to their &quot;copy&quot; of these attributes, located wherever (on
+their desktops/in their emails/in folders on Sharepoint/on pages of
+Confluence etc).
+<PB8/>
+
+What&apos;s important here is that regardless of the quality and
+consistency of this attribute data, there is not an equivalent digital
+representation of <SpongeBob/> that can easily be referred to by all
+employees should they need to &quot;speak&quot; of him digitally. There is
+seldom an SST representation of <SpongeBob/> and as the result, a lot
+of time is spent searching for the latest updated version of{" "}
+<SpongeBob/>&apos;s attributes (long phone calls / emails to chase /
+searching by text string and not by the meaning - <SpongeBob/>-ness).
+<PB8/>
+
+The essence, the &quot;CEO&quot;-ness is in fact transient -current CEO might
+step down and another person can become a new CEO. In this case
+everyone would make essential modifications to the notion of the
+&quot;current CEO&quot;. But <SpongeBob/> won&apos;t go anywhere - it will persist in
+the EKG as a new Chairsponge.
+<PB8/>
+
+## The Idea
+The idea came up when I worked for a family office and was dealing
+with bits and pieces of data coming across my desk. I noticed that I
+would spend most of my time and effort not on the value-generating
+activities relating to the data, but on solving questions like:
+<PB8/>
+
+<Code>What is the correct full address of Person X?</Code>
+<Code>And at the point of time T?</Code>
+<Code>Did we send that document to Y?</Code>
+<Code>When?</Code>
+<Code>What was in it?</Code>
+<Code>Where can I find XYZ?</Code>
+
+<PB8/>
+
+It was obvious that the solutions to these questions (99% of time that
+would be a source document, or colleague&apos;s advice) resided within my
+colleague&apos;s minds or on their desktops/emails. We did have an old and
+limited database that had some records of some legal entities and
+natural persons - but to use that knowledge it had to be checked and
+double-checked with colleagues first.
+<PB8/>
+
+Which in 50% of situations required them requesting the info from
+their counterparties. The problem was that once all the effort was
+made and the relevant info was received, verified and utilized, it was
+simply forgotten until the next time when same problem arrived. And
+when it did, usually after a prolonged period of time, no one could
+easily locate the previous result to reduce the amount of cognitive
+work.
+<PB8/>
+
+## Touch it if it&apos;s broken
+A simple solution was to agree to share all such hard-earned
+knowledge, but:
+<PB8/>
+<Bold>1.</Bold> Everyone wants to go on writing emails and making phone calls
+(status quo bias).
+<PB4/>
+<Bold>2.</Bold> There was no simple way to do it. We tried Confluence - but it
+required a learning curve that no one wanted (it at least did not
+seem too exiting to do extra mental work for free).
+<PB8/>
+
+No one wants to archive. Archiving is a difficult mental work which is
+not rewarded in an obvious, immediate way. Therefore no one does it at
+will. This creates a huge (but familiar) tech debt in a form of
+knowledge search, repeating same work that already has been done by
+others.
+<PB8/>
+
+On the upside this is how office workers v1.0 justify the time they
+spend in the office getting paid.
+<PB8/>
+
+## Future solution
+Office workers v2.0 need to recognize, embrace and be rewarded for
+Knowledge Sharing activities. They need to be confident in knowing
+that there is a Single Source of Truth, accessible without <WebLink href="https://en.wikipedia.org/wiki/Object%E2%80%93relational_impedance_mismatch">
+  extra mental effort</WebLink>. And if there is extra mental effort required (to upload knowledge),
+then it is rewarded immediately (reputation/points/perks etc) to
+recognize Knowledge Sharing as a critical value-generating activity of
+the 21 century.

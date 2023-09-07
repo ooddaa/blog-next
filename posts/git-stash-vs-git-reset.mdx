@@ -1,0 +1,161 @@
+---
+id: 7
+title: git stash vs git reset
+subtitle: why oh why do I not stash enough?
+author: Dmitry "Oda" Vikhorev
+date: 20220422
+timeToRead: 5min
+version: 0.1
+tags: ["git", "Netlify", "DevOps"]
+---
+
+<TLDR>
+  Yesterday, after ditching a bunch of useful code because I thought it
+  contained a bug which it did not, I made a rule to:
+  <div className="flex w-full justify-center gap-2 pt-4">
+    <Code>git stash</Code> <Span color="red"> instead of </Span>
+    <Code>git reset --hard</Code>
+  </div>
+</TLDR>
+
+## Of course it depends
+        
+on what kind of garbage code you are throwing away. If you are 100%
+sure it should perish, then <Code>git reset --hard</Code> and never
+look back. But what if you're wrong and you've just binned a code that
+might worth at least 50kcal ??
+<PB8/>
+
+### Let me share my example.
+Yesterday I helped my wife deploy her React project to
+<a
+  className="hover:text-amber-800 underline decoration-solid"
+  href="https://www.netlify.com"
+>Netlify</a> 
+The build was failing because by default Netlify's build
+configuration was set to treat React's warnings as errors. Two plans
+were obvious, I should either:
+<PB4/>
+        
+<Code>1. Correct the codebase - get rid of warnings</Code>
+<br/>
+<Code>2. Correct Netlify's config - make it ignore warnings.</Code>
+<PB8/>
+
+### Dealing with warnings
+
+As I wrote in my recent
+<WebLink href="/blog/setting-document-event-listeners-with-React-useEffect-hook">Setting document event listeners with React useEffect hook</WebLink> post, I used a <Code>useEffect</Code> hooks to set up document
+listeners and React's linter warned me:
+<PB4/>
+  <Image
+    className="rounded mx-auto"
+    width={800}
+    height={800}
+    src="/missingDependency.png"
+    alt=""
+  />
+
+<PB8/>
+        
+Naturally, I did not pay any attention to the warning, because it's just a warning; and
+
+<Blockquote cite="Donald Knuth">
+  Premature optimization is the root of all evil
+</Blockquote>
+        
+That is until the moment when Netlify deployment was derailed off of
+these unhandled warnings.
+<PB8/>
+
+### Long story short
+
+I managed to wrap everything in <Code>useCallback</Code> hooks or move
+function definitions inside useEffect hook so that its dependencies do
+not change on each render. As per the suggestion:
+<PB4/>
+
+<Image
+    className="rounded mx-auto"
+    width={800}
+    height={800}
+    src="/wrapInuseCallback.png"
+    alt=""
+  />
+<PB4/>
+
+It was a bit of struggle. But then I was all set - no warnings from
+compiler. Yas!
+<PB8/>
+        
+The only problem was that in a previous commit I added a dependency to
+<PB4/>
+
+```javascript 
+/* init state */
+  useEffect(() => {
+    reset();
+  }, []);
+```
+<PB4/>
+Which became:
+<PB4/>
+```
+/* init state */
+  useEffect(() => {
+    reset();
+  }, [reset]);
+```
+<PB4/>
+          
+Again, as per Create-react-app's suggestion:
+<PB4/>
+<Image
+  className="rounded mx-auto"
+  width={800}
+  height={800}
+  src="/addResetAsDependency.png"
+  alt=""
+/>
+<PB8/> 
+
+### Things go wrong
+Which went horribly wrong - the app just kept re-setting its state,
+because that's what <Code>reset()</Code> is for. But nevermind.
+Important thing here is that I missed the fact that I broke the app
+following compiler's advice and commited a bug. Then, after I wrangled
+all warnings and was ready to show Netlify who's the boss, I quickly
+peeked at whether the app was actually doing what it supposed to do.
+Which it wasn't.
+<PB8/>
+
+My quick panic reaction was that it must have been the current latest
+changes (a lot of wrangling with moving code/adding
+dependencies/wrapping in useCallbacks) that introduced the error. So I
+decided to discard all convoluted code wrangling and hit
+<Code>git reset --hard</Code>...
+<PB8/>
+
+... only to discover that nope, that code was not the reason the bug
+existed. And yes, after 
+<a href="https://git-scm.com/docs/git-reset#Documentation/git-reset.txt---hard">doing hard rest</a>
+I cannot get it back.
+<PB8/>
+
+What I should have done was to simply
+<PB4/>
+```
+$ git stash save wrangleDeps
+```
+<PB4/>
+
+which would've discarded all the changes in the current working tree
+anyways, **AND** I'd have access to the work I had done.
+Which turned out to be useful and not related to the bug that I
+caught. The sad part - now I need to do the wrangling again. But this
+time I'll <Code>git stash</Code> <Span color="red">instead of </Span><Code>git reset</Code>
+<PB8/>
+
+### to be continued ...
+My plan now is to correct the <Code>reset</Code> as a dependency
+mistake and then follow Option 2 - make Netlify ignore my warnings.

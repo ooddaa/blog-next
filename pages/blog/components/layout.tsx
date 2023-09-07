@@ -1,8 +1,34 @@
+import { Open_Sans } from 'next/font/google'
+
+const open_sans = Open_Sans({ subsets: ["latin"] })
+
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <div className="wrapper">{children}</div>
-      <style jsx>{`
+      <div className={["wrapper", open_sans.className, "w-full sm:w-2/5 mx-auto text-base/6 sm:text-lg/8"].join(" ")}>{children}</div>
+      <style jsx global>{`
+        code {
+          font-family: 'Menlo';
+          font-size: 14px;
+          line-height: 20px;
+        }
+        span > code > span > span {
+          font-family: 'Menlo';
+          font-size: 14px;
+          line-height: 20px;
+          padding: 4px;
+          background-color: #f9fafb;
+          color: #1e293b;
+        }
+        pre {
+          border-radius: 8px;
+          padding: 16px;
+        }
+        [data-highlighted-chars] {
+          background-color: grey;
+        }
+      `}</style>
+      {/* <style jsx>{`
         .wrapper {
           max-width: 50%;
           margin: 0 auto;
@@ -40,17 +66,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           margin-bottom: 1.5rem;
         }
 
-        code {
-          font-family: 'Menlo';
-        }
-        [data-highlighted-chars] {
-          background-color: grey;
-        }
-        pre {
-          padding: 12px;
-          border-radius: 8px;
-        }
-      `}</style>
+        
+      `}</style> */}
     </>
   )
 }

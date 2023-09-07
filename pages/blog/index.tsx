@@ -4,9 +4,13 @@ import Link from 'next/link'
 import path from 'path'
 import Layout from './components/layout'
 import { postFilePaths, POSTS_PATH } from '../../utils/mdxUtils'
-// import { MDXProvider } from '@mdx-js/react'
 
-export default function Index({ posts }) {
+type Post = {
+  content: string,
+  data: {[key: string]: any},
+  filePath: string
+}
+export default function Index({ posts }: {posts: Post[]}) {
   return (
     <Layout>
     <div>

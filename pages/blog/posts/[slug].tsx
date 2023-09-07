@@ -1,16 +1,18 @@
 import fs from 'fs'
 import matter from 'gray-matter'
-import { MDXRemote } from 'next-mdx-remote'
+import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote'
 import { serialize } from 'next-mdx-remote/serialize'
 import rehypePrettyCode from 'rehype-pretty-code'
 import dynamic from 'next/dynamic'
 import Header from '../components/Header'
 import Link from 'next/link'
 import path from 'path'
-import { TLDR } from '@/app/toolbox'
+import { TLDR, PB2, PB4, PB8, MB4, Code, H2 } from '@/app/toolbox'
 // import CustomLink from '../../components/CustomLink'
 import Layout from '../components/layout'
 import { postFilePaths, POSTS_PATH } from '../../../utils/mdxUtils'
+import type { InferGetStaticPropsType, GetStaticProps } from 'next'
+
 
 // Custom components/renderers to pass to MDX.
 // Since the MDX files aren't loaded by webpack, they have no knowledge of how
@@ -23,62 +25,54 @@ const components = {
   // // See the notes in README.md for more details.
   // TestComponent: dynamic(() => import('../../components/TestComponent')),
   // Head,
+  h2: H2,
+  MB4,
+  PB2,
+  PB4,
+  PB8,
+  TLDR, 
+  Code
 }
 
-export default function PostPage({ source, frontMatter }) {
-  console.log(frontMatter)
+export default function PostPage({ source, frontMatter }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <Layout>
-      <header>
-        <nav>
-          <Link href="/" legacyBehavior>
-            <a>👈 Go back home</a>
-          </Link>
-        </nav>
-      </header>
-      {/* <div className="post-header"> */}
-        <Header 
-          title={frontMatter.title}
-          author={frontMatter.author}
-          timeToRead={frontMatter.timeToRead}
-          version={frontMatter.version}
-          date={frontMatter.date}
-          />
-        <TLDR>{frontMatter.tldr}</TLDR>
-        {frontMatter.description && (
-          <p className="description">{frontMatter.description}</p>
-        )}
-      {/* </div> */}
+      <Header 
+        // title={frontMatter.title}
+        // subtitle={frontMatter.subtitle}
+        // author={frontMatter.author}
+        // timeToRead={frontMatter.timeToRead}
+        // version={frontMatter.version}
+        // date={frontMatter.date}
+        {...frontMatter}
+        />
+      {frontMatter.description && (
+        <p className="description">{frontMatter.description}</p>
+      )}
       <main>
         <MDXRemote {...source} components={components} />
       </main>
-
-      <style jsx>{`
-        .post-header h1 {
-          margin-bottom: 0;
-        }
-
-        .post-header {
-          margin-bottom: 2rem;
-        }
-        .description {
-          opacity: 0.6;
-        }
-      `}</style>
+      <div className='footer w-full h-12'></div>
     </Layout>
   )
 }
 
 // https://rehype-pretty-code.netlify.app/
+// https://unpkg.com/browse/shiki@0.14.2/themes/
 /** @type {import('rehype-pretty-code').Options} */
 const codeHighlightOptions = {
-  theme: 'dark-plus',
+  theme: 'github-dark',
+  defaultLang: 'plaintext',
+  keepBackground: true
 };
 
-export const getStaticProps = async ({ params }) => {
-  const postFilePath = path.join(POSTS_PATH, `${params.slug}.mdx`)
-  const source = fs.readFileSync(postFilePath)
+type MDXSource = MDXRemoteSerializeResult<Record<string, unknown>, Record<string, unknown>>
+type frontMatterData = { [key: string]: any }
 
+// https://nextjs.org/docs/pages/api-reference/functions/get-static-props
+export const getStaticProps: GetStaticProps<{source: MDXSource, frontMatter: frontMatterData}> = async ({ params }) => {
+  const postFilePath = path.join(POSTS_PATH, `${params?.slug}.mdx`)
+  const source = fs.readFileSync(postFilePath)
   const { content, data } = matter(source)
 
   const mdxSource = await serialize(content, {

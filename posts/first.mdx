@@ -4,22 +4,43 @@ author: Oda Nabunaga
 date: 20230907
 timeToRead: 5min
 vesrion: 0.1
-description: This frontmatter description will appear below the title
-tldr: lorem ipsum too long didn't read
+tags: ["a", "b"]
 ---
 # ONE ✨
-
+<TLDR> lorem ipsum too long didn't read </TLDR>
 Bootstrapped with `create-next-app`.
 
 ```elixir
 defmodule Elix do
    def yo, do: "yo!!"
+   def recur([]), do: []
+   def recur(list), do: recur(list, [])
+   def recur([], acc), do: Enum.reverse(acc)
+   def recur([h|t], acc) do
+     # ...
+   end
 end
 ```
 
 <br/>
-```typescript /children/
-export default function Layout({ children }: { children: React.ReactNode }) {
-  return (<div className="wrapper">{children}</div>)
+
+```elixir
+defmodule KatcherWeb.PipelineTest do
+  use KatcherWeb.ConnCase
+  alias Phoenix.Controller.Pipeline
+  alias Phoenix.Controller.Pipeline
+  alias Katcher.Pipeline
+  alias Katcher.Pipeline.QuizTemplate
+
+  def identity(x), do: x
+  def identity(x, data), do: Map.put(x, :data, data)
+end
+```
+
+<br/>
+```js /children/
+export default function Layout(
+  { children }: { children: React.ReactNode }) {
+    return (<div className="wrapper">{children}</div>)
 }
 ```

@@ -23,8 +23,8 @@ function parseDateToNumbers(date: string|number): number[] {
 
 function parseStringDate(str: string): number[] {
   const year = Number.parseInt(str.substring(0, 4))
-  const month = Number.parseInt(str.substring(4, 2))
-  const day = Number.parseInt(str.substring(6, 2))
+  const month = Number.parseInt(str.substring(4, 6))
+  const day = Number.parseInt(str.substring(6, 8))
   return [year, month, day]
 }
 
@@ -249,7 +249,7 @@ function TLDR({ children, ...props }: Partial<WrapperComponent>) {
         gradient={{ from: "indigo", to: "cyan", deg: 45 }}
         weight={600}
       >
-        <>TL/DR:{" "}</>
+        TL/DR
       </Span>
       {children}
     </div>
@@ -272,11 +272,10 @@ function P({ children, pb, tailwindClasses, ...props }: Partial<WrapperComponent
   );
 }
 
-
-function PB8({ children, tailwindClasses, ...props }: Partial<WrapperComponent> & TailwindClasses) {
+function PB2({ children, tailwindClasses, ...props }: Partial<WrapperComponent> & TailwindClasses) {
   return (
     <P
-    pb={8}
+    pb={2}
     tailwindClasses={tailwindClasses}
     {...props}
     >{children}</P>
@@ -287,6 +286,16 @@ function PB4({ children, tailwindClasses, ...props }: Partial<WrapperComponent> 
   return (
     <P
     pb={4}
+    tailwindClasses={tailwindClasses}
+    {...props}
+    >{children}</P>
+  );
+}
+
+function PB8({ children, tailwindClasses, ...props }: Partial<WrapperComponent> & TailwindClasses) {
+  return (
+    <P
+    pb={8}
     tailwindClasses={tailwindClasses}
     {...props}
     >{children}</P>
@@ -359,8 +368,9 @@ export {
   treefyPosts,
   TLDR,
   P,
-  PB8,
+  PB2,
   PB4,
+  PB8,
   M,
   MB8,
   MB4,

@@ -3,12 +3,11 @@ import matter from 'gray-matter'
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote'
 import { serialize } from 'next-mdx-remote/serialize'
 import rehypePrettyCode from 'rehype-pretty-code'
-import dynamic from 'next/dynamic'
 import Header from '../components/Header'
 import Image from 'next/image'
 import path from 'path'
 import { TLDR, PB2, PB4, PB8, MB4, Code, H2, H3, Bold, SpongeBob, WebLink, Span } from '@/app/toolbox'
-import Layout from '../components/layout'
+import Layout from '../components/Layout'
 import { postFilePaths, POSTS_PATH } from '../../../utils/mdxUtils'
 import { Text, Blockquote, Center, List } from "@mantine/core";
 import type { InferGetStaticPropsType, GetStaticProps } from 'next'
@@ -19,9 +18,6 @@ import type { InferGetStaticPropsType, GetStaticProps } from 'next'
 // to handle import statements. Instead, you must include components in scope
 // here.
 const components = {
-  // // It also works with dynamically-imported components, which is especially
-  // // useful for conditionally loading components for certain routes.
-  // // See the notes in README.md for more details.
   // TestComponent: dynamic(() => import('../../components/TestComponent')),
   h2: H2,
   h3: H3,

@@ -353,10 +353,14 @@ function Code({ children, block, ...props }: Partial<WrapperComponent> & Tailwin
 }
 
 function SpongeBob() {
-  return <GradientSpan from="yellow" to="orange">
-     SpongeBob
-   </GradientSpan>
- }
+  return <GradientSpan from="yellow" to="orange">SpongeBob</GradientSpan>
+}
+
+function intersection(a: any, b: any) {
+  const setA = new Set(a), setB = new Set(b), _intersection = new Set();
+  for (const elem of setB) if (setA.has(elem)) _intersection.add(elem);
+  return _intersection;
+}
 
 export {
   log,
@@ -384,5 +388,6 @@ export {
   emptyObject,
   WebLink,
   Code,
-  SpongeBob
+  SpongeBob,
+  intersection
 };

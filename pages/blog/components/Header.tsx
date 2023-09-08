@@ -1,5 +1,5 @@
 import React from "react";
-import { Span, resolveMonth, parseDateToNumbers } from "@/app/toolbox";
+import { Span, resolveMonth, humanizeDate } from "@/app/toolbox";
 import { Libre_Franklin } from "next/font/google";
 
 const header_font = Libre_Franklin({ subsets: ["latin"] });
@@ -20,7 +20,6 @@ export default function Header({
   timeToRead,
   version,
 }: BlogHeaderProps): JSX.Element {
-  const [year, month, day] = parseDateToNumbers(date);
   return (
     <>
       <div
@@ -42,7 +41,8 @@ export default function Header({
                 <Span className="oda">{author}</Span>{" "}
               </div>
               <div>
-                {day.toString()} {resolveMonth(month)}, {year}
+                {humanizeDate(date)}
+
               </div>
             </div>
 

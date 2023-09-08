@@ -3,7 +3,7 @@ import { Text, createStyles } from "@mantine/core";
 import { Prism } from "@mantine/prism";
 
 import type { Post } from "./types.d.ts";
-import { isString, isNumber } from "lodash";
+import { isString, isNumber, isArray } from "lodash";
 
 const log = (...args: any) => console.log(...args);
 
@@ -26,6 +26,22 @@ function parseStringDate(str: string): number[] {
   const month = Number.parseInt(str.substring(4, 6))
   const day = Number.parseInt(str.substring(6, 8))
   return [year, month, day]
+}
+
+function parseDateToDate(date: number): Date {
+  // 20230201
+  const str = date.toString()
+  const year = Number.parseInt(str.substring(0, 4))
+  const month = Number.parseInt(str.substring(4, 6)) - 1
+  const day = Number.parseInt(str.substring(6, 8))
+  const rv = new Date(year, month, day)
+  return rv
+}
+
+function humanizeDate(date: string|number, ops?: string[]): string {
+  const [year, month, day] = parseDateToNumbers(date)
+  if (ops && isArray(ops) && ops[0] == "year") return `${year.toString()}, ${day.toString()} ${resolveMonth(month)}`
+  return `${day.toString()} ${resolveMonth(month)} ${year.toString()}`
 }
 
 function resolveMonth(num: number, config: { short?: boolean } = {}): string {
@@ -366,6 +382,8 @@ export {
   log,
   reverseString,
   parseDateToNumbers,
+  parseDateToDate,
+  humanizeDate,
   resolveMonth,
   Span,
   Bold,

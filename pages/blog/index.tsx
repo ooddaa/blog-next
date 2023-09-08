@@ -6,9 +6,9 @@ import Link from 'next/link'
 import path from 'path'
 import BlogLayout from './BlogLayout'
 import BlogTOC from "./components/BlogTOC";
-import { postFilePaths, POSTS_PATH } from '../../utils/mdxUtils'
+import { POSTS_PATH } from '../../utils/mdxUtils'
 import { useSearchParams } from 'next/navigation'
-import {intersection} from "@/app/toolbox"
+import {humanizeDate, parseDateToDate } from "@/app/toolbox"
 import flatten from "lodash/flatten";
 import MantineHeader from '@/app/components/MantineHeader';
 
@@ -49,22 +49,34 @@ export default function Index({ posts }: {posts: Post[]}) {
         <div className="left basis-full pb-48 sm:basis-3/5 bg-baby-powder min-h-screen">
           <MantineHeader links={links}></MantineHeader>
           <ul className='ml-12 mt-12'>
-            {posts.map(({data}) => (
-              <li key={data.filePath}>
+            {sortPosts(posts)
+              .map(({data}) => (
+              <li key={data.filePath} className='flex flex-row gap-4'>
+                <div className='w-[256px]'>
+                  {humanizeDate(data.date, ["year", "day", "month"])}
+                </div>
+                <div>
                 <Link
                   as={`/blog/posts/${data.filePath.replace(/\.mdx?$/, '')}`}
                   href={`/blog/posts/[slug]`}
-                >
+                  >
                   {data.title}
                 </Link>
+                </div>
               </li>
             ))}
           </ul>
-        </div>
-    
+        </div>   
       </div>
     </BlogLayout>
   )
+}
+
+function sortPosts(posts: Post[]): Post[] {
+  return posts.sort((a,b) => {
+    if (parseDateToDate(a.data.date) >= parseDateToDate(b.data.date)) return -1
+    return 1
+  })
 }
 
 export async function getStaticProps() {

@@ -38,7 +38,7 @@ const useStyles = createStyles((theme) => ({
     padding: "8px 12px",
     borderRadius: theme.radius.sm,
     textDecoration: "none",
-    color: "#999",
+    color: "#334155",
     fontSize: theme.fontSizes.sm,
     fontWeight: 500,
     transition: "all .3s",

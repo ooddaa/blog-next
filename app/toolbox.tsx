@@ -380,7 +380,7 @@ function SpongeBob() {
   return <GradientSpan from="yellow" to="orange">SpongeBob</GradientSpan>
 }
 
-function intersection(a: any, b: any) {
+function intersection(a: any, b: any): Set<any> {
   const setA = new Set(a), setB = new Set(b), _intersection = new Set();
   for (const elem of setB) if (setA.has(elem)) _intersection.add(elem);
   return _intersection;

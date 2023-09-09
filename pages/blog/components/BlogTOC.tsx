@@ -24,15 +24,14 @@ export default function BlogTOC({
   setHighlightedTags,
 } = {} as BlogTOCparams) {
   if (posts === undefined || !posts.length) return <h2>No posts yet</h2>;
-  // we get sorted posts,
-  // group by year/month 
+  // when tag is clicked, we filter TOC to show only tag-related posts
 
   return (
     <div className="p-12 w-full text-slate-800">
       {groupByYear(posts)
        .map(({year, posts}) => {
           return <div key={year} className="">
-            <div className="flex text-2xl text-slate-500 mb-8 w-full border-b">{year}</div>
+            <div className="flex text-2xl text-slate-500 mb-8 w-full border-b justify-end">{year}</div>
             {groupByMonth(posts)
              .map(({month, posts}) => {
               return <div key={month} className="">
@@ -44,7 +43,10 @@ export default function BlogTOC({
                     <div className='w-[128px] text-slate-500'>
                       {parseDay(data.date)}
                     </div>
-                    <div>
+                    <div 
+                      onMouseEnter={() => {setHighlightedTags?.(data.tags)}}
+                      onMouseLeave={() => {setHighlightedTags?.([])}}
+                    >
                     <Link
                       as={`/blog/posts/${data.filePath.replace(/\.mdx?$/, '')}`}
                       href={`/blog/posts/[slug]`}

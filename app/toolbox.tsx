@@ -386,6 +386,17 @@ function intersection(a: any, b: any) {
   return _intersection;
 }
 
+function sortPosts(posts: Post[], opt = "desc"): Post[] {
+  if (opt == "asc") return posts.sort((a,b) => {
+    if (parseDateToDate(a.data.date) >= parseDateToDate(b.data.date)) return 1
+    return -1
+  })
+  return posts.sort((a,b) => {
+    if (parseDateToDate(a.data.date) >= parseDateToDate(b.data.date)) return -1
+    return 1
+  })
+}
+
 export {
   log,
   reverseString,
@@ -415,5 +426,6 @@ export {
   WebLink,
   Code,
   SpongeBob,
-  intersection
+  intersection,
+  sortPosts
 };

@@ -8,7 +8,7 @@ import BlogLayout from './BlogLayout'
 import BlogTOC from "./components/BlogTOC";
 import { POSTS_PATH } from '../../utils/mdxUtils'
 import { useSearchParams } from 'next/navigation'
-import {parseDateToDate } from "@/app/toolbox"
+import {parseDateToDate, sortPosts } from "@/app/toolbox"
 import MantineHeader from '@/app/components/MantineHeader';
 import type { Post } from '@/app/types';
 
@@ -46,13 +46,6 @@ export default function Index({ posts }: {posts: Post[]}) {
       </div>
     </BlogLayout>
   )
-}
-
-function sortPosts(posts: Post[]): Post[] {
-  return posts.sort((a,b) => {
-    if (parseDateToDate(a.data.date) >= parseDateToDate(b.data.date)) return -1
-    return 1
-  })
 }
 
 export async function getStaticProps() {

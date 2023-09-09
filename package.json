@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start -p $PORT",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "vitest"
   },
   "dependencies": {
     "@mantine/core": "^6.0.19",
@@ -41,6 +42,7 @@
   },
   "devDependencies": {
     "@types/lodash": "^4.14.197",
-    "@types/uuid": "^9.0.2"
+    "@types/uuid": "^9.0.2",
+    "vitest": "^0.34.4"
   }
 }

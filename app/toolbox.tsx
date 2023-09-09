@@ -40,11 +40,11 @@ function parseDateToDate(date: number): Date {
 
 function humanizeDate(date: string|number, ops?: string[]): string {
   const [year, month, day] = parseDateToNumbers(date)
-  if (ops && isArray(ops) && ops[0] == "year") return `${year.toString()}, ${day.toString()} ${resolveMonth(month)}`
+  if (ops && isArray(ops) && ops[0] == "year") return `${year.toString()} ${day.toString()} ${resolveMonth(month)}`
   return `${day.toString()} ${resolveMonth(month)} ${year.toString()}`
 }
 
-function resolveMonth(num: number, config: { short?: boolean } = {}): string {
+function resolveMonth(num: number|string, config: { short?: boolean } = {}): string {
   const mapping: {[key:number]: string} = {
     1: "January",
     2: "February",
@@ -59,9 +59,17 @@ function resolveMonth(num: number, config: { short?: boolean } = {}): string {
     11: "November",
     12: "December",
   };
+  
+  if (isNumber(num)) {
+    if (config.short) return mapping[num].slice(0, 3);
+    return mapping[num];
+  }
 
-  if (config.short) return mapping[num].slice(0, 3);
-  return mapping[num];
+  if (isString(num)) {
+    if (config.short) return mapping[Number.parseInt(num)].slice(0, 3);
+    return mapping[Number.parseInt(num)];
+  }
+  throw new Error(`resolveMonth: expected a number|string, received:\n${JSON.stringify(num)}`)
 }
 
 interface Props {

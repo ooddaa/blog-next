@@ -1,15 +1,7 @@
-export interface Post {
-  id: number;
-  slug: string;
-  header: string;
-  subheader: string;
-  dateCreated: [number, number, number];
-  author: string;
-  timeToRead: string;
-  timeToThink: string;
-  tags: string[];
-  body: JSX;
-  version?: string
+export type Post = {
+  content: string,
+  data: {[key: string]: any},
+  filePath: string
 }
 
 export interface TagContainer {

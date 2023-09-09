@@ -1,8 +1,8 @@
-import { Container, createStyles, MantineProvider, Stack } from "@mantine/core";
-import BlogTOCGroup from "./BlogTOCGroup";
-import { treefyPosts, emptyObject } from "@/app/toolbox";
+import { resolveMonth } from "@/app/toolbox";
 import { Post } from "@/app/types";
 import { IconCircleX } from "@tabler/icons-react";
+import Link from "next/link";
+import { groupBy, keys } from "lodash";
 
 /**
  * Renders:
@@ -15,72 +15,110 @@ import { IconCircleX } from "@tabler/icons-react";
 type BlogTOCparams = {
   posts: Post[],
   handlePostNavigation?: Function,
-  setHighlightedTags: Function,
-  classNames: string[],
+  setHighlightedTags?: Function
 }
 
 export default function BlogTOC({
   posts,
   handlePostNavigation,
   setHighlightedTags,
-  classNames,
 } = {} as BlogTOCparams) {
-  if (posts === undefined || posts.length === 0) {
-    return <h2>No posts yet</h2>;
-  }
+  if (posts === undefined || !posts.length) return <h2>No posts yet</h2>;
+  // we get sorted posts,
+  // group by year/month 
 
-  const { cx } = createStyles(emptyObject)();
-
-  /**
-   * @TODO
-   * Years on the left side
-   * Month-on-month tiles with blog topics in the middle
-   * Tags on the right side
-   */
-
-  /**
-   * Arrange posts by Month / Date as a calendar.
-   * 1. Turn Post[] into a Map (year=>month:Post[])
-   * 2. Iterate over Map, producing BlogTOCGroup - a nominee for the
-   * worst Component name ever:)
-   * 3. Sort
-   */
-  const postTree: Map<any, any> = treefyPosts(posts);
-  // log(postTree);
-  const children: any[] = [];
-  
-  /**
-   * hehe don't forget the map.forEach signature: (value, key, map, thisArg)
-   * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/forEach
-   *
-   * postTree = {2022 => {month => Post[]...}
-   */
-  postTree.forEach((months, year) => {
-    /* sort by month first */
-    // log(months.entries());
-    months.forEach((posts: any, month: any) => {
-      children.push(
-        <BlogTOCGroup
-          key={`${year}${month}`}
-          year={year}
-          month={month}
-          /* I need to sort posts by day */
-          posts={posts.sort((a: Post, b: Post) => {
-            return a.dateCreated[2] - b.dateCreated[2];
-            }
-          )}
-          setHighlightedTags={setHighlightedTags}
-        />
-      );
-    });
-  });
-  /* I need to sort posts by month */
-  children.sort();
   return (
-    <MantineProvider>
-      <div className={cx("blog-toc flex-none -mt-[64px]", classNames)}>
-        {children}
-      </div>
-    </MantineProvider>
-  );
+    <div className="p-12 w-full text-slate-800">
+      {groupByYear(posts)
+       .map(({year, posts}) => {
+          return <div key={year} className="">
+            <div className="flex text-2xl text-slate-500 mb-8 w-full border-b">{year}</div>
+            {groupByMonth(posts)
+             .map(({month, posts}) => {
+              return <div key={month} className="sm:pl-36">
+                <div className="text-2xl text-slate-500 pb-4">{resolveMonth(month)}</div>
+                <div className="pb-12">
+                {posts
+                  .map(({data}) => (
+                    <div key={data.filePath} className='flex flex-row gap-4'>
+                    <div className='w-[128px] text-slate-500'>
+                      {parseDay(data.date)}
+                    </div>
+                    <div>
+                    <Link
+                      as={`/blog/posts/${data.filePath.replace(/\.mdx?$/, '')}`}
+                      href={`/blog/posts/[slug]`}
+                      >
+                      {data.title}
+                    </Link>
+                    </div>
+                  </div>
+                ))}
+                </div>
+              </div>
+            })}
+          </div>
+       })}
+    </div>
+  )
 }
+
+type YearlyPost = {
+  year: string,
+  posts: Post[]
+}
+function groupByYear(posts: Post[]): YearlyPost[] {
+  let groupped = groupBy(posts, ({data}) => parseYear(data.date))
+  return keys(groupped).map(year => ({ year, posts: groupped[year] }))
+  // return [{year: 2000, posts: []}, {year: 2010, posts: []}]
+}
+
+type MonthlyPost = {
+  month: string,
+  posts: Post[]
+}
+function groupByMonth(posts: Post[]): MonthlyPost[] {
+  let groupped = groupBy(posts, ({data}) => parseMonth(data.date))
+  return keys(groupped).map(month => ({ month, posts: groupped[month] }))
+  // return [{month: 1, posts: []}, {month: 8, posts: []}]
+}
+
+function parseYear(date: number): number {
+  return Number.parseInt(date.toString().substring(0, 4))
+}
+function parseMonth(date: number): number {
+  return Number.parseInt(date.toString().substring(4, 6))
+}
+function parseDay(date: number): number {
+  return Number.parseInt(date.toString().substring(6, 8))
+}
+
+
+// _.transform({ 'a': 1, 'b': 2, 'c': 1 }, function(result, value, key) {
+//   (result[value] || (result[value] = [])).push(key);
+// }, {});
+// // => { '1': ['a', 'c'], '2': ['b'] }
+
+
+// return (
+  //     <div>
+  //       <ul className='ml-12 mt-12'>
+  //           {posts
+  //             .map(({data}) => (
+  //             <li key={data.filePath} className='flex flex-row gap-4'>
+  //               <div className='w-[256px]'>
+  //                 {humanizeDate(data.date, ["year", "day", "month"])}
+  //               </div>
+  //               <div>
+  //               <Link
+  //                 as={`/blog/posts/${data.filePath.replace(/\.mdx?$/, '')}`}
+  //                 href={`/blog/posts/[slug]`}
+  //                 >
+  //                 {data.title}
+  //               </Link>
+  //               </div>
+  //             </li>
+  //           ))}
+  //         </ul>
+  //     </div>
+ // );

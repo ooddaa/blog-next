@@ -8,15 +8,9 @@ import BlogLayout from './BlogLayout'
 import BlogTOC from "./components/BlogTOC";
 import { POSTS_PATH } from '../../utils/mdxUtils'
 import { useSearchParams } from 'next/navigation'
-import {humanizeDate, parseDateToDate } from "@/app/toolbox"
-import flatten from "lodash/flatten";
+import {parseDateToDate } from "@/app/toolbox"
 import MantineHeader from '@/app/components/MantineHeader';
-
-type Post = {
-  content: string,
-  data: {[key: string]: any},
-  filePath: string
-}
+import type { Post } from '@/app/types';
 
 const links = [
   {
@@ -45,27 +39,9 @@ export default function Index({ posts }: {posts: Post[]}) {
   return (
     <BlogLayout>
       <div className="blog flex flex-col lg:flex-row">
-
         <div className="left basis-full pb-48 sm:basis-3/5 bg-baby-powder min-h-screen">
           <MantineHeader links={links}></MantineHeader>
-          <ul className='ml-12 mt-12'>
-            {sortPosts(posts)
-              .map(({data}) => (
-              <li key={data.filePath} className='flex flex-row gap-4'>
-                <div className='w-[256px]'>
-                  {humanizeDate(data.date, ["year", "day", "month"])}
-                </div>
-                <div>
-                <Link
-                  as={`/blog/posts/${data.filePath.replace(/\.mdx?$/, '')}`}
-                  href={`/blog/posts/[slug]`}
-                  >
-                  {data.title}
-                </Link>
-                </div>
-              </li>
-            ))}
-          </ul>
+          <BlogTOC posts={sortPosts(posts)} />
         </div>   
       </div>
     </BlogLayout>

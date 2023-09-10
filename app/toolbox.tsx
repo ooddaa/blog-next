@@ -1,8 +1,11 @@
+import Path from 'path'
+import matter from 'gray-matter'
 import React from "react";
 import { Text, createStyles } from "@mantine/core";
 import { Prism } from "@mantine/prism";
 
 import type { Post } from "./types.d.ts";
+import { isString, isNumber, isArray } from "lodash";
 
 const log = (...args: any) => console.log(...args);
 
@@ -10,7 +13,40 @@ function reverseString(str: string): string {
   return str.split("").reverse().join("");
 }
 
-function resolveMonth(num: number, config: { short?: boolean } = {}): string {
+function parseDateToNumbers(date: string|number): number[] {
+  // 7 September 2023
+  // "20230907" -> [2023, 9, 7]
+  // 20230907 -> [2023, 9, 7]
+
+  if (isString(date)) return parseStringDate(date)
+  if (isNumber(date)) return parseStringDate(date.toString())
+  throw new Error(`parseDateToNumbers: date must be string|number.\ndate:${date}`)
+}
+
+function parseStringDate(str: string): number[] {
+  const year = Number.parseInt(str.substring(0, 4))
+  const month = Number.parseInt(str.substring(4, 6))
+  const day = Number.parseInt(str.substring(6, 8))
+  return [year, month, day]
+}
+
+function parseDateToDate(date: number): Date {
+  // 20230201
+  const str = date.toString()
+  const year = Number.parseInt(str.substring(0, 4))
+  const month = Number.parseInt(str.substring(4, 6)) - 1
+  const day = Number.parseInt(str.substring(6, 8))
+  const rv = new Date(year, month, day)
+  return rv
+}
+
+function humanizeDate(date: string|number, ops?: string[]): string {
+  const [year, month, day] = parseDateToNumbers(date)
+  if (ops && isArray(ops) && ops[0] == "year") return `${year.toString()} ${day.toString()} ${resolveMonth(month)}`
+  return `${day.toString()} ${resolveMonth(month)} ${year.toString()}`
+}
+
+function resolveMonth(num: number|string, config: { short?: boolean } = {}): string {
   const mapping: {[key:number]: string} = {
     1: "January",
     2: "February",
@@ -25,9 +61,17 @@ function resolveMonth(num: number, config: { short?: boolean } = {}): string {
     11: "November",
     12: "December",
   };
+  
+  if (isNumber(num)) {
+    if (config.short) return mapping[num].slice(0, 3);
+    return mapping[num];
+  }
 
-  if (config.short) return mapping[num].slice(0, 3);
-  return mapping[num];
+  if (isString(num)) {
+    if (config.short) return mapping[Number.parseInt(num)].slice(0, 3);
+    return mapping[Number.parseInt(num)];
+  }
+  throw new Error(`resolveMonth: expected a number|string, received:\n${JSON.stringify(num)}`)
 }
 
 interface Props {
@@ -203,36 +247,37 @@ const H2: React.FC<HProps> = ({ children, style, tailwindClasses, ...props }) =>
   );
 };
 
-/**
- * Turns Post[] into a tree, sorting by year and month.
- *
- * @nonPure Produces side effects.
- * @param {Post} posts
- * @param {Map} tree
- * @returns {Map}
- */
-function treefyPosts(posts: Post[], tree = new Map()): Map<number, number> {
-  posts.forEach((post) => {
-    const [year, month] = post.dateCreated;
-    tree.has(year)
-      ? tree.get(year).has(month)
-        ? tree.get(year).get(month).push(post)
-        : tree.get(year).set(month, [post])
-      : tree.set(year, new Map().set(month, [post]));
-  });
-  return tree;
-}
+// /**
+//  * Turns Post[] into a tree, sorting by year and month.
+//  *
+//  * @nonPure Produces side effects.
+//  * @param {Post} posts
+//  * @param {Map} tree
+//  * @returns {Map}
+//  */
+// function treefyPosts(posts: Post[], tree = new Map()): Map<number, number> {
+//   posts.forEach((post) => {
+//     const [year, month] = post.dateCreated;
+//     tree.has(year)
+//       ? tree.get(year).has(month)
+//         ? tree.get(year).get(month).push(post)
+//         : tree.get(year).set(month, [post])
+//       : tree.set(year, new Map().set(month, [post]));
+//   });
+//   return tree;
+// }
 
 function TLDR({ children, ...props }: Partial<WrapperComponent>) {
   return (
-    <div className="tl-dr pb-16" {...props}>
+    <div className="tl-dr p-6 mb-16 bg-slate-50 rounded-md border" {...props}>
       <Span
         variant="gradient"
         gradient={{ from: "indigo", to: "cyan", deg: 45 }}
         weight={600}
       >
-        <>TL/DR:{" "}</>
+        TL/DR
       </Span>
+      <PB4/>
       {children}
     </div>
   );
@@ -254,11 +299,10 @@ function P({ children, pb, tailwindClasses, ...props }: Partial<WrapperComponent
   );
 }
 
-
-function PB8({ children, tailwindClasses, ...props }: Partial<WrapperComponent> & TailwindClasses) {
+function PB2({ children, tailwindClasses, ...props }: Partial<WrapperComponent> & TailwindClasses) {
   return (
     <P
-    pb={8}
+    pb={2}
     tailwindClasses={tailwindClasses}
     {...props}
     >{children}</P>
@@ -269,6 +313,16 @@ function PB4({ children, tailwindClasses, ...props }: Partial<WrapperComponent> 
   return (
     <P
     pb={4}
+    tailwindClasses={tailwindClasses}
+    {...props}
+    >{children}</P>
+  );
+}
+
+function PB8({ children, tailwindClasses, ...props }: Partial<WrapperComponent> & TailwindClasses) {
+  return (
+    <P
+    pb={8}
     tailwindClasses={tailwindClasses}
     {...props}
     >{children}</P>
@@ -311,7 +365,6 @@ interface A {
 }
 function WebLink({ children, tailwindClasses, href, alt, ...props }: Partial<WrapperComponent> & TailwindClasses & A) {
   return (<a href={href} className={tailwindClasses || "text-sky-700 hover:underline"}>{children}</a>);
-  // return (<a href={href} alt={alt} className={tailwindClasses || "text-sky-700 hover:underline"}>{children}</a>);
 }
 
 const emptyObject = () => ({});
@@ -324,9 +377,49 @@ function Code({ children, block, ...props }: Partial<WrapperComponent> & Tailwin
   );
 }
 
+function SpongeBob() {
+  return <GradientSpan from="yellow" to="orange">SpongeBob</GradientSpan>
+}
+
+function intersection(a: any, b: any): Set<any> {
+  const setA = new Set(a), setB = new Set(b), _intersection = new Set();
+  for (const elem of setB) if (setA.has(elem)) _intersection.add(elem);
+  return _intersection;
+}
+
+/**
+ * Loads .mdx files and converts them into Post[]
+ */
+async function loadPosts(pathToPosts: string, fs: Module): Promise<Post[]> {
+  const paths = fs.readdirSync(pathToPosts)
+  const posts = 
+    paths
+    .map(path => {
+      const mdx = fs.readFileSync(Path.join(pathToPosts, path))
+      let {content, data} = matter(mdx)
+      data = { filePath: path, ...data}
+      return {content, data, filePath: path}
+    })
+  return posts
+}
+
+function sortPosts(posts: Post[], opt = "desc"): Post[] {
+  if (opt == "asc") return posts.sort((a,b) => {
+    if (parseDateToDate(a.data.date) >= parseDateToDate(b.data.date)) return 1
+    return -1
+  })
+  return posts.sort((a,b) => {
+    if (parseDateToDate(a.data.date) >= parseDateToDate(b.data.date)) return -1
+    return 1
+  })
+}
+
 export {
   log,
   reverseString,
+  parseDateToNumbers,
+  parseDateToDate,
+  humanizeDate,
   resolveMonth,
   Span,
   Bold,
@@ -337,15 +430,20 @@ export {
   Emoji,
   H3,
   H2,
-  treefyPosts,
+  // treefyPosts,
   TLDR,
   P,
-  PB8,
+  PB2,
   PB4,
+  PB8,
   M,
   MB8,
   MB4,
   emptyObject,
   WebLink,
-  Code
+  Code,
+  SpongeBob,
+  intersection,
+  loadPosts,
+  sortPosts,
 };

@@ -12,7 +12,7 @@ import { useSearchParams } from 'next/navigation'
 
 export default function Blog() {
   const searchParams = useSearchParams()
-  const selectedTags = searchParams.getAll('tag')
+  const selectedTags = searchParams?.getAll('tag')
   /* State
   ________________________________________________________________*/
 
@@ -148,8 +148,3 @@ function intersection(a: any, b: any) {
   for (const elem of setB) if (setA.has(elem)) _intersection.add(elem);
   return _intersection;
 }
-// function intersection(setA: Set<any>, setB: Set<any>) {
-//   const _intersection = new Set();
-//   for (const elem of setB) if (setA.has(elem)) _intersection.add(elem);
-//   return _intersection;
-// }

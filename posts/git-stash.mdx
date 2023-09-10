@@ -1,0 +1,61 @@
+---
+id: 2
+title: Git stash to the rescue
+subtitle: Haven't thought it through before making changes on this branch? No biggie - git stash it!
+author: Dmitry "Oda" Vikhorev
+date: 20230907
+timeToRead: 3min
+version: 0.2
+tags: ["git"]
+---
+
+<TLDR>
+If you practice everyone's favourite ***code first - think later*** approach, then these are your best friends:
+<PB4/>
+- <Code>git stash </Code>
+- <Code>git stash list </Code>
+- <Code>git stash pop </Code>
+</TLDR>
+
+## My workflow
+
+Sometimes I struggle with keeping my coding organised. My projects are
+fair game for me - I can touch any part of it whenever I want. Which
+produces convoluted coding sessions.
+<PB8 />
+
+Which more often than not creates a lot of unnecessary code
+re-writing. Or, even more often, after I wrote something, I realise
+that it logically belongs to another branch.
+<PB8 />
+
+If there is <span className="text-lg font-bold">NO</span> other
+branch, I simply
+<PB4/>
+
+```
+$ git checkout -b newBranch
+$ git commit -am "stuff that should be on newBranch
+```
+
+<PB8 />
+If there <span className="text-lg font-bold">IS</span> the other
+branch that logically owns the changes, no biggie,
+<Code>git stash</Code> to the rescue!
+<PB4/>
+
+```
+$ git stash       // all changes on current branch are 
+                  // reverted, equals to git reset --hard
+$ git checkout anotherBranch
+$ git stash list  // shows us the stack of stash@{number}: 
+                  // WIP on <branchName>: <branchHash> <branchComment>
+$ git stash pop   // there might be some conflicts for manual resolution, 
+                  // I accept all incoming (stashed) changes
+$ git commit -am "stuff that should have been on anotherBranch
+```
+<PB8/>
+
+## Voila!
+
+We now have appropriately positioned and accounted for our code. 🥳

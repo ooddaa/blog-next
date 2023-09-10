@@ -7,7 +7,7 @@ import Header from '../components/Header'
 import Image from 'next/image'
 import { Post } from '@/app/types'
 import { TLDR, PB2, PB4, PB8, MB4, Code, H2, H3, Bold, SpongeBob, WebLink, Span, loadPosts, sortPosts } from '@/app/toolbox'
-import Layout from '../components/Layout'
+import Layout from '../components/layout'
 import { postFilePaths, POSTS_PATH } from '../../../utils/mdxUtils'
 import { Blockquote, List } from "@mantine/core";
 import type { InferGetStaticPropsType, GetStaticProps } from 'next'

@@ -1,3 +1,5 @@
+import Path from 'path'
+import matter from 'gray-matter'
 import React from "react";
 import { Text, createStyles } from "@mantine/core";
 import { Prism } from "@mantine/prism";
@@ -245,25 +247,25 @@ const H2: React.FC<HProps> = ({ children, style, tailwindClasses, ...props }) =>
   );
 };
 
-/**
- * Turns Post[] into a tree, sorting by year and month.
- *
- * @nonPure Produces side effects.
- * @param {Post} posts
- * @param {Map} tree
- * @returns {Map}
- */
-function treefyPosts(posts: Post[], tree = new Map()): Map<number, number> {
-  posts.forEach((post) => {
-    const [year, month] = post.dateCreated;
-    tree.has(year)
-      ? tree.get(year).has(month)
-        ? tree.get(year).get(month).push(post)
-        : tree.get(year).set(month, [post])
-      : tree.set(year, new Map().set(month, [post]));
-  });
-  return tree;
-}
+// /**
+//  * Turns Post[] into a tree, sorting by year and month.
+//  *
+//  * @nonPure Produces side effects.
+//  * @param {Post} posts
+//  * @param {Map} tree
+//  * @returns {Map}
+//  */
+// function treefyPosts(posts: Post[], tree = new Map()): Map<number, number> {
+//   posts.forEach((post) => {
+//     const [year, month] = post.dateCreated;
+//     tree.has(year)
+//       ? tree.get(year).has(month)
+//         ? tree.get(year).get(month).push(post)
+//         : tree.get(year).set(month, [post])
+//       : tree.set(year, new Map().set(month, [post]));
+//   });
+//   return tree;
+// }
 
 function TLDR({ children, ...props }: Partial<WrapperComponent>) {
   return (
@@ -363,7 +365,6 @@ interface A {
 }
 function WebLink({ children, tailwindClasses, href, alt, ...props }: Partial<WrapperComponent> & TailwindClasses & A) {
   return (<a href={href} className={tailwindClasses || "text-sky-700 hover:underline"}>{children}</a>);
-  // return (<a href={href} alt={alt} className={tailwindClasses || "text-sky-700 hover:underline"}>{children}</a>);
 }
 
 const emptyObject = () => ({});
@@ -384,6 +385,22 @@ function intersection(a: any, b: any): Set<any> {
   const setA = new Set(a), setB = new Set(b), _intersection = new Set();
   for (const elem of setB) if (setA.has(elem)) _intersection.add(elem);
   return _intersection;
+}
+
+/**
+ * Loads .mdx files and converts them into Post[]
+ */
+async function loadPosts(pathToPosts: string, fs: Module): Promise<Post[]> {
+  const paths = fs.readdirSync(pathToPosts)
+  const posts = 
+    paths
+    .map(path => {
+      const mdx = fs.readFileSync(Path.join(pathToPosts, path))
+      let {content, data} = matter(mdx)
+      data = { filePath: path, ...data}
+      return {content, data, filePath: path}
+    })
+  return posts
 }
 
 function sortPosts(posts: Post[], opt = "desc"): Post[] {
@@ -413,7 +430,7 @@ export {
   Emoji,
   H3,
   H2,
-  treefyPosts,
+  // treefyPosts,
   TLDR,
   P,
   PB2,
@@ -427,5 +444,6 @@ export {
   Code,
   SpongeBob,
   intersection,
-  sortPosts
+  loadPosts,
+  sortPosts,
 };

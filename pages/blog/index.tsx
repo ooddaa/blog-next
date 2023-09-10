@@ -1,38 +1,12 @@
-import fs from 'fs'
-import Path from 'path'
+import fs from "fs"
 import { useState } from 'react'
-import matter from 'gray-matter'
 import BlogLayout from './BlogLayout'
 import BlogTOC from "./components/BlogTOC";
 import { POSTS_PATH } from '../../utils/mdxUtils'
-import { sortPosts, intersection } from "@/app/toolbox"
-import MantineHeader from '@/app/components/MantineHeader';
+import { sortPosts, intersection, loadPosts } from "@/app/toolbox"
 import type { Post } from '@/app/types';
 import BlogTags from './components/BlogTags';
 import { flatten, uniq } from 'lodash';
-
-const links = [
-  {
-    link: "/",
-    label: "Main",
-  },
-  {
-    link: "/blog",
-    label: "Blog",
-  },
-  {
-    link: "https://github.com/ooddaa",
-    label: "Github",
-  },
-  {
-    link: "/portfolio",
-    label: "Portfolio",
-  },
-  {
-    link: "/playground",
-    label: "Playground",
-  },
-];
 
 interface BlogProps {posts: Post[], preselectedTags?: string[]}
 
@@ -57,7 +31,6 @@ export default function Blog({ posts, preselectedTags }: BlogProps) {
   }
   return (
     <BlogLayout>
-      <MantineHeader links={links}></MantineHeader>
       <div className="blog flex flex-col lg:flex-row relative bg-slate-50">
         <div className="left basis-full pb-48 sm:basis-3/5  min-h-screen">
           <BlogTOC 
@@ -108,21 +81,9 @@ function filter(getterFn: Function, setB: Set<string>): (value: Post, index: num
 }
 
 export async function getStaticProps() {
-  const posts = await loadPosts()
+  const posts = await loadPosts(POSTS_PATH, fs)
   return { props: { posts } }
 }
 
-async function loadPosts() {
-  const paths = fs.readdirSync(POSTS_PATH)
-  const posts = 
-    paths
-    .map(path => {
-      const mdx = fs.readFileSync(Path.join(POSTS_PATH, path))
-      let {content, data} = matter(mdx)
-      data = { filePath: path, ...data}
-      return {content, data}
-    })
 
-  return posts
-}
 

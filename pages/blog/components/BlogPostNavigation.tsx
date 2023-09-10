@@ -1,6 +1,6 @@
 import { Button } from "@mantine/core";
 import Link from "next/link";
-import type { Post } from "../../types"
+import type { Post } from "@/app/types"
 
 /* https://mantine.dev/core/button/ */
 interface BlogPostNavigation { previousPost: Post, nextPost: Post }

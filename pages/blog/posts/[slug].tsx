@@ -5,12 +5,13 @@ import { serialize } from 'next-mdx-remote/serialize'
 import rehypePrettyCode from 'rehype-pretty-code'
 import Header from '../components/Header'
 import Image from 'next/image'
-import path from 'path'
-import { TLDR, PB2, PB4, PB8, MB4, Code, H2, H3, Bold, SpongeBob, WebLink, Span } from '@/app/toolbox'
+import { Post } from '@/app/types'
+import { TLDR, PB2, PB4, PB8, MB4, Code, H2, H3, Bold, SpongeBob, WebLink, Span, loadPosts, sortPosts } from '@/app/toolbox'
 import Layout from '../components/Layout'
 import { postFilePaths, POSTS_PATH } from '../../../utils/mdxUtils'
-import { Text, Blockquote, Center, List } from "@mantine/core";
+import { Blockquote, List } from "@mantine/core";
 import type { InferGetStaticPropsType, GetStaticProps } from 'next'
+import BlogNavigation from '../components/BlogNavigation'
 
 
 // Custom components/renderers to pass to MDX.
@@ -36,25 +37,25 @@ const components = {
   Image
 }
 
-export default function PostPage({ source, frontMatter }: InferGetStaticPropsType<typeof getStaticProps>) {
+export default function PostPage({ currentPost: {source, data}, navigation }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <Layout>
       <Header 
-        // title={frontMatter.title}
-        // subtitle={frontMatter.subtitle}
-        // author={frontMatter.author}
-        // timeToRead={frontMatter.timeToRead}
-        // version={frontMatter.version}
-        // date={frontMatter.date}
-        {...frontMatter}
+        // title={data.title}
+        // subtitle={data.subtitle}
+        // author={data.author}
+        // timeToRead={data.timeToRead}
+        // version={data.version}
+        // date={data.date}
+        {...data}
         />
-      {frontMatter.description && (
-        <p className="description">{frontMatter.description}</p>
+      {data.description && (
+        <p className="description">{data.description}</p>
       )}
       <main>
         <MDXRemote {...source} components={components}/>
       </main>
-      <div className='footer w-full h-12'></div>
+      <BlogNavigation postDate={data.date} navigation={navigation}/>
     </Layout>
   )
 }
@@ -72,11 +73,12 @@ type MDXSource = MDXRemoteSerializeResult<Record<string, unknown>, Record<string
 type frontMatterData = { [key: string]: any }
 
 // https://nextjs.org/docs/pages/api-reference/functions/get-static-props
-export const getStaticProps: GetStaticProps<{source: MDXSource, frontMatter: frontMatterData}> = async ({ params }) => {
-  const postFilePath = path.join(POSTS_PATH, `${params?.slug}.mdx`)
-  const source = fs.readFileSync(postFilePath)
-  const { content, data } = matter(source)
+export const getStaticProps: GetStaticProps<{currentPost: {source: MDXSource, data: frontMatterData}, navigation: {previousPost: Post|null, nextPost: Post|null}}> = async ({ params }) => {
+  const posts = await loadPosts(POSTS_PATH, fs).then(sortPosts)
+  const [currentPost] = posts.filter(({filePath}) => filePath === `${params?.slug}.mdx`)
+  const { content, data } = matter(currentPost)
 
+  const navigation = calculateNavigation(currentPost, posts)
   const mdxSource = await serialize(content, {
     mdxOptions: {
       remarkPlugins: [],
@@ -87,10 +89,22 @@ export const getStaticProps: GetStaticProps<{source: MDXSource, frontMatter: fro
 
   return {
     props: {
-      source: mdxSource,
-      frontMatter: data,
+      currentPost: {
+        source: mdxSource,
+        data,
+      },
+      navigation
     },
   }
+}
+
+function calculateNavigation(currentPost: Post, posts: Post[]) {
+  // posts are in desc order now
+  const currentIndex = posts.findIndex(({filePath}) => (filePath == currentPost.filePath))
+  if (currentIndex === -1) throw new Error(`calculateNavigation: cannot find current post index:\ncurrentPost.filePath: ${JSON.stringify(currentPost.filePath)}`)
+  if (currentIndex === 0) return {previousPost: posts.length > 1 ? posts[currentIndex + 1] : null, nextPost: null}
+  if (currentIndex === posts.length - 1) return {previousPost: null, nextPost: posts.length > 1 ? posts[currentIndex - 1] : null}
+  return {previousPost: posts[currentIndex + 1], nextPost: posts[currentIndex - 1]}
 }
 
 export const getStaticPaths = async () => {

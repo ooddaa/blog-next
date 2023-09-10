@@ -31,7 +31,7 @@ export default function BlogTOC({
       {groupByYear(posts)
        .map(({year, posts}) => {
           return <div key={year} className="">
-            <div className="flex text-2xl text-slate-500 mb-8 w-full border-b justify-end">{year}</div>
+            <div className="flex text-2xl text-slate-300 mb-8 w-full border-b justify-end">{year}</div>
             {groupByMonth(posts)
              .map(({month, posts}) => {
               return <div key={month} className="">

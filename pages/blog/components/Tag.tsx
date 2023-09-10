@@ -1,16 +1,15 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Center, createStyles } from "@mantine/core";
 import { isFunction } from "lodash";
-import { log } from "@/app/toolbox";
+import { BlogContext } from "..";
 
 export interface Tag {
   tag: string, 
   classNames?: string, 
-  highlighted?: boolean, 
-  filterForSelectedTag?: Function,
   handleClick?: Function
 }
-export default function Tag({ tag, classNames, highlighted, filterForSelectedTag, handleClick }: Tag) {
+export default function Tag({ tag, classNames, handleClick }: Tag) {
+  const { highlightedTags, filterForSelectedTag } = useContext(BlogContext)
   const useStyles = createStyles(() => ({}));
   const { cx } = useStyles();
   const [clicked, setClicked] = useState(false);
@@ -41,7 +40,7 @@ export default function Tag({ tag, classNames, highlighted, filterForSelectedTag
       className={cx(
         classNames ??
           "p-2 pl-3 pr-3 h-auto w-max rounded-md text-sm transition delay-50 select-none hover:cursor-pointer hover:shadow-md",
-        highlighted ? 
+        highlightedTags?.includes(tag) ? 
         "bg-orchid-pink" : 
         "bg-transparent"
       )}

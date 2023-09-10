@@ -1,5 +1,5 @@
 import fs from "fs"
-import { useState } from 'react'
+import { useState, createContext } from 'react'
 import BlogLayout from './BlogLayout'
 import BlogTOC from "./components/BlogTOC";
 import { POSTS_PATH } from '../../utils/mdxUtils'
@@ -9,6 +9,8 @@ import BlogTags from './components/BlogTags';
 import { flatten, uniq } from 'lodash';
 
 interface BlogProps {posts: Post[], preselectedTags?: string[]}
+
+export const BlogContext = createContext<{[key: string]: any}>({})
 
 export default function Blog({ posts, preselectedTags }: BlogProps) {
   const [highlightedTags, setHighlightedTags] = useState(preselectedTags || []);
@@ -29,24 +31,20 @@ export default function Blog({ posts, preselectedTags }: BlogProps) {
     if (!currentlySelectedTags.size) return setFilteredPosts(sortPosts(posts))
     return setFilteredPosts(filterPostsByTags(posts, currentlySelectedTags))
   }
+
   return (
+  <BlogContext.Provider value={{ highlightedTags, setHighlightedTags, filterForSelectedTag }}>
     <BlogLayout>
       <div className="blog flex flex-col lg:flex-row relative bg-slate-50">
         <div className="left basis-full pb-48 sm:basis-3/5  min-h-screen">
-          <BlogTOC 
-            posts={filteredPosts} 
-            setHighlightedTags={setHighlightedTags}
-          />
+          <BlogTOC posts={filteredPosts}/>
         </div>   
         <div className='right sticky top-0 w-full h-max sm:w-1/3 pt-12 sm:pt-24 mx-auto'>
-          <BlogTags 
-            tags={extractTagsFromPosts(posts)}
-            highlightedTags={highlightedTags}
-            filterForSelectedTag={filterForSelectedTag}
-            />
+          <BlogTags tags={extractTagsFromPosts(posts)}/>
         </div>
       </div>
     </BlogLayout>
+  </BlogContext.Provider>
   )
 }
 

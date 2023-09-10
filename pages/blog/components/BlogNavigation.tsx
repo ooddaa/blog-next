@@ -7,16 +7,10 @@ import Link from "next/link";
 import { IconArrowNarrowLeft, IconArrowNarrowRight } from "@tabler/icons-react";
 
 interface BlogNavigationProps {
-  postDate: number;
-  navigation: {
     previousPost: Post | null;
     nextPost: Post | null;
-  };
 }
-export default function BlogNavigation({
-  postDate,
-  navigation: { previousPost, nextPost },
-}: BlogNavigationProps) {
+export default function BlogNavigation({ previousPost, nextPost }: BlogNavigationProps) {
   return (
     <div className="footer w-full flex flex-row justify-between items-center mb-24 pt-12">
       {previousPost && (

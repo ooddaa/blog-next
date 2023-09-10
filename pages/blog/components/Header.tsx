@@ -42,7 +42,6 @@ export default function Header({
               </div>
               <div>
                 {humanizeDate(date)}
-
               </div>
             </div>
 

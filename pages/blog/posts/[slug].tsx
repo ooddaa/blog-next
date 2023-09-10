@@ -12,6 +12,7 @@ import { postFilePaths, POSTS_PATH } from '../../../utils/mdxUtils'
 import { Blockquote, List } from "@mantine/core";
 import type { InferGetStaticPropsType, GetStaticProps } from 'next'
 import BlogNavigation from '../components/BlogNavigation'
+import { MDXComponents } from 'mdx/types'
 
 
 // Custom components/renderers to pass to MDX.
@@ -37,25 +38,22 @@ const components = {
   Image
 }
 
-export default function PostPage({ currentPost: {source, data}, navigation }: InferGetStaticPropsType<typeof getStaticProps>) {
+export default function PostPage({ currentPost: {source, data}, previousPost, nextPost}: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <Layout>
       <Header 
-        // title={data.title}
-        // subtitle={data.subtitle}
-        // author={data.author}
-        // timeToRead={data.timeToRead}
-        // version={data.version}
-        // date={data.date}
-        {...data}
+        title={data.title}
+        subtitle={data.subtitle}
+        author={data.author}
+        timeToRead={data.timeToRead}
+        version={data.version}
+        date={data.date}
         />
-      {data.description && (
-        <p className="description">{data.description}</p>
-      )}
+      {data.description && <p className="description">{data.description}</p>}
       <main>
-        <MDXRemote {...source} components={components}/>
+        <MDXRemote {...source} components={components as MDXComponents}/>
       </main>
-      <BlogNavigation postDate={data.date} navigation={navigation}/>
+      <BlogNavigation previousPost={previousPost} nextPost={nextPost}/>
     </Layout>
   )
 }
@@ -73,7 +71,7 @@ type MDXSource = MDXRemoteSerializeResult<Record<string, unknown>, Record<string
 type frontMatterData = { [key: string]: any }
 
 // https://nextjs.org/docs/pages/api-reference/functions/get-static-props
-export const getStaticProps: GetStaticProps<{currentPost: {source: MDXSource, data: frontMatterData}, navigation: {previousPost: Post|null, nextPost: Post|null}}> = async ({ params }) => {
+export const getStaticProps: GetStaticProps<{currentPost: {source: MDXSource, data: frontMatterData}, previousPost: Post|null, nextPost: Post|null}> = async ({ params }) => {
   const posts = await loadPosts(POSTS_PATH, fs).then(sortPosts)
   const [currentPost] = posts.filter(({filePath}) => filePath === `${params?.slug}.mdx`)
   const { content, data } = matter(currentPost)
@@ -93,7 +91,7 @@ export const getStaticProps: GetStaticProps<{currentPost: {source: MDXSource, da
         source: mdxSource,
         data,
       },
-      navigation
+      ...navigation
     },
   }
 }

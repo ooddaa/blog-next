@@ -40,7 +40,8 @@ function parseDateToDate(date: number): Date {
   return rv
 }
 
-function humanizeDate(date: string|number, ops?: string[]): string {
+function humanizeDate(date: string|number|undefined, ops?: string[]): string {
+  if (date === undefined) return ""
   const [year, month, day] = parseDateToNumbers(date)
   if (ops && isArray(ops) && ops[0] == "year") return `${year.toString()} ${day.toString()} ${resolveMonth(month)}`
   return `${day.toString()} ${resolveMonth(month)} ${year.toString()}`
@@ -247,26 +248,6 @@ const H2: React.FC<HProps> = ({ children, style, tailwindClasses, ...props }) =>
   );
 };
 
-// /**
-//  * Turns Post[] into a tree, sorting by year and month.
-//  *
-//  * @nonPure Produces side effects.
-//  * @param {Post} posts
-//  * @param {Map} tree
-//  * @returns {Map}
-//  */
-// function treefyPosts(posts: Post[], tree = new Map()): Map<number, number> {
-//   posts.forEach((post) => {
-//     const [year, month] = post.dateCreated;
-//     tree.has(year)
-//       ? tree.get(year).has(month)
-//         ? tree.get(year).get(month).push(post)
-//         : tree.get(year).set(month, [post])
-//       : tree.set(year, new Map().set(month, [post]));
-//   });
-//   return tree;
-// }
-
 function TLDR({ children, ...props }: Partial<WrapperComponent>) {
   return (
     <div className="tl-dr p-6 mb-16 bg-slate-50 rounded-md border" {...props}>
@@ -390,11 +371,11 @@ function intersection(a: any, b: any): Set<any> {
 /**
  * Loads .mdx files and converts them into Post[]
  */
-async function loadPosts(pathToPosts: string, fs: Module): Promise<Post[]> {
+async function loadPosts(pathToPosts: string, fs: any): Promise<Post[]> {
   const paths = fs.readdirSync(pathToPosts)
   const posts = 
     paths
-    .map(path => {
+    .map((path: string) => {
       const mdx = fs.readFileSync(Path.join(pathToPosts, path))
       let {content, data} = matter(mdx)
       data = { filePath: path, ...data}

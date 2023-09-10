@@ -40,19 +40,19 @@ export default function BlogTOC({
                 {sortPosts(posts, "asc")
                   .map(({data}) => (
                     <div key={data.filePath} className='flex flex-row gap-4'>
-                    <div className='w-[128px] text-slate-500'>
-                      {parseDay(data.date)}
-                    </div>
-                    <div 
-                      onMouseEnter={() => {setHighlightedTags?.(data.tags)}}
-                      onMouseLeave={() => {setHighlightedTags?.([])}}
-                    >
-                    <Link
-                      as={`/blog/posts/${data.filePath.replace(/\.mdx?$/, '')}`}
-                      href={`/blog/posts/[slug]`}
+                      <div className='min-w-[32px] text-slate-500'>
+                        {parseDay(data.date)}
+                      </div>
+                      <div 
+                        onMouseEnter={() => {setHighlightedTags?.(data.tags)}}
+                        onMouseLeave={() => {setHighlightedTags?.([])}}
                       >
-                      {data.title}
-                    </Link>
+                      <Link
+                        as={`/blog/posts/${data.filePath.replace(/\.mdx?$/, '')}`}
+                        href={`/blog/posts/[slug]`}
+                        >
+                        {data.title}
+                      </Link>
                     </div>
                   </div>
                 ))}

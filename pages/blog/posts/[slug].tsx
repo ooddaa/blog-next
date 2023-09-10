@@ -63,7 +63,7 @@ export default function PostPage({ currentPost: {source, data}, previousPost, ne
 /** @type {import('rehype-pretty-code').Options} */
 const codeHighlightOptions = {
   theme: 'github-dark',
-  defaultLang: 'plaintext',
+  defaultLang: 'zsh',
   keepBackground: true
 };
 

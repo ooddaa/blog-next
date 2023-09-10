@@ -14,7 +14,7 @@ export default function BlogNavigation({ previousPost, nextPost }: BlogNavigatio
   return (
     <div className="footer w-full flex flex-row justify-between items-center mb-24 pt-12">
       {previousPost && (
-        <div className="group underline text-slate-800 flex flex-row gap-2 items-center">
+        <div className="group underline text-slate-800 flex flex-row gap-2 justify-start items-center w-full">
           <IconArrowNarrowLeft size={24} strokeWidth={2} className="group-hover:text-slate-500 text-slate-800" />
           <Link
             as={`/blog/posts/${previousPost?.data.filePath.replace(
@@ -22,18 +22,18 @@ export default function BlogNavigation({ previousPost, nextPost }: BlogNavigatio
               ""
             )}`}
             href={`/blog/posts/[slug]`}
-            className="group-hover:text-slate-500"
+            className="group-hover:text-slate-500 text-start"
           >
             {previousPost?.data.title}
           </Link>
         </div>
       )}
       {nextPost && (
-        <div className="group active:scale-[.98] underline text-slate-800 flex flex-row gap-2 items-center">
+        <div className="group active:scale-[.98] underline text-slate-800 flex flex-row gap-2 justify-end items-center w-full">
           <Link
             as={`/blog/posts/${nextPost?.data.filePath.replace(/\.mdx?$/, "")}`}
             href={`/blog/posts/[slug]`}
-            className="group-hover:text-slate-500"
+            className="group-hover:text-slate-500 text-end"
           >
             {nextPost?.data.title}
           </Link>

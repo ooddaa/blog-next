@@ -69,7 +69,9 @@ The API is now accessible on <a href="https://yahooprices.herokuapp.com">Heroku<
 <PB4/>
 
 ```
-{ "data": Ticker[] }
+{ 
+  "data": Ticker[] 
+}
 ```
 <PB2/>
 
@@ -79,10 +81,13 @@ Where each Ticker is:
 ```
 [
   ticker: str, 
-  # price may be skipped for POST request, add null in Postman
-  price: null, 
-  # at the moment of writing this post, it's hard to remember
-  # why I split time into two lists like this.         
+  # price may be skipped 
+  # for POST request, add 
+  # null in Postman 
+  # at the moment of writing 
+  # this post, it's hard to 
+  # remember why I split 
+  # time into two lists like this.         
   [
     year:int, 
     month:int, 
@@ -164,7 +169,8 @@ the response. Then users could sort themselves out should the main
 timestamp not be available. I did it by adding a new route:
 <PB4/>
 ```
-POST https://yahooprices.herokuapp.com/allPrices
+POST 
+https://yahooprices.herokuapp.com/allPrices
 ```
 <PB4/>
 
@@ -182,7 +188,10 @@ I should have done like this:
         
 ```
 # yahoo.py 
-def get_prices(tickers, attach_prices=False): ...
+def get_prices(
+      tickers, 
+      attach_prices=False):
+   ...
 ```
 <PB4/>
 

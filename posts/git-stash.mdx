@@ -33,9 +33,9 @@ If there is <span className="text-lg font-bold">NO</span> other
 branch, I simply
 <PB4/>
 
-```
+```zsh
 $ git checkout -b newBranch
-$ git commit -am "stuff that should be on newBranch
+$ git commit -am "to newBranch"
 ```
 
 <PB8 />
@@ -44,15 +44,22 @@ branch that logically owns the changes, no biggie,
 <Code>git stash</Code> to the rescue!
 <PB4/>
 
-```
-$ git stash       // all changes on current branch are 
-                  // reverted, equals to git reset --hard
+```zsh
+// all changes on current branch are 
+// reverted, equals to git reset --hard
+$ git stash       
+                  
 $ git checkout anotherBranch
-$ git stash list  // shows us the stack of stash@{number}: 
-                  // WIP on <branchName>: <branchHash> <branchComment>
-$ git stash pop   // there might be some conflicts for manual resolution, 
-                  // I accept all incoming (stashed) changes
-$ git commit -am "stuff that should have been on anotherBranch
+
+// shows us the stack of stash@{number} 
+$ git stash list  
+
+// there might be some conflicts 
+// for manual resolution,  
+// I accept all incoming changes
+$ git stash pop    
+                 
+$ git commit -am "to anotherBranch"
 ```
 <PB8/>
 

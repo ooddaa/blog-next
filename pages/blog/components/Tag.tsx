@@ -1,7 +1,7 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { Center, createStyles } from "@mantine/core";
 import { isFunction } from "lodash";
-import { BlogContext } from "..";
+import { useBlogContext } from "@/contexts/blog-context";
 
 export interface Tag {
   tag: string, 
@@ -9,7 +9,7 @@ export interface Tag {
   handleClick?: Function
 }
 export default function Tag({ tag, classNames, handleClick }: Tag) {
-  const { highlightedTags, filterForSelectedTag } = useContext(BlogContext)
+  const { highlightedTags, filterForSelectedTag } = useBlogContext()
   const useStyles = createStyles(() => ({}));
   const { cx } = useStyles();
   const [clicked, setClicked] = useState(false);

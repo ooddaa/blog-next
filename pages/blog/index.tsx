@@ -1,5 +1,5 @@
 import fs from "fs"
-import { useState, createContext } from 'react'
+import { useState } from 'react'
 import BlogLayout from './BlogLayout'
 import BlogTOC from "./components/BlogTOC";
 import { POSTS_PATH } from '../../utils/mdxUtils'
@@ -7,10 +7,9 @@ import { sortPosts, intersection, loadPosts } from "@/app/toolbox"
 import type { Post } from '@/app/types';
 import BlogTags from './components/BlogTags';
 import { flatten, uniq } from 'lodash';
+import BlogContextProvider from "@/contexts/blog-context";
 
 interface BlogProps {posts: Post[], preselectedTags?: string[]}
-
-export const BlogContext = createContext<{[key: string]: any}>({})
 
 export default function Blog({ posts, preselectedTags }: BlogProps) {
   const [highlightedTags, setHighlightedTags] = useState(preselectedTags || []);
@@ -33,7 +32,7 @@ export default function Blog({ posts, preselectedTags }: BlogProps) {
   }
 
   return (
-  <BlogContext.Provider value={{ highlightedTags, setHighlightedTags, filterForSelectedTag }}>
+  <BlogContextProvider value={{ highlightedTags, setHighlightedTags, filterForSelectedTag }}>
     <BlogLayout>
       <div className="blog flex flex-col lg:flex-row relative bg-slate-50">
         <div className="left basis-full pb-48 sm:basis-3/5  min-h-screen">
@@ -44,7 +43,7 @@ export default function Blog({ posts, preselectedTags }: BlogProps) {
         </div>
       </div>
     </BlogLayout>
-  </BlogContext.Provider>
+  </BlogContextProvider>
   )
 }
 

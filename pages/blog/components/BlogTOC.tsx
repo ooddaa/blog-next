@@ -3,14 +3,14 @@ import { resolveMonth, sortPosts } from "@/app/toolbox";
 import { Post } from "@/app/types";
 import Link from "next/link";
 import { groupBy, keys, reverse } from "lodash";
-import { BlogContext } from "..";
+import { useBlogContext } from "@/contexts/blog-context";
 
 type BlogTOCparams = {
   posts: Post[],
 }
 
 export default function BlogTOC({posts}: BlogTOCparams) {
-  const { setHighlightedTags } = useContext(BlogContext)
+  const { setHighlightedTags } = useBlogContext()
   if (posts === undefined || !posts.length) return <h2>No posts yet</h2>;
   
   return (

@@ -1,5 +1,5 @@
 import fs from "fs"
-import { useEffect, useMemo, useState } from 'react'
+import { useState } from 'react'
 import BlogLayout from './BlogLayout'
 import BlogTOC from "./components/BlogTOC";
 import { POSTS_PATH } from '../../utils/mdxUtils'
@@ -10,8 +10,6 @@ import { flatten, isArray, isString, uniq } from 'lodash';
 import BlogContextProvider from "@/contexts/blog-context";
 import { useRouter } from "next/router";
 import { InferGetServerSidePropsType, GetServerSideProps } from "next";
-
-
 
 /**
  * Decided to use url search params as state vs useState.
@@ -123,6 +121,5 @@ type BlogProps = { posts: Post[] }
 
 export async function getServerSideProps(context: GetServerSideProps<BlogProps>) {
   const posts = await loadPosts(POSTS_PATH, fs)
-  return { props: { posts } }
   return { props: { posts } }
 } 

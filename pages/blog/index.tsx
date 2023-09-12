@@ -1,38 +1,91 @@
 import fs from "fs"
-import { useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import BlogLayout from './BlogLayout'
 import BlogTOC from "./components/BlogTOC";
 import { POSTS_PATH } from '../../utils/mdxUtils'
 import { sortPosts, intersection, loadPosts } from "@/app/toolbox"
 import type { Post } from '@/app/types';
 import BlogTags from './components/BlogTags';
-import { flatten, uniq } from 'lodash';
+import { flatten, isString, uniq } from 'lodash';
 import BlogContextProvider from "@/contexts/blog-context";
+import { useRouter } from "next/router";
 
-interface BlogProps {posts: Post[], preselectedTags?: string[]}
+interface BlogProps { posts: Post[], host: string }
 
-export default function Blog({ posts, preselectedTags }: BlogProps) {
-  const [highlightedTags, setHighlightedTags] = useState(preselectedTags || []);
-  const [selectedTags, setSelectedTags] = useState<Set<string>>(new Set());
-  const [filteredPosts, setFilteredPosts] = useState(sortPosts(posts));
+/**
+ * Decided to use url search params as state vs useState.
+ * It will allow me sharing a link that will display sorted
+ * blogposts. 
+ */
+export default function Blog({ posts, host }: BlogProps) {
+  const router = useRouter()
+  // console.log(router)
+  const [highlightedTags, setHighlightedTags] = useState([]);
+
+  // there may be a single/multiple tags in the url query
+  // we need to cast them as array
+  const {tags} = router.query
+  const _tags: Set<string> = 
+    tags
+      ? new Set(isString(tags) ? [tags] : tags) 
+      : new Set()
+  const [selectedTags, setSelectedTags] = useState<Set<string>>(_tags);
+  const [filteredPosts, setFilteredPosts] = useState(sortPosts(filterPostsByTags(posts, selectedTags)));
 
   function filterForSelectedTag(tag: string) {
-    let currentlySelectedTags: Set<string> = selectedTags
-    
-    // toggle tag's presense
-    selectedTags.has(tag) 
-    ? currentlySelectedTags.delete(tag) 
-    : currentlySelectedTags.add(tag)
-    
-    setSelectedTags(currentlySelectedTags)
+    if (tagInUrlParams(router.asPath, tag)) {
+      const newTags = removeTagFromQuery(tag)
+      router.push(generateUrl(newTags))
+      setSelectedTags(new Set(newTags))
+      setFilteredPosts(sortPosts(filterPostsByTags(posts, new Set(newTags))))
+    } else {
+      const newTags = addTagToQuery(tag)
+      router.push(generateUrl(newTags))
+      setSelectedTags(new Set(newTags))
+      setFilteredPosts(sortPosts(filterPostsByTags(posts, new Set(newTags))))
+    } 
+  }
 
-    // no selected tags == show all posts
-    if (!currentlySelectedTags.size) return setFilteredPosts(sortPosts(posts))
-    return setFilteredPosts(filterPostsByTags(posts, currentlySelectedTags))
+  type Tags = string|string[]|undefined
+  function generateUrl(tags: Tags): object {
+    return { query: { tags: tags }}
+  }
+
+  function removeTagFromQuery(tag: string): Tags {
+    let {tags} = router.query
+    if (tags) {
+      if (isString(tags)) {
+        tags = []
+      } else {
+        tags.splice(tags.indexOf(tag), 1)
+      }
+    }
+    return tags
+  }
+
+  function addTagToQuery(tag: string): Tags {
+    const {tags} = router.query
+    let _tags;
+    if (tags) {
+      if (isString(tags)) {
+        _tags = [tags, tag]
+      } else {
+        _tags = [...tags, tag]
+      }
+    } else {
+      _tags = [tag]
+    }
+    return _tags
+  }
+
+  function tagInUrlParams(asPath: string, tag: string): boolean {
+    const myUrl = new URL(`${host}${asPath}`)
+    const searchParams = new URLSearchParams(myUrl.search)
+    return Array.from(searchParams.values()).includes(tag)
   }
 
   return (
-  <BlogContextProvider value={{ highlightedTags, setHighlightedTags, filterForSelectedTag }}>
+  <BlogContextProvider value={{ highlightedTags, setHighlightedTags, filterForSelectedTag, selectedTags }}>
     <BlogLayout>
       <div className="blog flex flex-col lg:flex-row relative bg-slate-50">
         <div className="left basis-full pb-48 sm:basis-3/5  min-h-screen">
@@ -63,6 +116,10 @@ function extractTagsFromPosts(posts: Post[]): string[] {
  * Use to filter posts whose tags include those clicked by user.
  */
 function filterPostsByTags(posts: Post[], currentlySelectedTags: Set<string>): Post[] {
+  if (!currentlySelectedTags.size) {
+    console.log("return all posts", currentlySelectedTags)
+    return posts
+  }
   return posts.filter(filter(getPostTags, currentlySelectedTags))
 }
 
@@ -77,10 +134,11 @@ function filter(getterFn: Function, setB: Set<string>): (value: Post, index: num
   }
 }
 
-export async function getStaticProps() {
+// export async function getStaticProps() {
+//   const posts = await loadPosts(POSTS_PATH, fs)
+//   return { props: { posts } }
+// }
+export async function getServerSideProps(context) {
   const posts = await loadPosts(POSTS_PATH, fs)
-  return { props: { posts } }
+  return { props: { posts, host: context.req.headers.host } }
 }
-
-
-

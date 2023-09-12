@@ -2,6 +2,7 @@ import { useContext, createContext } from "react";
 
 type BlogContextProps = {
   highlightedTags: string[], 
+  selectedTags: Set<string>, 
   setHighlightedTags: Function, 
   filterForSelectedTag: Function
 }

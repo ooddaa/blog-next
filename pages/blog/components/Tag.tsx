@@ -9,10 +9,10 @@ export interface Tag {
   handleClick?: Function
 }
 export default function Tag({ tag, classNames, handleClick }: Tag) {
-  const { highlightedTags, filterForSelectedTag } = useBlogContext()
+  const { highlightedTags, filterForSelectedTag, selectedTags } = useBlogContext()
   const useStyles = createStyles(() => ({}));
   const { cx } = useStyles();
-  const [clicked, setClicked] = useState(false);
+  const [clicked, setClicked] = useState(selectedTags.has(tag));
 
   function defaultHandleClick(e: React.MouseEvent<HTMLDivElement>) {
     if (filterForSelectedTag !== undefined) filterForSelectedTag(tag);
@@ -40,9 +40,8 @@ export default function Tag({ tag, classNames, handleClick }: Tag) {
       className={cx(
         classNames ??
           "p-2 pl-3 pr-3 h-auto w-max rounded-md text-sm transition delay-50 select-none hover:cursor-pointer hover:shadow-md",
-        highlightedTags?.includes(tag) ? 
-        "bg-orchid-pink" : 
-        "bg-transparent"
+        highlightedTags?.includes(tag) && "bg-orchid-pink",
+        clicked && "bg-[#D0D6B3] shadow-md" 
       )}
       onClick={isFunction(handleClick) ? handleClick : defaultHandleClick}
     >

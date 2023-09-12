@@ -1,7 +1,7 @@
 import React from 'react'
 import { useRouter } from 'next/navigation'
 import { GradientSpan } from '../toolbox'
-import Tag from '@/pages/blog/components/Tag'
+import Link from 'next/link'
 
 export default function Intro() {
   const router = useRouter()
@@ -36,13 +36,20 @@ export default function Intro() {
       {/* toys */}
       <div className="w-full">
         <ul className="flex flex-row flex-wrap gap-2">
-          {["TypeScript", "React", "Next.js", "Elixir", "Phoenix", "Phoenix LiveView", "Figma" ]
-          .map(val => <Tag 
-            tag={val} 
+          {["TypeScript", "React", "Next.js", "Elixir", "Phoenix", "Phoenix LiveView", "Figma", "python"]
+          .map(val => <Link 
             key={val} 
-            classNames={"p-2 pl-3 pr-3 h-auto w-max rounded-md text-sm transition delay-50 select-none hover:cursor-pointer shadow-md active:scale-[.98]"}
-            handleClick={() => router.push(`/blog?tag=${val}`)}
-            />)}
+            className={"p-2 pl-3 pr-3 h-auto w-max rounded-md text-sm transition delay-50 select-none hover:cursor-pointer shadow-md active:scale-[.98]"}
+            // href={`/blog?tags=${val}`}
+            // href={`/blog?${new URLSearchParams({ tags: val })}`}
+            href={{
+              pathname: "/blog",
+              query: {
+                // tags: [val, "git"]
+                tags: [val]
+              }
+            }}
+            >{val} </Link>)}
         </ul>  
       </div>
   </div>

@@ -13,7 +13,7 @@ import { Blockquote, List } from "@mantine/core";
 import type { InferGetStaticPropsType, GetStaticProps } from 'next'
 import BlogNavigation from '../components/BlogNavigation'
 import { MDXComponents } from 'mdx/types'
-
+import Link from 'next/link'
 
 // Custom components/renderers to pass to MDX.
 // Since the MDX files aren't loaded by webpack, they have no knowledge of how
@@ -35,7 +35,8 @@ const components = {
   WebLink,
   Blockquote,
   Span,
-  Image
+  Image,
+  Link
 }
 
 export default function PostPage({ currentPost: {source, data}, previousPost, nextPost}: InferGetStaticPropsType<typeof getStaticProps>) {

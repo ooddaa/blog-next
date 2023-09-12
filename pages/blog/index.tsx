@@ -6,18 +6,19 @@ import { POSTS_PATH } from '../../utils/mdxUtils'
 import { sortPosts, intersection, loadPosts } from "@/app/toolbox"
 import type { Post } from '@/app/types';
 import BlogTags from './components/BlogTags';
-import { flatten, isString, uniq } from 'lodash';
+import { flatten, isArray, isString, uniq } from 'lodash';
 import BlogContextProvider from "@/contexts/blog-context";
 import { useRouter } from "next/router";
+import { InferGetServerSidePropsType, GetServerSideProps } from "next";
 
-interface BlogProps { posts: Post[], host: string }
+
 
 /**
  * Decided to use url search params as state vs useState.
  * It will allow me sharing a link that will display sorted
  * blogposts. 
  */
-export default function Blog({ posts, host }: BlogProps) {
+export default function Blog({ posts }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const router = useRouter()
   // console.log(router)
   const [highlightedTags, setHighlightedTags] = useState([]);
@@ -33,7 +34,7 @@ export default function Blog({ posts, host }: BlogProps) {
   const [filteredPosts, setFilteredPosts] = useState(sortPosts(filterPostsByTags(posts, selectedTags)));
 
   function filterForSelectedTag(tag: string) {
-    if (tagInUrlParams(router.asPath, tag)) {
+    if (tagInUrlParams(tag)) {
       const newTags = removeTagFromQuery(tag)
       router.push(generateUrl(newTags))
       setSelectedTags(new Set(newTags))
@@ -46,42 +47,29 @@ export default function Blog({ posts, host }: BlogProps) {
     } 
   }
 
-  type Tags = string|string[]|undefined
+  type Tags = string[]
   function generateUrl(tags: Tags): object {
     return { query: { tags: tags }}
   }
 
   function removeTagFromQuery(tag: string): Tags {
     let {tags} = router.query
-    if (tags) {
-      if (isString(tags)) {
-        tags = []
-      } else {
-        tags.splice(tags.indexOf(tag), 1)
-      }
-    }
-    return tags
+    if (tags && isArray(tags)) return tags.splice(tags.indexOf(tag), 1)
+    return []
   }
 
   function addTagToQuery(tag: string): Tags {
     const {tags} = router.query
-    let _tags;
-    if (tags) {
-      if (isString(tags)) {
-        _tags = [tags, tag]
-      } else {
-        _tags = [...tags, tag]
-      }
-    } else {
-      _tags = [tag]
-    }
-    return _tags
+    if (tags && isString(tags)) return [tags, tag]
+    if (tags && isArray(tags)) return [...tags, tag]
+    return [tag]
   }
 
-  function tagInUrlParams(asPath: string, tag: string): boolean {
-    const myUrl = new URL(`${host}${asPath}`)
-    const searchParams = new URLSearchParams(myUrl.search)
-    return Array.from(searchParams.values()).includes(tag)
+  function tagInUrlParams(tag: string): boolean {
+    const {tags} = router.query
+    if (tags && isString(tags)) return tags === tag
+    if (tags && isArray(tags)) return tags.includes(tag)
+    return false
   }
 
   return (
@@ -116,10 +104,7 @@ function extractTagsFromPosts(posts: Post[]): string[] {
  * Use to filter posts whose tags include those clicked by user.
  */
 function filterPostsByTags(posts: Post[], currentlySelectedTags: Set<string>): Post[] {
-  if (!currentlySelectedTags.size) {
-    console.log("return all posts", currentlySelectedTags)
-    return posts
-  }
+  if (!currentlySelectedTags.size) return posts
   return posts.filter(filter(getPostTags, currentlySelectedTags))
 }
 
@@ -134,11 +119,10 @@ function filter(getterFn: Function, setB: Set<string>): (value: Post, index: num
   }
 }
 
-// export async function getStaticProps() {
-//   const posts = await loadPosts(POSTS_PATH, fs)
-//   return { props: { posts } }
-// }
-export async function getServerSideProps(context) {
+type BlogProps = { posts: Post[] }
+
+export async function getServerSideProps(context: GetServerSideProps<BlogProps>) {
   const posts = await loadPosts(POSTS_PATH, fs)
-  return { props: { posts, host: context.req.headers.host } }
-}
+  return { props: { posts } }
+  return { props: { posts } }
+} 

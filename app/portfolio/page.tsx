@@ -21,6 +21,7 @@ import MantineHeader, {
   links as headerLinks,
 } from "../components/MantineHeader";
 import lorem from "./components/lorem";
+import { GradientSpan, PB4 } from "../toolbox";
 
 export type ComponentEntryValue = {component: JSX.Element, description: string | JSX.Element}
 type ComponentEntry = { [key: string]: ComponentEntryValue }
@@ -97,29 +98,41 @@ const components: ComponentEntry = {
   ), description: ""},
   'Person details': {component: <NameForm />, description: ""},
   "Welcome back": {component: <WelcomeBackForm />, description: ""},
-  Katcher: {component: <Katcher />, description: ""},
+  Katcher: {component: <Katcher />, description: (<><a href="https://www.katcher.bio"><GradientSpan from="green" to="blue">
+  Katcher
+</GradientSpan></a> is a job search platform for Life Science professionals. 
+<br/>
+My friend and I started it in 2022 and as of the end of August 2023 its MVP is almost complete.
+<PB4/>
+I wrote it <a href="https://elixir-lang.org/" className='text-sky-500 underline'>Elixir</a> | <a href="https://www.phoenixframework.org/" className='text-sky-500 underline'>Phoenix</a> | <a href="https://hexdocs.pm/phoenix_live_view/welcome.html" className='text-sky-500 underline'>Phoenix LiveView</a> which has been a heavenly experience 😁
+<PB4/> 
+Have a look, register and get yourself a great job in Life Sciences!
+<PB4/>
+go check it out 👉 <a href="https://www.katcher.bio"><GradientSpan from="green" to="blue">
+Katcher
+</GradientSpan></a></>)},
   // "Desktop": <DesktopWorkspace />,
 };
 
 const links = [
+  { label: "TicTacToe", order: 1 },
+  { label: "Katcher", order: 1, new: true },
   { label: "Intro", order: 1 },
   { label: "Forms", order: 1 },
   { label: "Reference", order: 2 },
   { label: "Person details", order: 2 },
   { label: "Welcome back", order: 2 },
   { label: "Custom select", order: 2 },
-  { label: "TicTacToe", order: 1 },
   { label: "Accordion", order: 1 },
   { label: "Carousel", order: 1 },
   { label: "Pagination", order: 1 },
   { label: "Table", order: 1 },
   { label: "Resizable", order: 1 },
-  { label: "Katcher", order: 1, new: true },
   // { label: "Desktop", link: "Desktop", order: 1 },
 ];
 
 export default function Portfolio() {
-  const [currentComponent, setCurrentComponent] = useState<{component: JSX.Element, description: string}>(
+  const [currentComponent, setCurrentComponent] = useState<ComponentEntryValue>(
     components["Reference"]
   );
 

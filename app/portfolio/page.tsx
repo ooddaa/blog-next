@@ -3,6 +3,7 @@
 
 import { useState } from "react";
 import TableOfContents from "./components/TableOfContents";
+import Workspace from "./components/Workspace";
 import ReferenceForm from "./components/ReferenceForm/ReferenceForm";
 import CustomSelect from "./components/ReferenceForm/CustomSelect";
 import TicTacToe from "./components/TicTacToe/TicTacToe";
@@ -21,9 +22,11 @@ import MantineHeader, {
 } from "../components/MantineHeader";
 import lorem from "./components/lorem";
 
-const components: { [key: string]: JSX.Element } = {
-  "Reference": <ReferenceForm />,
-  "Custom Select": (
+export type ComponentEntryValue = {component: JSX.Element, description: string | JSX.Element}
+type ComponentEntry = { [key: string]: ComponentEntryValue }
+const components: ComponentEntry = {
+  "Reference": {component: <ReferenceForm />, description: "A Reference Form for a user to submit their referees/guarantors."},
+  "Custom Select": {component: (
     <CustomSelect
       value={"Portfolio"}
       options={[
@@ -33,13 +36,23 @@ const components: { [key: string]: JSX.Element } = {
       ]}
       onChange={(e) => console.log(e.target.value)}
     />
-  ),
-  TicTacToe: <TicTacToe />,
-  Accordion: <Accordion />,
-  Carousel: <Carousel />,
-  Pagination: <Pagination pages={20} />,
-  Table: <Table />,
-  Resizable: (
+  ), description: ""},
+  TicTacToe: {component: <TicTacToe />,  description: (<div>I completed a basic tic-tac-toe game as part of a tech interview. To begin with, I was provided with the initial app structure and had to:
+  <br/>
+  1. Implement the stubbed-out functions in order to make the game functional
+  <br/>
+  2. Make the game state persistent between refreshes
+  <br/>
+  3. Implement a persistent game history, that allows the user to step back and forth through each state of the game. 
+  <br/>
+  Afterwards, I enhanced the visual appearance by incorporating CSS-in-JS to make it more visually appealing. 
+  <br/>
+  The result passed the interview 👍 <br/> The source code can be found <a href="https://github.com/ooddaa/blog-next/blob/main/app/portfolio/components/TicTacToe/TicTacToe.tsx" className="text-sky-700 hover:text-sky-500">here</a>.</div>)},
+  Accordion: {component: <Accordion />, description: ""},
+  Carousel: {component: <Carousel />, description: ""},
+  Pagination: {component: <Pagination pages={20} />, description: ""},
+  Table: {component: <Table />, description: ""},
+  Resizable: {component: (
     <Resizable
       height={"400px"}
       width={"1000px"}
@@ -81,10 +94,10 @@ const components: { [key: string]: JSX.Element } = {
         {lorem}
       </div>
     </Resizable>
-  ),
-  'Person details': <NameForm />,
-  "Welcome back": <WelcomeBackForm />,
-  Katcher: <Katcher />,
+  ), description: ""},
+  'Person details': {component: <NameForm />, description: ""},
+  "Welcome back": {component: <WelcomeBackForm />, description: ""},
+  Katcher: {component: <Katcher />, description: ""},
   // "Desktop": <DesktopWorkspace />,
 };
 
@@ -106,7 +119,7 @@ const links = [
 ];
 
 export default function Portfolio() {
-  const [currentComponent, setCurrentComponent] = useState<JSX.Element>(
+  const [currentComponent, setCurrentComponent] = useState<{component: JSX.Element, description: string}>(
     components["Reference"]
   );
 
@@ -139,20 +152,9 @@ export default function Portfolio() {
         </div>
 
         {/* WORKSPACE */}
-        <div
-          className="portfolio-workspace"
-          css={{
-            backgroundColor: ReferenceFormStyles.colors["bg-primary"],
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "flex-start",
-            paddingTop: "100px",
-            paddingBottom: "100px",
-          }}
-          style={{ minHeight: `calc(100vh - ${HEADER_HEIGHT}px)` }}
-        >
+        <Workspace>
           {currentComponent}
-        </div>
+        </Workspace>
       </div>
     </>
   );

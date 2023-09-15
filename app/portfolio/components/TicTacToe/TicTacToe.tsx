@@ -118,15 +118,15 @@ const Board = ({ squares, onSquareClick }: any) => {
           background: "#fff",
           border: "1px solid #999",
           float: "left",
-          fontSize: "96px",
+          fontSize: "48px",
           fontWeight: "bold",
-          lineHeight: "136px",
-          height: "136px",
+          lineHeight: "68px",
+          height: "68px",
           marginRight: "-1px",
           marginTop: "-1px",
           padding: "0",
           textAlign: "center",
-          width: "136px",
+          width: "68px",
           "&:focus": {
             outline: "none",
             background: "#fee2e2",
@@ -288,10 +288,6 @@ const TicTacToe = () => {
     <div
       className="wrapper"
     >
-      <div className='p-6 bg-white shadow rounded-md w-full text-lg/8'>
-      A simple tic-tac-toe game that I had to write for a job interview. Passed the tech interview 😂
-      </div>
-
       <div
         className="game"
         css={{

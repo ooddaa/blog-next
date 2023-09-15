@@ -40,12 +40,9 @@ export default function Intro() {
           .map(val => <Link 
             key={val} 
             className={"p-2 pl-3 pr-3 h-auto w-max rounded-md text-sm transition delay-50 select-none hover:cursor-pointer shadow-md active:scale-[.98]"}
-            // href={`/blog?tags=${val}`}
-            // href={`/blog?${new URLSearchParams({ tags: val })}`}
             href={{
               pathname: "/blog",
               query: {
-                // tags: [val, "git"]
                 tags: [val]
               }
             }}

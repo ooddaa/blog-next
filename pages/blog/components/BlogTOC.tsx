@@ -1,4 +1,3 @@
-import { useContext } from "react";
 import { resolveMonth, sortPosts } from "@/app/toolbox";
 import { Post } from "@/app/types";
 import Link from "next/link";

@@ -13,9 +13,9 @@ export default function Intro() {
           <ul className="py-4">
             <li><GradientSpan from="red" to="orange">Business Developer</GradientSpan></li>
             <li><GradientSpan from="orange" to="yellow">Software Engineer</GradientSpan></li>
-            <li><GradientSpan from="yellow" to="green">English teacher</GradientSpan></li>
-            <li><GradientSpan from="green" to="blue">Entrepreneur</GradientSpan></li>
-            <li><GradientSpan from="blue" to="purple">Full time dad</GradientSpan></li>
+            <li><GradientSpan from="yellow" to="green">Entrepreneur</GradientSpan></li>
+            <li><GradientSpan from="green" to="blue">Full time dad</GradientSpan></li>
+            <li><GradientSpan from="blue" to="purple">Grappler</GradientSpan></li>
           </ul>
         </div>
         <div className="tracking-wide">
@@ -36,7 +36,7 @@ export default function Intro() {
       {/* toys */}
       <div className="w-full">
         <ul className="flex flex-row flex-wrap gap-2">
-          {["TypeScript", "React", "Next.js", "Elixir", "Phoenix", "Phoenix LiveView", "Figma", "python"]
+          {["TypeScript", "React", "Next.js", "Elixir", "Phoenix", "Phoenix LiveView", "Figma", "Python"]
           .map(val => <Link 
             key={val} 
             className={"p-2 pl-3 pr-3 h-auto w-max rounded-md text-sm transition delay-50 select-none hover:cursor-pointer shadow-md active:scale-[.98]"}

@@ -6,7 +6,7 @@ import TableOfContents from "./components/TableOfContents";
 import Workspace from "./components/Workspace";
 import ReferenceForm from "./components/ReferenceForm/ReferenceForm";
 import CustomSelect from "./components/ReferenceForm/CustomSelect";
-import TicTacToe from "./components/TicTacToe/TicTacToe";
+import {ticTacToe} from "./components/TicTacToe/TicTacToe";
 import Accordion from "./components/Accordion/Accordion";
 import Carousel from "./components/Carousel/Carousel";
 import Pagination from "./components/Pagination/Pagination";
@@ -14,7 +14,7 @@ import Table from "./components/Tables/Table1";
 import Resizable from "./components/Resizable/Resizable";
 import NameForm from "./components/NameForm/NameForm";
 import WelcomeBackForm from "./components/WelcomeBackForm/WelcomeBack";
-import Katcher from "./components/Katcher/Katcher";
+import {katcher} from "./components/Katcher/Katcher";
 import { styles as ReferenceFormStyles } from "./components/ReferenceForm/styles/styleSystem";
 import MantineHeader, {
   HEADER_HEIGHT,
@@ -22,6 +22,7 @@ import MantineHeader, {
 } from "../components/MantineHeader";
 import lorem from "./components/lorem";
 import { GradientSpan, PB4 } from "../toolbox";
+import {caves} from "./components/Caves/Caves";
 
 export type ComponentEntryValue = {component: JSX.Element, description: string | JSX.Element}
 type ComponentEntry = { [key: string]: ComponentEntryValue }
@@ -38,17 +39,7 @@ const components: ComponentEntry = {
       onChange={(e) => console.log(e.target.value)}
     />
   ), description: ""},
-  TicTacToe: {component: <TicTacToe />,  description: (<div>I completed a basic tic-tac-toe game as part of a tech interview. To begin with, I was provided with the initial app structure and had to:
-  <br/>
-  1. Implement the stubbed-out functions in order to make the game functional
-  <br/>
-  2. Make the game state persistent between refreshes
-  <br/>
-  3. Implement a persistent game history, that allows the user to step back and forth through each state of the game. 
-  <br/>
-  Afterwards, I enhanced the visual appearance by incorporating CSS-in-JS to make it more visually appealing. 
-  <br/>
-  The result passed the interview 👍 <br/> The source code can be found <a href="https://github.com/ooddaa/blog-next/blob/main/app/portfolio/components/TicTacToe/TicTacToe.tsx" className="text-sky-700 hover:text-sky-500">here</a>.</div>)},
+  TicTacToe: ticTacToe,
   Accordion: {component: <Accordion />, description: ""},
   Carousel: {component: <Carousel />, description: ""},
   Pagination: {component: <Pagination pages={20} />, description: ""},
@@ -98,26 +89,14 @@ const components: ComponentEntry = {
   ), description: ""},
   'Person details': {component: <NameForm />, description: ""},
   "Welcome back": {component: <WelcomeBackForm />, description: ""},
-  Katcher: {component: <Katcher />, description: (<><a href="https://www.katcher.bio"><GradientSpan from="green" to="blue">
-  Katcher
-</GradientSpan></a> is a job search platform for Life Science professionals. 
-<br/>
-My friend and I started it in 2022 and as of the end of August 2023 its MVP is almost complete.
-<PB4/>
-I wrote it <a href="https://elixir-lang.org/" className='text-sky-500 underline'>Elixir</a> | <a href="https://www.phoenixframework.org/" className='text-sky-500 underline'>Phoenix</a> | <a href="https://hexdocs.pm/phoenix_live_view/welcome.html" className='text-sky-500 underline'>Phoenix LiveView</a> which has been a heavenly experience 😁
-<PB4/> 
-Have a look, register and get yourself a great job in Life Sciences!
-<PB4/>
-go check it out 👉 <a href="https://www.katcher.bio"><GradientSpan from="green" to="blue">
-Katcher
-</GradientSpan></a></>)},
-  // "Desktop": <DesktopWorkspace />,
+  Caves: caves,
+  Katcher: katcher
 };
 
 const links = [
-  { label: "TicTacToe", order: 1 },
+  { label: "Caves", order: 1, new: true },
   { label: "Katcher", order: 1, new: true },
-  { label: "Intro", order: 1 },
+  { label: "TicTacToe", order: 1 },
   { label: "Forms", order: 1 },
   { label: "Reference", order: 2 },
   { label: "Person details", order: 2 },
@@ -133,7 +112,7 @@ const links = [
 
 export default function Portfolio() {
   const [currentComponent, setCurrentComponent] = useState<ComponentEntryValue>(
-    components["Reference"]
+    components["Caves"]
   );
 
   const selectComponent = (componentName: string) => {

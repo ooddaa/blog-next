@@ -367,4 +367,14 @@ const TicTacToe = () => {
   );
 };
 
-export default TicTacToe;
+export const ticTacToe = {component: <TicTacToe />,  description: (<div>I completed a basic tic-tac-toe game as part of a tech interview. To begin with, I was provided with the initial app structure and had to:
+  <br/>
+  1. Implement the stubbed-out functions in order to make the game functional
+  <br/>
+  2. Make the game state persistent between refreshes
+  <br/>
+  3. Implement a persistent game history, that allows the user to step back and forth through each state of the game. 
+  <br/>
+  Afterwards, I enhanced the visual appearance by incorporating CSS-in-JS to make it more visually appealing. 
+  <br/>
+  The result passed the interview 👍 <br/> The source code can be found <a href="https://github.com/ooddaa/blog-next/blob/main/app/portfolio/components/TicTacToe/TicTacToe.tsx" className="text-sky-700 hover:text-sky-500">here</a>.</div>)}

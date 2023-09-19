@@ -43,7 +43,7 @@ interface TableOfContentsProps {
 }
 
 export default function TableOfContents({ links, onClick }: TableOfContentsProps) {
-  const [active, setActive] = useState("Intro")
+  const [active, setActive] = useState("Caves")
   const { classes, cx } = useStyles();
   const items = links.map((item) => { 
     return (

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, Fragment, SetStateAction } from "react";
 
 export const caveSystem = {
   start: ["b"],
@@ -159,19 +159,20 @@ type RenderGridProps = {
   grid: Grid;
   children?: JSX.Element | JSX.Element[];
 };
+
 function renderGrid({
   position: { x, y },
   grid,
   children,
 }: RenderGridProps): JSX.Element[] {
-  return grid.map((position) => {
+  return grid.map((position, i) => {
     return (
-      <>
+      <Fragment key={`${i}${position.x}${position.y}`}>
         <svg x={x} y={y}>
           {renderDot({ position })}
           {children}
         </svg>
-      </>
+      </Fragment>
     );
   });
 }
@@ -195,97 +196,94 @@ export function renderCaveSystem(caveSystem: object): JSX.Element {
     <div className="w-full flex flex-row gap-12 justify-between items-between">
       <svg width={600} height={600}>
         {/* <Grid position={{ x, y }} side={side} size={{ rows: 10, cols: 10 }}> */}
-          <Cave
-            position={{ x: side * 2.5, y: side * 0.5 }}
-            width={side * 3}
-            height={side}
-            label={"Start"}
-            fill="#a7f3d0"
-          >
-            <Line
-              from={{ x: side * 0.5, y: side }}
-              to={{ x: side * 0.5, y: side * 2.5 }}
-            />
-            <Line
-              from={{ x: side * 2.5, y: side }}
-              to={{ x: side * 2.5, y: side * 2.5 }}
-            />
-          </Cave>
+        <Cave
+          position={{ x: side * 2.5, y: side * 0.5 }}
+          width={side * 3}
+          height={side}
+          label={"Start"}
+          fill="#a7f3d0"
+        >
+          <Line
+            from={{ x: side * 0.5, y: side }}
+            to={{ x: side * 0.5, y: side * 2.5 }}
+          />
+          <Line
+            from={{ x: side * 2.5, y: side }}
+            to={{ x: side * 2.5, y: side * 2.5 }}
+          />
+        </Cave>
 
-          <Cave
-            position={{ x: side * 0.5, y: side * 2.5 }}
-            width={side}
-            height={side}
-            label={"c"}
-            fill="#e2e8f0"
-          >
-            <Line
-              from={{ x: side, y: side * 0.5 }}
-              to={{ x: side * 2.5, y: side * 0.5 }}
-            />
-          </Cave>
+        <Cave
+          position={{ x: side * 0.5, y: side * 2.5 }}
+          width={side}
+          height={side}
+          label={"c"}
+          fill="#e2e8f0"
+        >
+          <Line
+            from={{ x: side, y: side * 0.5 }}
+            to={{ x: side * 2.5, y: side * 0.5 }}
+          />
+        </Cave>
 
-          <Cave
-            position={{ x: side * 2.5, y: side * 2.5 }}
-            width={side}
-            height={side}
-            label={"A"}
-          >
-            <Line
-              from={{ x: side * 0.5, y: side }}
-              to={{ x: side * 0.5, y: side * 2.5 }}
-            />
-            <Line
-              from={{ x: side, y: side * 0.5 }}
-              to={{ x: side * 2.5, y: side * 0.5 }}
-            />
-          </Cave>
+        <Cave
+          position={{ x: side * 2.5, y: side * 2.5 }}
+          width={side}
+          height={side}
+          label={"A"}
+        >
+          <Line
+            from={{ x: side * 0.5, y: side }}
+            to={{ x: side * 0.5, y: side * 2.5 }}
+          />
+          <Line
+            from={{ x: side, y: side * 0.5 }}
+            to={{ x: side * 2.5, y: side * 0.5 }}
+          />
+        </Cave>
 
-          <Cave
-            position={{ x: side * 4.5, y: side * 2.5 }}
-            width={side}
-            height={side}
-            label={"b"}
-            fill="#e2e8f0"
-          >
-            <Line
-              from={{ x: side * 0.5, y: side }}
-              to={{ x: side * 0.5, y: side * 2.5 }}
-            />
-            <Line
-              from={{ x: side, y: side * 0.5 }}
-              to={{ x: side * 2.5, y: side * 0.5 }}
-            />
-          </Cave>
+        <Cave
+          position={{ x: side * 4.5, y: side * 2.5 }}
+          width={side}
+          height={side}
+          label={"b"}
+          fill="#e2e8f0"
+        >
+          <Line
+            from={{ x: side * 0.5, y: side }}
+            to={{ x: side * 0.5, y: side * 2.5 }}
+          />
+          <Line
+            from={{ x: side, y: side * 0.5 }}
+            to={{ x: side * 2.5, y: side * 0.5 }}
+          />
+        </Cave>
 
-          <Cave
-            position={{ x: side * 6.5, y: side * 2.5 }}
-            width={side}
-            height={side}
-            label={"d"}
-            fill="#e2e8f0"
-          >
-            {/* <Line from={{x: side, y: side * .5}} to={{x: side * 2.35, y: side * .5}} /> */}
-          </Cave>
+        <Cave
+          position={{ x: side * 6.5, y: side * 2.5 }}
+          width={side}
+          height={side}
+          label={"d"}
+          fill="#e2e8f0"
+        >
+          {/* <Line from={{x: side, y: side * .5}} to={{x: side * 2.35, y: side * .5}} /> */}
+        </Cave>
 
-          <Cave
-            position={{ x: side * 2.5, y: side * 4.5 }}
-            width={side * 3}
-            height={side}
-            label={"End"}
-            fill="#a7f3d0"
-          >
-            {/* <Line from={{x: side, y: side}} to={{x: side * .5, y: side * 2}} />
-          <Line from={{x: side, y: side}} to={{x: side * 2.5, y: side * 2.5}} /> */}
-          </Cave>
+        <Cave
+          position={{ x: side * 2.5, y: side * 4.5 }}
+          width={side * 3}
+          height={side}
+          label={"End"}
+          fill="#a7f3d0"
+        ></Cave>
         {/* </Grid> */}
       </svg>
-      {renderPaths()}
+      {RenderPaths()}
     </div>
   );
 }
 
-export function renderPaths(): JSX.Element {
+export function RenderPaths(): JSX.Element {
   const side = 10,
     x = 5,
     y = 5,
@@ -293,260 +291,189 @@ export function renderPaths(): JSX.Element {
     cols = 7;
   const grid = makeGrid(side, { rows, cols });
   // console.log(grid)
+  function explainPath(e: React.MouseEvent) {
+    console.log(e);
+  }
   return (
     <div className="bg-white w-1/3 p-6 flex flex-row gap-4 flex-wrap justify-start items-start content-start">
-      <svg width={cols * side} height={rows * side}>
-        <Grid position={{ x, y }} side={side} size={{ rows, cols }}>
-          {/* Start -> A */}
-          <Line
-            from={{ x: side * 2, y: 0 }}
-            to={{ x: side * 2, y: side * 2 }}
-            stroke="red"
-            strokeWidth={2}
-          />
-          {/* A -> End */}
-          <Line
-            from={{ x: side * 2, y: side * 2 }}
-            to={{ x: side * 2, y: side * 4 }}
-            stroke="red"
-            strokeWidth={2}
-          />
-        </Grid>
-      </svg>
+      {/* Start -> A -> End */}
+      <div className="hover:scale-[1.1] cursor-pointer active:scale-[.98] hover:shadow-md bg-white flex justify-center items-center rounded-md">
+        {/* {PathSolution({side, size: {rows, cols}, position: {x, y}})} */}
+       <PathSolution side={side} size={{rows, cols}} position={{x, y}}/>
+      </div>
 
-      {/* Start -> A -> c -> A -> End */}
-      <svg width={cols * side} height={rows * side}>
-        <Grid position={{ x, y }} side={side} size={{ rows, cols }}>
-          {/* Start -> A */}
-          <Line
-            from={{ x: side * 2, y: 0 }}
-            to={{ x: side * 2, y: side * 2 }}
-            stroke="red"
-            strokeWidth={2}
-          />
-          {/* c -> A*/}
-          <Line
-            from={{ x: 0, y: side * 2 }}
-            to={{ x: side * 2, y: side * 2 }}
-            stroke="red"
-            strokeWidth={2}
-          />
-          {/* A -> End */}
-          <Line
-            from={{ x: side * 2, y: side * 2 }}
-            to={{ x: side * 2, y: side * 4 }}
-            stroke="red"
-            strokeWidth={2}
-          />
-        </Grid>
-      </svg>
-
-      <svg width={cols * side} height={rows * side}>
-        <Grid position={{ x, y }} side={side} size={{ rows, cols }}>
-          {/* Start -> A */}
-          <Line
-            from={{ x: side * 2, y: 0 }}
-            to={{ x: side * 2, y: side * 2 }}
-            stroke="red"
-            strokeWidth={2}
-          />
-          {/* A -> End */}
-          <Line
-            from={{ x: side * 2, y: side * 2 }}
-            to={{ x: side * 2, y: side * 4 }}
-            stroke="red"
-            strokeWidth={2}
-          />
-          {/* c -> A -> b*/}
-          <Line
-            from={{ x: 0, y: side * 2 }}
-            to={{ x: side * 4, y: side * 2 }}
-            stroke="red"
-            strokeWidth={2}
-          />
-        </Grid>
-      </svg>
-
-      {/* Start -> A -> c -> A -> b -> A -> End */}
-      <svg width={cols * side} height={rows * side}>
-        <Grid position={{ x, y }} side={side} size={{ rows, cols }}>
-          {/* Start -> A */}
-          <Line
-            from={{ x: side * 2, y: 0 }}
-            to={{ x: side * 2, y: side * 2 }}
-            stroke="red"
-            strokeWidth={2}
-          />
-          {/* c -> A -> b*/}
-          <Line
-            from={{ x: 0, y: side * 2 }}
-            to={{ x: side * 4, y: side * 2 }}
-            stroke="red"
-            strokeWidth={2}
-          />
-          {/* b -> End */}
-          <Line
-            from={{ x: side * 4, y: side * 2 }}
-            to={{ x: side * 4, y: side * 4 }}
-            stroke="red"
-            strokeWidth={2}
-          />
-        </Grid>
-      </svg>
-
-      {/* Start -> A -> b -> A -> c -> A -> End */}
+      {/* Start -> A -> End */}
       <div className="hover:scale-[1.1] cursor-pointer active:scale-[.98] hover:shadow-md bg-white flex justify-center items-center rounded-md">
         <svg width={cols * side} height={rows * side}>
           <Grid position={{ x, y }} side={side} size={{ rows, cols }}>
-            {/* Start -> A */}
-            <Line
-              from={{ x: side * 2, y: 0 }}
-              to={{ x: side * 2, y: side * 2 }}
+            <path
+              d={`M ${side * 2} 0 V ${side * 4}`}
               stroke="red"
               strokeWidth={2}
+              strokeLinecap="square"
+            />
+          </Grid>
+        </svg>
+      </div>
+
+      {/* Start -> A -> c -> A -> End */}
+      <div className="hover:scale-[1.1] cursor-pointer active:scale-[.98] hover:shadow-md bg-white flex justify-center items-center rounded-md">
+        <svg width={cols * side} height={rows * side}>
+          <Grid position={{ x, y }} side={side} size={{ rows, cols }}>
+            {/* Start -> A -> End */}
+            <path
+              d={`M ${side * 2} 0 V ${side * 4}`}
+              stroke="red"
+              strokeWidth={2}
+              strokeLinecap="square"
+            />
+            {/* c -> A -> */}
+            <path
+              d={`M 0 ${side * 2} H ${side * 2}`}
+              stroke="red"
+              strokeWidth={2}
+              strokeLinecap="square"
+            />
+          </Grid>
+        </svg>
+      </div>
+
+      {/* Start -> A -> b -> A -> End */}
+      <div className="hover:scale-[1.1] cursor-pointer active:scale-[.98] hover:shadow-md bg-white flex justify-center items-center rounded-md">
+        <svg width={cols * side} height={rows * side}>
+          <Grid position={{ x, y }} side={side} size={{ rows, cols }}>
+            <path
+              d={`M ${side * 2} 0 V ${side * 4} M ${side * 2} ${side * 2} h ${
+                side * 2
+              }`}
+              stroke="red"
+              strokeWidth={2}
+              strokeLinecap="square"
+              fill="transparent"
+            />
+          </Grid>
+        </svg>
+      </div>
+
+      {/* Start -> A -> c -> A -> b -> A ->  End */}
+      <div className="hover:scale-[1.1] cursor-pointer active:scale-[.98] hover:shadow-md bg-white flex justify-center items-center rounded-md">
+        <svg width={cols * side} height={rows * side}>
+          <Grid position={{ x, y }} side={side} size={{ rows, cols }}>
+            {/* Start -> A -> End */}
+            <path
+              d={`M ${side * 2} 0 V ${side * 4}`}
+              stroke="red"
+              strokeWidth={2}
+              strokeLinecap="square"
             />
             {/* c -> A -> b*/}
-            <Line
-              from={{ x: 0, y: side * 2 }}
-              to={{ x: side * 4, y: side * 2 }}
+            <path
+              d={`M 0 ${side * 2} H ${side * 4}`}
               stroke="red"
               strokeWidth={2}
+              strokeLinecap="square"
             />
-            {/* b -> End */}
-            <Line
-              from={{ x: side * 4, y: side * 2 }}
-              to={{ x: side * 4, y: side * 4 }}
+          </Grid>
+        </svg>
+      </div>
+      {/* Start -> A -> b -> A -> c -> A ->  End */}
+      <div className="hover:scale-[1.1] cursor-pointer active:scale-[.98] hover:shadow-md bg-white flex justify-center items-center rounded-md">
+        <svg width={cols * side} height={rows * side}>
+          <Grid position={{ x, y }} side={side} size={{ rows, cols }}>
+            {/* Start -> A -> End */}
+            <path
+              d={`M ${side * 2} 0 V ${side * 4}`}
               stroke="red"
               strokeWidth={2}
+              strokeLinecap="square"
+            />
+            {/* c -> A -> b*/}
+            <path
+              d={`M 0 ${side * 2} H ${side * 4}`}
+              stroke="red"
+              strokeWidth={2}
+              strokeLinecap="square"
+            />
+          </Grid>
+        </svg>
+      </div>
+
+      {/* Start -> A -> c -> A -> b -> End */}
+      <div className="hover:scale-[1.1] cursor-pointer active:scale-[.98] hover:shadow-md bg-white flex justify-center items-center rounded-md">
+        <svg width={cols * side} height={rows * side}>
+          <Grid position={{ x, y }} side={side} size={{ rows, cols }}>
+            <path
+              d={`M ${side * 2} 0 v ${side * 2} M 0 ${side * 2} h ${
+                side * 4
+              } v ${side * 2}`}
+              stroke="red"
+              strokeWidth={2}
+              strokeLinecap="square"
+              fill="transparent"
             />
           </Grid>
         </svg>
       </div>
 
       {/* Start -> A -> b -> End */}
-      <svg width={cols * side} height={rows * side}>
-        <Grid position={{ x, y }} side={side} size={{ rows, cols }}>
-          {/* Start -> A */}
-          <Line
-            from={{ x: side * 2, y: 0 }}
-            to={{ x: side * 2, y: side * 2 }}
-            stroke="red"
-            strokeWidth={2}
-          />
-          {/* A -> b */}
-          <Line
-            from={{ x: side * 2, y: side * 2 }}
-            to={{ x: side * 4, y: side * 2 }}
-            stroke="red"
-            strokeWidth={2}
-          />
-          {/* b -> End */}
-          <Line
-            from={{ x: side * 4, y: side * 2 }}
-            to={{ x: side * 4, y: side * 4 }}
-            stroke="red"
-            strokeWidth={2}
-          />
-        </Grid>
-      </svg>
-
-      {/* Start -> A -> b -> A -> End */}
-      <svg width={cols * side} height={rows * side}>
-        <Grid position={{ x, y }} side={side} size={{ rows, cols }}>
-          {/* Start -> A */}
-          <Line
-            from={{ x: side * 2, y: 0 }}
-            to={{ x: side * 2, y: side * 2 }}
-            stroke="red"
-            strokeWidth={2}
-          />
-          {/* A -> b */}
-          <Line
-            from={{ x: side * 2, y: side * 2 }}
-            to={{ x: side * 4, y: side * 2 }}
-            stroke="red"
-            strokeWidth={2}
-          />
-          {/* A -> End */}
-          <Line
-            from={{ x: side * 2, y: side * 2 }}
-            to={{ x: side * 2, y: side * 4 }}
-            stroke="red"
-            strokeWidth={2}
-          />
-        </Grid>
-      </svg>
+      <div className="hover:scale-[1.1] cursor-pointer active:scale-[.98] hover:shadow-md bg-white flex justify-center items-center rounded-md">
+        <svg width={cols * side} height={rows * side}>
+          <Grid position={{ x, y }} side={side} size={{ rows, cols }}>
+            {/* Start -> A */}
+            <path
+              d={`M ${side * 2} 0 v ${side * 2} h ${side * 2} v ${side * 2}`}
+              stroke="red"
+              strokeWidth={2}
+              strokeLinecap="square"
+              fill="transparent"
+            />
+          </Grid>
+        </svg>
+      </div>
 
       {/* Start -> b -> End */}
-      <svg width={cols * side} height={rows * side}>
-        <Grid position={{ x, y }} side={side} size={{ rows, cols }}>
-          {/* Start -> b */}
-          <Line
-            from={{ x: side * 4, y: 0 }}
-            to={{ x: side * 4, y: side * 2 }}
-            stroke="red"
-            strokeWidth={2}
-          />
-          {/* b -> End */}
-          <Line
-            from={{ x: side * 4, y: side * 2 }}
-            to={{ x: side * 4, y: side * 4 }}
-            stroke="red"
-            strokeWidth={2}
-          />
-        </Grid>
-      </svg>
+      <div className="hover:scale-[1.1] cursor-pointer active:scale-[.98] hover:shadow-md bg-white flex justify-center items-center rounded-md">
+        <svg width={cols * side} height={rows * side}>
+          <Grid position={{ x, y }} side={side} size={{ rows, cols }}>
+            {/* Start -> A */}
+            <path
+              d={`M ${side * 4} 0 V ${side * 4}`}
+              stroke="red"
+              strokeWidth={2}
+              strokeLinecap="square"
+              fill="transparent"
+            />
+          </Grid>
+        </svg>
+      </div>
 
       {/* Start -> b -> A -> c -> A -> End */}
-      <svg width={cols * side} height={rows * side}>
-        <Grid position={{ x, y }} side={side} size={{ rows, cols }}>
-          {/* Start -> b */}
-          <Line
-            from={{ x: side * 4, y: 0 }}
-            to={{ x: side * 4, y: side * 2 }}
-            stroke="red"
-            strokeWidth={2}
-          />
-          {/* A -> b */}
-          <Line
-            from={{ x: side * 2, y: side * 2 }}
-            to={{ x: side * 4, y: side * 2 }}
-            stroke="red"
-            strokeWidth={2}
-          />
-          {/* A -> End */}
-          <Line
-            from={{ x: side * 2, y: side * 2 }}
-            to={{ x: side * 2, y: side * 4 }}
-            stroke="red"
-            strokeWidth={2}
-          />
-        </Grid>
-      </svg>
+      <div className="hover:scale-[1.1] cursor-pointer active:scale-[.98] hover:shadow-md bg-white flex justify-center items-center rounded-md">
+        <svg width={cols * side} height={rows * side}>
+          <Grid position={{ x, y }} side={side} size={{ rows, cols }}>
+            {/* Start -> A */}
+            <path
+              d={`M ${side * 4} 0 v ${side * 2} h -${side * 4} h ${
+                side * 2
+              } v ${side * 2}`}
+              stroke="red"
+              strokeWidth={2}
+              strokeLinecap="square"
+              fill="transparent"
+            />
+          </Grid>
+        </svg>
+      </div>
 
       {/* Start -> b -> A -> End */}
       <svg width={cols * side} height={rows * side}>
         <Grid position={{ x, y }} side={side} size={{ rows, cols }}>
-          {/* Start -> b */}
-          <Line
-            from={{ x: side * 4, y: 0 }}
-            to={{ x: side * 4, y: side * 2 }}
+          <path
+            d={`M ${side * 4} 0 v ${side * 2} h -${side * 2} v ${side * 2}`}
             stroke="red"
             strokeWidth={2}
-          />
-          {/* c -> A -> b*/}
-          <Line
-            from={{ x: 0, y: side * 2 }}
-            to={{ x: side * 4, y: side * 2 }}
-            stroke="red"
-            strokeWidth={2}
-          />
-          {/* A -> End */}
-          <Line
-            from={{ x: side * 2, y: side * 2 }}
-            to={{ x: side * 2, y: side * 4 }}
-            stroke="red"
-            strokeWidth={2}
+            strokeLinecap="square"
+            fill="transparent"
           />
         </Grid>
       </svg>
@@ -554,8 +481,43 @@ export function renderPaths(): JSX.Element {
   );
 }
 
+function PathSolution({side, size: {rows, cols}, position: {x, y}, children}: GridProps) {
+  const path: Position[] = [
+   {x: side*2-2, y: 0}, 
+  {x: side*2-2, y: side},
+  {x: side*2-2, y: side*2},
+  {x: side*2-2, y: side*3},
+  {x: side*2-2, y: side*4},
+]
+  const [positionIndex, setPositionIndex] = useState<number>(0)
+  useEffect(() => {
+    setInterval(() => {
+      setPositionIndex((currIndex): any => {
+        return getNextPosition(currIndex)
+      })
+    }, 500)
+  }, [])
+  function getNextPosition(index: number): number {
+    if (index == 4) return 0
+    return index + 1
+  }
+  return (<div className="hover:scale-[1.1] cursor-pointer active:scale-[.98] hover:shadow-md bg-white flex justify-center items-center rounded-md">
+  <svg width={cols * side} height={rows * side}>
+    <Grid position={{ x, y }} side={side} size={{ rows, cols }}>
+      <path
+        d={`M ${side * 2} 0 V ${side * 4}`}
+        stroke="red"
+        strokeWidth={2}
+        strokeLinecap="square"
+      />
+      {renderDot({position: path[positionIndex], width: 4, height: 4, fill: "green"})}
+    </Grid>
+  </svg>
+</div>)
+}
+
 export function Test() {
-  const [position, setPosition] = useState<Position>({
+  const [position, setPositionIndex] = useState<Position>({
     x: 10,
     y: 10,
     direction: "right",
@@ -579,7 +541,7 @@ export function Test() {
 
   useEffect(() => {
     setInterval(() => {
-      setPosition((position) => calculatePosition(position));
+      setPositionIndex((position) => calculatePosition(position));
     }, 100);
   }, []);
 

@@ -4,7 +4,7 @@ title: Bloggin from GitHub 1
 subtitle: Part 1
 author: Dmitry "Oda" Vikhorev
 date: 20230910
-timeToRead: 3min
+timeToRead: 3 min
 version: 0.1
 tags: ["GitHub", ".mdx"]
 ---
@@ -24,26 +24,24 @@ End goal:
 🤫 way nicer and prettier than a simple Markdown would allow though
 </TLDR>
 
-## Blablabla
-Same with playing the guitar - I want to actually learn to play it. But if every time I have an urge
-to practice Lateralus, I have to invest more than 15seconds to set things up - well, chances are it ain't gonna happen.
-<PB8/>
-
-Instead, I just made it simple - guitar is next to the amp, cabels are plugged. Take the guitar out, push the button and play.
-And I got so much more mileage from this setup over the years. 
-I am lazy but I am stubborn, what can I say.
-<PB8/>
-
-## My problem
-**a)** Blogging is not easy. For me it isn't. 
-So I want to make the production as simple as possible and focus on the content. Ideally, any time I have something going on which I'd like to put in writing to understand better,
-I need some quick and easy way to write and publish it. 
+## Problem
+Blogging is not easy. And it takes me too long to write a post in JSX.
+I want to make the production (writing and publishing) as simple as possible to focus on the content. 
 <PB4/>
-**b)** My second problem is that I'm not using Medium or any other free publicly available bloggin platform. Because that's not the point. The point is to learn how things work and progress. 
-By exposing myself to all the problems that come with creating my blog/website from scratch, I made more progress than I think I would have if I started my blog on Medium. 
+Ideally, any time I have something I'd like to put in writing,
+I need some quick and easy way to write and publish it. Which I didn't until recently.
+<PB4/>
+
+## Solution
+1. Add .mdx support to Next.js.
+2. Use common .mdx template to write posts.
+3. Use custom components to format text.
+4. Once done, <Code>git push</Code> to Heroku.
 <PB8/>
-## Time to simplify and automate
-So at first my workflow looked like this: 
+# Let's go
+
+## Old setup
+My first setup looked like this: 
 **a)** Create posts.tsx file that exports an array of Posts, each Post being
 <PB4/>
 ```typescript
@@ -89,24 +87,179 @@ So at first my workflow looked like this:
 It is this part that made me cringe and find excuses not to write the next blogpost every time I had an inclination to do so. 
 <PB8/>
 
-## My Solution
-So I decided to invest a bit of time and do the setup properly. I will write Markdown + custom .tsx elements in .mdx files, store them locally (for now) and have GitHub deploy to Heroku every time I push into main branch. 
+## New setup
+So I decided to invest a bit of time and do the setup properly. 
+1. I will write Markdown + use custom tsx elements in .mdx files
+2. Store them locally (for now) and 
+3. Have GitHub deploy to Heroku every time I push into main branch. 
 <PB4/>
 Let's see how this works.
 <PB8/>
 
 ### Markdown
-First, I did not want to write any more .jsx/.tsx/html, I wanted to write simple human readable text, with as little decorations as possible. Hence <WebLink href="https://www.markdownguide.org/">Markdown</WebLink>. It is never a bad idea to level up your Markdown skills, is it. 
+As I wanted to write simple human readable text, with as little decorations as possible I chose to use <WebLink href="https://www.markdownguide.org/">Markdown</WebLink>. It is never a bad idea to level up your Markdown skills, is it. 
 <PB8/>
 
 ### .mdx files
-Can I write Markdown files, store them locally and transform them into a usable <Code>.tsx</Code>? Yep, sure, rtfm on <WebLink href="https://mdxjs.com/docs/">MDX</WebLink>
+However, instead of writing pure .md files, I decided to go with <WebLink href="https://mdxjs.com">MDX</WebLink>. In the nutshell, MDX alows mixing JSX/TSX syntax in one file.
 <PB4/>
-And since I am eye hall deep in Next.js, this <WebLink html="https://nextjs.org/docs/pages/building-your-application/configuring/mdx">rtfm</WebLink> is also of importance. 
+And since I am eye ball deep in Next.js, this <WebLink html="https://nextjs.org/docs/pages/building-your-application/configuring/mdx">rtfm</WebLink> also helped a lot. 
 <PB8/>
 
-<div className="w-full text-center text-sky-700">
-<Link href="/blog/posts/bloggin-from-github-2">[PART 2 FOLLOWS]</Link>
-</div>
+## Writing .mdx post
+
+## Loading .mdx post
+```typescript
+/**
+ * Loads .mdx files and parses front-matter 
+ */
+async function loadPosts(pathToPosts: string, fs: any): Promise<Post[]> {
+  const paths = fs.readdirSync(pathToPosts)
+  const posts = 
+    paths
+    .map((path: string) => {
+      const mdx = fs.readFileSync(Path.join(pathToPosts, path))
+      // data is blog post's metadata
+      // content is blog posts's content
+      let {content, data} = matter(mdx)
+      data = {filePath: path, ...data}
+      return {content, data, filePath: path}
+    })
+  return posts
+}
+```
+<PB8/>
+
+## SSR Blog with .mdx files
+I'm using the Next.js `Page Router`, so when `.../blog/posts/nice-story` path is requested, Next.js calls a dynamic route where the post (if it exists) will be displayed (or 404). 
+```
+/..
+|-- ..
+|-- pages
+    |-- blog
+        |-- posts
+            |-- [slug].tsx  <- dynamic route
+```
+
+## [slug].tsx 
+This file is returning <Code>PostPage</Code> SSR component like so:
+```typescript
+export default function PostPage({ currentPost: {source, data}, previousPost, nextPost}: InferGetStaticPropsType<typeof getStaticProps>) {
+  return (
+    <Layout>
+      <Header 
+        title={data.title}
+        subtitle={data.subtitle}
+        author={data.author}
+        timeToRead={data.timeToRead}
+        version={data.version}
+        date={data.date}
+        />
+      {data.description && <p className="description">{data.description}</p>}
+      <main>
+        <MDXRemote {...source} components={components as MDXComponents}/>
+      </main>
+      <BlogNavigation previousPost={previousPost} nextPost={nextPost}/>
+    </Layout>
+  )
+}
+```
+<PB4/>
+
+<Code>currentPost</Code> is where MDX magic comes from.
+Let's see how we obtain it. 
+
+## Getting .mdx file as data into PostPage
+Since we are in SSR and have everything stored locally, we can generate all paths and load contents with
+<PB4/>
+```typescript
+export const getStaticPaths = async () => {
+  const paths = postFilePaths
+    // Remove file extensions for page paths
+    .map((path) => path.replace(/\.mdx?$/, ''))
+    // Map the path into the static paths object required by Next.js
+    .map((slug) => ({ params: { slug } }))
+
+  return {
+    paths,
+    fallback: false,
+  }
+}
+```
+<PB4/>
+and
+<PB4/>
+```typescript
+export const getStaticProps: GetStaticProps<{
+  currentPost: { source: MDXSource; data: frontMatterData };
+  previousPost: Post | null;
+  nextPost: Post | null;
+}> = async ({ params }) => {
+  const posts = await loadPosts(POSTS_PATH, fs).then(sortPosts);
+  const [currentPost] = posts.filter(
+    ({ filePath }) => filePath === `${params?.slug}.mdx`
+  );
+  const { content, data } = matter(currentPost);
+
+  const navigation = calculateNavigation(currentPost, posts);
+  const mdxSource = await serialize(content, {
+    mdxOptions: {
+      remarkPlugins: [],
+      rehypePlugins: [[rehypePrettyCode, codeHighlightOptions]],
+    },
+    scope: data,
+  });
+
+  return {
+    props: {
+      currentPost: {
+        source: mdxSource,
+        data,
+      },
+      ...navigation,
+    },
+  };
+};
+```
 
 
+This is a SSR component that handles loading of the .mdx posts and turning them into a `Post[]`
+
+## MDX plugins
+https://github.com/remarkjs/remark-gfm
+https://nextjs.org/docs/pages/building-your-application/configuring/mdx#custom-elements
+
+## How do I render .mdx?
+There are two ways to load .mdx files in Next.js: locally and remotely. 
+I chose to go with the second as in future I plan to store files on S3 or in some database. For now they all reside in <Code>my-blog/posts</Code> directory. 
+<PB8/>
+UNFINISHED 🎃
+
+## Keep metadata in .mdx
+One important thing for me was the ability to keep all associated metadata in the same .mdx file. It looks like this:
+<PB4/>
+```
+// from here 
+---
+id: 789
+title: Bloggin from GitHub 1
+subtitle: Part 1
+author: Dmitry "Oda" Vikhorev
+date: 20230910
+timeToRead: 3 min
+version: 0.1
+tags: ["GitHub", ".mdx"]
+---
+// to here is called "front-matter"
+
+// all actual blog content goes here ...
+```
+<PB4/>
+
+The trick is to process the .mdx file that contains *front-matter* with <WebLink href="https://www.npmjs.com/package/gray-matter">grey-matter</WebLink>, a package that can parse a string into an object.  
+<PB4/> 
+
+At the moment I figured out how to do it having read in .mdx as with
+```typescript
+
+```

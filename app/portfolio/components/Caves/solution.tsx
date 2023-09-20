@@ -154,6 +154,10 @@ type GridProps = {
   size: GridSize;
   children?: JSX.Element | JSX.Element[];
 };
+interface PathSolutionProps extends GridProps {
+  start: Position;
+  instructions: ("down"|"up"|"left"|"right")[]
+};
 type RenderGridProps = {
   position: Position;
   grid: Grid;
@@ -192,10 +196,12 @@ export function renderCaveSystem(caveSystem: object): JSX.Element {
   const side = 60,
     x = 60,
     y = 0;
+    const caves = {
+
+    }
   return (
     <div className="w-full flex flex-row gap-12 justify-between items-between">
       <svg width={600} height={600}>
-        {/* <Grid position={{ x, y }} side={side} size={{ rows: 10, cols: 10 }}> */}
         <Cave
           position={{ x: side * 2.5, y: side * 0.5 }}
           width={side * 3}
@@ -289,31 +295,12 @@ export function RenderPaths(): JSX.Element {
     y = 5,
     rows = 5,
     cols = 7;
-  const grid = makeGrid(side, { rows, cols });
-  // console.log(grid)
-  function explainPath(e: React.MouseEvent) {
-    console.log(e);
-  }
+
   return (
     <div className="bg-white w-1/3 p-6 flex flex-row gap-4 flex-wrap justify-start items-start content-start">
       {/* Start -> A -> End */}
       <div className="hover:scale-[1.1] cursor-pointer active:scale-[.98] hover:shadow-md bg-white flex justify-center items-center rounded-md">
-        {/* {PathSolution({side, size: {rows, cols}, position: {x, y}})} */}
-       <PathSolution side={side} size={{rows, cols}} position={{x, y}}/>
-      </div>
-
-      {/* Start -> A -> End */}
-      <div className="hover:scale-[1.1] cursor-pointer active:scale-[.98] hover:shadow-md bg-white flex justify-center items-center rounded-md">
-        <svg width={cols * side} height={rows * side}>
-          <Grid position={{ x, y }} side={side} size={{ rows, cols }}>
-            <path
-              d={`M ${side * 2} 0 V ${side * 4}`}
-              stroke="red"
-              strokeWidth={2}
-              strokeLinecap="square"
-            />
-          </Grid>
-        </svg>
+       <PathSolution side={side} size={{rows, cols}} position={{x, y}} instructions={["down","down","down","down"]} start={{x: side*2-4/2, y: 0}}/>
       </div>
 
       {/* Start -> A -> c -> A -> End */}
@@ -481,14 +468,67 @@ export function RenderPaths(): JSX.Element {
   );
 }
 
-function PathSolution({side, size: {rows, cols}, position: {x, y}, children}: GridProps) {
-  const path: Position[] = [
-   {x: side*2-2, y: 0}, 
-  {x: side*2-2, y: side},
-  {x: side*2-2, y: side*2},
-  {x: side*2-2, y: side*3},
-  {x: side*2-2, y: side*4},
-]
+function instructionsToCoordinates(start: Position, path: string[], side: number) {
+  // Start + [down, down, down, down] Start -> A -> End
+  // Start + [down, down, left, left, right, right, down, down] Start -> A -> c -> A ->  End
+  function down(from: Position): Position {
+    // increase y one side/level/step/any other bad name
+    return {...from, y: from.y + side}
+  }
+  function up(from: Position): Position {
+    // descrease y one side/level/step/any other bad name
+    return {...from, y: from.y - side}
+  }
+  function left(from: Position): Position {
+    // descrease x one side/level/step/any other bad name
+    return {...from, x: from.x - side}
+  }
+  function right(from: Position): Position {
+    // increase x one side/level/step/any other bad name
+    return {...from, x: from.x + side}
+  }
+  const mapping: {[key: string]: Function} = {down,up,left,right}
+
+  const rv = path.reduce((acc, move)  => {
+    let [last] = acc
+    return [mapping[move](last), ...acc]
+  }, [start]).reverse()
+  return rv
+}
+function instructionsToPath(start: Position, path: string[], side: number) {
+  // Start + [down, down, down, down] Start -> A -> End
+  /* d={`M ${side * 2} 0 V ${side * 4}`} */
+  // Start + [down, down, left, left, right, right, down, down] Start -> A -> c -> A ->  End
+  function down(from: Position): Position {
+    // increase y one side/level/step/any other bad name
+    return {...from, y: from.y + side}
+  }
+  function up(from: Position): Position {
+    // descrease y one side/level/step/any other bad name
+    return {...from, y: from.y - side}
+  }
+  function left(from: Position): Position {
+    // descrease x one side/level/step/any other bad name
+    return {...from, x: from.x - side}
+  }
+  function right(from: Position): Position {
+    // increase x one side/level/step/any other bad name
+    return {...from, x: from.x + side}
+  }
+  const mapping: {[key: string]: Function} = {down,up,left,right}
+
+  const rv = path.reduce((acc, move)  => {
+    let [last] = acc
+    return [mapping[move](last), ...acc]
+  }, [start]).reverse()
+  return rv
+}
+
+
+
+function PathSolution({side, size: {rows, cols}, position: {x, y}, start, instructions, children}: PathSolutionProps) {
+  const dotWidth = 4
+  const coordinates = instructionsToCoordinates(start, instructions, side)
   const [positionIndex, setPositionIndex] = useState<number>(0)
   useEffect(() => {
     setInterval(() => {
@@ -498,7 +538,9 @@ function PathSolution({side, size: {rows, cols}, position: {x, y}, children}: Gr
     }, 500)
   }, [])
   function getNextPosition(index: number): number {
-    if (index == 4) return 0
+    // console.dir({index, len: coordinates.length, mod: index % coordinates.length})
+    // return index % coordinates.length 
+    if (index == coordinates.length - 1) return 0
     return index + 1
   }
   return (<div className="hover:scale-[1.1] cursor-pointer active:scale-[.98] hover:shadow-md bg-white flex justify-center items-center rounded-md">
@@ -510,7 +552,7 @@ function PathSolution({side, size: {rows, cols}, position: {x, y}, children}: Gr
         strokeWidth={2}
         strokeLinecap="square"
       />
-      {renderDot({position: path[positionIndex], width: 4, height: 4, fill: "green"})}
+      {renderDot({position: coordinates[positionIndex], width: dotWidth, height: dotWidth, fill: "green"})}
     </Grid>
   </svg>
 </div>)

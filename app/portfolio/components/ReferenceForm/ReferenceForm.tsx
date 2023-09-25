@@ -19,11 +19,11 @@ const minWidth = 350;
 const minHeight = 200;
 
 const general = {
-  color: styles.colors["dark-blue"],
-  display: "flex",
-  flexDirection: "column",
-  // "flex-direction": "column",
-  marginBottom: styles.spacing[24],
+  // color: styles.colors["dark-blue"],
+  // display: "flex",
+  // flexDirection: "column",
+  // // "flex-direction": "column",
+  // marginBottom: styles.spacing[24],
 };
 
 const generalInput = {

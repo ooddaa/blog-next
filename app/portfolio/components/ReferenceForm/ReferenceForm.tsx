@@ -13,7 +13,6 @@ import {
 } from "./interfaces";
 import { v4 as uuidv4 } from "uuid";
 import findIndex from "lodash/findIndex";
-// import axios from 'axios'
 
 const maxWidth = 450;
 const minWidth = 350;
@@ -22,7 +21,8 @@ const minHeight = 200;
 const general = {
   color: styles.colors["dark-blue"],
   display: "flex",
-  "flex-direction": "column",
+  flexDirection: "column",
+  // "flex-direction": "column",
   marginBottom: styles.spacing[24],
 };
 
@@ -122,9 +122,6 @@ const localStyles = {
     justifyContent: "flex-start",
     gap: styles.spacing[48],
   },
-  // date: {
-  //   width: "150px",
-  // },
   dateInput: {
     ...generalInput,
     marginTop: styles.spacing[8],

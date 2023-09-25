@@ -1,4 +1,3 @@
-import { useContext } from "react";
 import { resolveMonth, sortPosts } from "@/app/toolbox";
 import { Post } from "@/app/types";
 import Link from "next/link";
@@ -21,7 +20,6 @@ export default function BlogTOC({posts}: BlogTOCparams) {
             <div className="flex text-2xl text-slate-300 mb-8 w-full border-b justify-end">{year}</div>
             {groupByMonth(posts, "desc")
               .map(({month, posts}) => {
-                console.log(month)
                 return <div key={month}>
                   <div className="text-xl text-slate-500 pb-4">{resolveMonth(month)}</div>
                   <div className="pb-12">

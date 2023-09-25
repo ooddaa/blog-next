@@ -118,15 +118,15 @@ const Board = ({ squares, onSquareClick }: any) => {
           background: "#fff",
           border: "1px solid #999",
           float: "left",
-          fontSize: "96px",
+          fontSize: "48px",
           fontWeight: "bold",
-          lineHeight: "136px",
-          height: "136px",
+          lineHeight: "68px",
+          height: "68px",
           marginRight: "-1px",
           marginTop: "-1px",
           padding: "0",
           textAlign: "center",
-          width: "136px",
+          width: "68px",
           "&:focus": {
             outline: "none",
             background: "#fee2e2",
@@ -288,10 +288,6 @@ const TicTacToe = () => {
     <div
       className="wrapper"
     >
-      <div className='p-6 bg-white shadow rounded-md w-full text-lg/8'>
-      A simple tic-tac-toe game that I had to write for a job interview. Passed the tech interview 😂
-      </div>
-
       <div
         className="game"
         css={{
@@ -371,4 +367,14 @@ const TicTacToe = () => {
   );
 };
 
-export default TicTacToe;
+export const ticTacToe = {component: <TicTacToe />,  description: (<div>I completed a basic tic-tac-toe game as part of a tech interview. To begin with, I was provided with the initial app structure and had to:
+  <br/>
+  1. Implement the stubbed-out functions in order to make the game functional
+  <br/>
+  2. Make the game state persistent between refreshes
+  <br/>
+  3. Implement a persistent game history, that allows the user to step back and forth through each state of the game. 
+  <br/>
+  Afterwards, I enhanced the visual appearance by incorporating CSS-in-JS to make it more visually appealing. 
+  <br/>
+  The result passed the interview 👍 <br/> The source code can be found <a href="https://github.com/ooddaa/blog-next/blob/main/app/portfolio/components/TicTacToe/TicTacToe.tsx" className="text-sky-700 hover:text-sky-500">here</a>.</div>)}

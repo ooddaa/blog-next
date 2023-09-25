@@ -1,0 +1,55 @@
+---
+id: 10
+title: Using Markdown with Custom components in Next.js
+subtitle: My Journey to Optimized Blogging
+author: Dmitry "Oda" Vikhorev
+date: 20230920
+timeToRead: 3min
+version: 0.1
+tags: ["Next.js", ".mdx"]
+---
+
+<TLDR>
+Are you a blogger or a developer looking to supercharge your blogging experience with Next.js and Markdown? In this blog post, I'll take you through my experience of adding .mdx (Markdown) support to Next.js. 
+</TLDR>
+
+Markdown is a lightweight markup language that allows you to write content in plain text with simple formatting syntax. It's a popular choice for bloggers due to its simplicity and readability. So, let's dive into the process of integrating Markdown into Next.js for a more efficient and enjoyable blogging experience.
+
+Setting the Stage
+Before we start, let's clarify our goal: we want to optimize our blog writing process by using Markdown instead of HTML. Markdown is known for its simplicity, which makes it a great choice for creating and managing blog content.
+
+1. Installation
+To get started, we need to install the necessary dependencies. We'll use the @next/mdx package, which allows us to read .mdx files directly. You can install it using npm:
+
+bash
+Copy code
+npm i @next/mdx @types/mdx
+2. Configuration
+Next, we need to configure Next.js to work with MDX. This involves creating a next.config.js file and an mdx-components.js file in your project's root folder. You can refer to the official Next.js documentation for guidance on how to set this up: Next.js MDX Documentation
+
+3. Creating Pages
+To start using MDX for your blog posts, create a directory structure for your blog pages. You'll need to refresh the Pages Router to recognize your new MDX-powered pages. Check out the example provided in the Next.js repository for guidance: Next.js with MDX Example
+
+4. Additional Dependencies
+In addition to @next/mdx, you might also need to install next-mdx-remote and next-remote-watch for advanced MDX capabilities.
+
+bash
+Copy code
+npm i next-mdx-remote next-remote-watch
+5. Code Highlighting
+For code highlighting in your MDX content, it's crucial to choose the right approach. Instead of using the rehype-highlight package, consider using rehype-pretty-code. This alternative allows you to highlight code effectively without the need for additional configuration in your next.config.js. You can find more information on how to implement it in the Next.js documentation.
+
+6. Styling and Layout
+Customizing the appearance of your MDX content is important. You might want to replace the default <pre> element with a more aesthetically pleasing code wrapper. You can achieve this by adding styles to your layout and using JavaScript to enhance the appearance of code blocks.
+
+7. TypeScript Integration
+If you're working with TypeScript, ensure that your code highlights correctly and looks as expected in your MDX content.
+
+8. Customizing TL;DRs
+Adding custom elements like TL;DR sections to your blog posts is a great way to engage readers. However, you might run into issues with styling. To overcome this, make sure to properly set up Tailwind CSS for your Next.js project, as described in the official documentation: Tailwind CSS with Next.js.
+
+9. MDX Gotchas
+While working with MDX, keep in mind some gotchas, such as how to handle inline elements like links. Remember to structure your Markdown elements correctly for the best rendering results.
+
+Conclusion
+Integrating Markdown into Next.js can significantly improve your blogging experience by providing a clean and efficient way to create and manage content. By following the steps outlined above and considering the best practices, you'll be well on your way to crafting beautiful and engaging blog posts with Next.js and MDX. Happy blogging!

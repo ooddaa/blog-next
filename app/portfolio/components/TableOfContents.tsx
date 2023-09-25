@@ -1,7 +1,6 @@
 /**@jsxImportSource @emotion/react */
-import React from 'react';
+import React, {useState} from 'react';
 import { createStyles, Text, Group } from '@mantine/core';
-// import { ListSearch } from 'tabler-icons-react';
 
 const useStyles = createStyles((theme) => ({
   link: {
@@ -39,31 +38,31 @@ const useStyles = createStyles((theme) => ({
 }));
 
 interface TableOfContentsProps {
-  links: { label: string; link: string; order: number, new?: boolean }[];
-  active: string;
+  links: { label: string; order: number, new?: boolean }[];
   onClick: (link: string) => void;
 }
 
-export default function TableOfContents({ links, active, onClick }: TableOfContentsProps) {
+export default function TableOfContents({ links, onClick }: TableOfContentsProps) {
+  const [active, setActive] = useState("Caves")
   const { classes, cx } = useStyles();
-  const items = links.map((item) => (
-    
+  const items = links.map((item) => { 
+    return (
     <div 
-      className={cx(classes.link, { [classes.linkActive]: active === item.link })}
+      className={cx(classes.link, { [classes.linkActive]: active === item.label })}
       key={item.label}
-      onClick={() => onClick(item.link)}
-      css={{
-        paddingLeft: `${item.order * 1}rem`
+      onClick={() => {
+        onClick(item.label)
+        setActive(item.label)
       }}
+      css={{paddingLeft: `${item.order * 1}rem`}}
     >
-{ item.new ? renderNewLabel(item.label) : item.label }
+      { item.new ? renderNewLabel(item.label) : item.label }
     </div>
-  ));
+  )});
 
   return (
     <div>
       <Group mb="md">
-        {/* <ListSearch size={18} /> */}
         <Text>Table of contents</Text>
       </Group>
       {items}
@@ -74,8 +73,8 @@ export default function TableOfContents({ links, active, onClick }: TableOfConte
 function renderNewLabel(label: string): JSX.Element {
   return (
     <div className='flex flex-row justify-between items-center'>
-    <span>{label}</span> 
-    <span className="text-sm text-red-500 rounded-xl  px-2">new</span>
+      <span>{label}</span> 
+      <span className="text-sm text-red-500 rounded-xl px-2">new</span>
     </div>
   )
 }

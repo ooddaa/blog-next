@@ -12,6 +12,29 @@ import { useToggle } from "@mantine/hooks";
 
 export const HEADER_HEIGHT = 64;
 
+export const links = [
+  {
+    link: "/",
+    label: "Main",
+  },
+  {
+    link: "/blog",
+    label: "Blog",
+  },
+  {
+    link: "https://github.com/ooddaa",
+    label: "Github",
+  },
+  {
+    link: "/portfolio",
+    label: "Portfolio",
+  },
+  // {
+  //   link: "/playground",
+  //   label: "Playground",
+  // },
+];
+
 const useStyles = createStyles((theme) => ({
   inner: {
     height: HEADER_HEIGHT,

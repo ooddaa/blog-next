@@ -1,29 +1,8 @@
 import { Libre_Franklin } from 'next/font/google'
-import MantineHeader from '@/app/components/MantineHeader';
+import MantineHeader, { links } from '@/app/components/MantineHeader';
 
 const font = Libre_Franklin({ subsets: ["latin"], weight: ["400", "500", "700", "900"] })
-export const links = [
-  {
-    link: "/",
-    label: "Main",
-  },
-  {
-    link: "/blog",
-    label: "Blog",
-  },
-  {
-    link: "https://github.com/ooddaa",
-    label: "Github",
-  },
-  {
-    link: "/portfolio",
-    label: "Portfolio",
-  },
-  {
-    link: "/playground",
-    label: "Playground",
-  },
-];
+
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>

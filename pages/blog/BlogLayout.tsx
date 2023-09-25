@@ -1,6 +1,5 @@
 import { Libre_Franklin } from 'next/font/google'
-import MantineHeader from '@/app/components/MantineHeader';
-import {links} from "./components/layout"
+import MantineHeader, { links } from '@/app/components/MantineHeader';
 
 const font = Libre_Franklin({ subsets: ["latin"], weight: ["400", "500", "700", "900"] })
 

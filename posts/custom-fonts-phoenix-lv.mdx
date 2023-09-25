@@ -1,0 +1,268 @@
+---
+id: 11,
+title: "Use Custom Fonts with Phoenix LiveView"
+subtitle: "hint: .ttf are evil, use .woff2"
+date: 20230807
+timeToRead: 5min
+author: Dmitry "Oda" Vikhorev
+version: 0.2
+tags: [
+  "fonts",
+  ".heex",
+  "Phoenix",
+  "LiveView",
+  "FOUT",
+  ".ttf",
+  ".woff2"
+]
+---
+<TLDR>
+  <Code>:phoenix, &quot;~&gt; 1.7.2&quot;</Code>
+  <br/>
+  <Code>:phoenix_live_view, &quot;~&gt; 0.18.18&quot;</Code>
+  <PB4/>
+<WebLink href="https://www.zachleat.com/web/webfont-glossary/#fout" alt="Flash Of Unstyled Text link">FOUT</WebLink> or <b>Flash Of Unstyled Text</b> is a pesky bug that really makes my OCD sad. 
+<PB4/>
+  To get rid of it, I needed to stop linking Google Fonts from cdn and instead, provide them as ready-to-use assets. This way client does not need to wait precious milliseconds while fonts are downloaded and no FOUT occurs. 
+<PB4/>
+The process of downloading and using custom fonts for Phoenix LiveView seems a bit involved at first and it helps to have a step-by-step guide at hand to start with. 
+<PB4/>
+Here we go.
+<PB4/>
+
+</TLDR>
+
+## Step-by-Step Guide
+
+### 1. Downloading Fonts from Google Fonts
+
+Visit the <WebLink href="https://fonts.google.com/specimen/Inter?query=Inter" alt="link to google fonts website">Google Fonts website</WebLink>.
+Select the desired font, in this case, &quot;Inter&quot;.
+Click the download font family button to save the font files to your computer.
+<PB8/>
+
+### 2. Converting Font Files
+
+This is the most important bit that took me a while to figure out. It turns out that Phoenix LiveView is not friendly to .ttf that you get from GoogleFonts. Therefore, convert the downloaded .ttf font file to .woff2 format using a tool like <WebLink href="https://cloudconvert.com/ttf-to-woff2" alt="link to CloudConvert website">CloudConvert</WebLink>.
+<PB8/>
+
+### 3. Creating Font Folder
+
+If you are running a mix project (which you should), your directory stuctrure by default looks something like this: 
+<PB4/>
+```
+/
+  |-- assets 
+  |-- config
+  |-- lib
+  |-- priv
+  |-- rel
+  |-- test
+  |-- mix.exs
+```
+<PB4/>
+
+With the <Code>/assets</Code> folder containing things that <Code>esbuild</Code> will process at compile time (configured via `config/config.exs`). This is what my <Code>/assets</Code> folder looks like before adding fonts:
+<PB4/>
+
+```
+/
+  |-- assets 
+      |-- css
+      |-- js
+      |-- vendor
+      |-- tailwind.config.js
+```
+<PB4/>
+
+This is what it will look like after I add <Code>Inter</Code> font in the correct format and the correct .css rules. So I go ahead, put my inter.woff2 here and proceed to create an empty <Code>inter.css</Code>: 
+<PB4/>
+
+```
+/
+  |-- assets 
+      |-- css
+      |-- fonts
+          |-- inter
+              |-- inter.woff2
+              |-- inter.css
+      |-- js
+      |-- vendor
+      |-- tailwind.config.js
+```
+<PB8/>
+
+### 4. Adding Font CSS
+
+In the <Code>/assets/fonts/inter/inter.css</Code> file, define the <WebLink href="https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face" alt="link to font-face rule">@font-face rule</WebLink> to specify font properties and paths for both the <Code>.woff2</Code> font file (and, optionally <Code>.woff</Code> for weird old browsers).
+<PB4/>
+Result:
+<PB4/>
+
+```
+# /assets/fonts/inter/inter.css
+
+@font-face {
+  font-family: 'Inter';
+  src: url('inter.woff2') format('woff2');
+}
+```
+<PB8/>
+
+### 5. Configuring esbuild
+
+Locate the &quot;config.exs&quot; file in your project:
+<PB4/>
+```
+/
+  |-- config 
+      |-- config.exs
+      |-- dev.exs
+      |-- prod.exs
+      |-- runtime.exs
+      |-- test.exs
+```
+<PB4/>
+
+Now add paths to <Code>inter.css</Code> and <Code>inter.woff2</Code> to make esbuild process and copy these files to <Code>--outdir=../priv/static/assets</Code> 
+<PB4/>
+Before:
+<PB4/>
+```
+# /config/config.exs
+
+config :esbuild,
+version: "0.17.11",
+default: [
+  args:
+    ~w(
+      js/app.js 
+      --bundle 
+      --target=es2015 
+      --outdir=../priv/static/assets 
+      --external:/fonts/* 
+      --external:/images/* 
+      --external:/temp/*
+      ),
+  cd: Path.expand("../assets", __DIR__),
+  env: %{
+    "NODE_PATH" => Path.expand(
+      "../deps", __DIR__)
+    }
+]
+```
+<PB4/>
+
+After:
+<PB4/>
+```
+# /config/config.exs
+
+config :esbuild,
+version: "0.17.11",
+default: [
+  args:
+    ~w(
+      js/app.js 
+      --bundle 
+      --target=es2015 
+      --outdir=../priv/static/assets 
+      --external:/fonts/* 
+      --external:/images/* 
+      --external:/temp/*
+      ),
+  cd: Path.expand("../assets", __DIR__),
+  env: %{
+    "NODE_PATH" => Path.expand(
+      "../deps", __DIR__)
+    }
+]
+```
+<PB4/>
+
+<Code>--loader</Code> option tells esbuild how to treat .woff2 extetion files. In this case no special treatment needed, esbuild will copy it, adding a unique identifier, to make sure we can later update it on the client, should it need to change, ie perform a <WebLink href="https://sparkbox.com/foundry/browser_cache_busting_explained" alt="cache bust explaination">cache bust</WebLink>.
+<PB8/>
+
+### 6. Extending Tailwind Configuration
+
+To be able to use our new font as a TailwindCSS class <Code>className=&quot;font-inter&quot;</Code> instead of the usual <Code>className=&quot;font-[Inter]&quot;</Code> we could extend <Code>tailwind.config.js</Code> file.
+<PB4/>
+```
+/
+|-- assets 
+    |-- tailwind.config.js
+```
+<PB4/>
+
+Under the <Code>fontFamily</Code> section, add the &quot;Inter&quot; font as an option, along with a fallback font if desired:
+<PB4/>
+Before:
+<PB4/>
+```
+// /assets/tailwind.config.js
+
+module.exports = {
+  // ...other stuff
+  theme: {
+    extend: {
+      // put things in here
+    }
+  }
+}
+```
+<PB4/>
+
+After:
+<PB4/>
+```
+// /assets/tailwind.config.js
+
+module.exports = {
+  // ...other stuff
+  theme: {
+    extend: {
+      fontFamily: {
+        inter: ['Inter', &apos;system-ui'],
+      }
+    }
+  }
+}
+```
+<PB8/>
+
+### 7. Linking Font Stylesheet
+
+In your project&apos;s root HTML file (e.g., <Code>root.html.heex</Code>), add a link to the font&apos;s CSS file <Code>/assets/fonts/inter/inter.css</Code>.
+Ensure that the link is placed before any content that requires the font like this, ie above the <Code>app.css</Code>:
+<PB4/>
+
+```
+// /.../root.html.heex
+...
+<head>
+<link 
+  phx-track-static rel="stylesheet" 
+  href={~p"/assets/fonts/inter/inter.css"} 
+/>
+<link 
+  phx-track-static rel="stylesheet" 
+  href={~p"/assets/app.css"} 
+/>
+</head>
+...
+```
+<PB4/>
+<Bold>Fun fact: <Code>~p&quot;/assets/fonts/Inter/inter.css&quot;</Code> path (note the upcased <Code>Inter</Code>) would also work locally, but it will take away a couple of hours of your time, when you deploy to <WebLink href="https://fly.io/docs/speedrun/" alt="link to fly.io website">fly.io</WebLink> (or elsewhere?) and find that your fonts aren&apos;t available as assets 🫣. I&apos;ll write another another blogpost about deploying to fly.io in future. </Bold>
+<PB8/>
+
+
+### 8. Optimizing Font Loading
+
+Congratulations! All should work now! 
+By linking the font stylesheet, you&apos;ve pre-loaded the fonts, reducing the likelihood of FOUT (Flash of Unstyled Text).
+<PB4/>
+For further optimization, consider loading the entire font family as base64-encoded data. Refer to the <WebLink href="https://www.zachleat.com/web/comprehensive-webfonts/#critical-foft-with-data-uri" alt="link to zachleat's website">expert advice</WebLink> for detailed instructions.
+<PB8/>
+
+### Conclusion
+By following these steps, you&apos;ve successfully integrated the &quot;Inter&quot; font into your project, ensuring a consistent and visually pleasing user experience. By optimizing font loading and eliminating FOUT, you&apos;ve taken a crucial step toward enhancing your design&apos;s overall impact. Enjoy the benefits of a well-managed font system, providing a polished and professional touch to your web projects.

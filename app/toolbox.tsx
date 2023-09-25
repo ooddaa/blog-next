@@ -247,6 +247,21 @@ const H2: React.FC<HProps> = ({ children, style, tailwindClasses, ...props }) =>
     </h2>
   );
 };
+const H1: React.FC<HProps> = ({ children, style, tailwindClasses, ...props }) => {
+  const { cx } = createStyles(() => ({}))();
+  const defaultClasses = "font-bold text-4xl pb-4 tracking-tight";
+  return (
+    <h1
+      className={cx(
+        tailwindClasses ? [defaultClasses, tailwindClasses] : defaultClasses
+      )}
+      style={style ?? {}}
+      {...props}
+    >
+      {children}
+    </h1>
+  );
+};
 
 function TLDR({ children, ...props }: Partial<WrapperComponent>) {
   return (
@@ -369,7 +384,8 @@ function intersection(a: any, b: any): Set<any> {
 }
 
 /**
- * Loads .mdx files and converts them into Post[]
+ * Loads .mdx files, parses front-matter 
+ * and converts them into Post[]
  */
 async function loadPosts(pathToPosts: string, fs: any): Promise<Post[]> {
   const paths = fs.readdirSync(pathToPosts)
@@ -378,7 +394,7 @@ async function loadPosts(pathToPosts: string, fs: any): Promise<Post[]> {
     .map((path: string) => {
       const mdx = fs.readFileSync(Path.join(pathToPosts, path))
       let {content, data} = matter(mdx)
-      data = { filePath: path, ...data}
+      data = {filePath: path, ...data}
       return {content, data, filePath: path}
     })
   return posts
@@ -411,6 +427,7 @@ export {
   Emoji,
   H3,
   H2,
+  H1,
   // treefyPosts,
   TLDR,
   P,

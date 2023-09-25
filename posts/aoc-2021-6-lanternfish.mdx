@@ -36,7 +36,7 @@ Here's the rough idea:
 <PB4/>
 ```elixir
 # set initial conditions
-# define logic to increment each fish each day
+# define logic to increment a fish per day
 # repeat N of epochs, growing the list 
 ```
 <PB4/>
@@ -68,7 +68,7 @@ Now we need to figure out how to make a hashmap useful for our case. We need to 
 # %{ age => group_size }
 ``` 
 <PB4/>
-Important note: our <Code>age is age_before_fish_becomes_a_parent_age</Code>, so we will be decrementing it. In line with the puzzle's description.
+Important note: our <Code>age</Code> is <Code>age_before_fish_becomes_a_parent_age</Code>, so we will be decrementing it. In line with the puzzle's description.
 <PB4/>
 ## Insight 3
 I've mentioned <Code>population</Code>, <Code>iteration</Code> and <Code>growing</Code> which sounds like a use case to implement a genetic algorithm.
@@ -77,14 +77,18 @@ I've mentioned <Code>population</Code>, <Code>iteration</Code> and <Code>growing
 
 ## Genetic algorithm
 
->Genetic algorithms work via transformations on populations of chromosomes over some number of generations.
+>Genetic algorithms work via *transformations* on *populations of chromosomes* over some number of *generations*.
 <PB4/>
 In our case: 
 ```elixir
-chormosome = each {age, size}  bucket
-population of chromosomes = map of 9 {age, size} buckets
-transformations = change age, change size (produce children)
-number of generations = days
+# chormosome
+each {age, size} bucket
+# population of chromosomes
+map of 9 {age, size} buckets
+# transformations
+change age, change size 
+# number of generations 
+days
 ```
 <PB8/>
 
@@ -111,7 +115,8 @@ defmodule Fish do
 
   """
   def population(input) do
-    # our %{ age => group_size } map goes in here as input
+    # our %{ age => group_size } 
+    # map goes in here as input
   end
 
   def select_parents(population) do
@@ -124,7 +129,8 @@ defmodule Fish do
   end
 
   def count(population) do
-    # we need a final answer to be an integer
+    # we need a final answer 
+    # to be an integer
   end
 
   def run(population, days) do
@@ -157,11 +163,16 @@ defmodule Fish do
 
   Example:
   Fish.population([3, 4, 3, 1, 2])
-  %{0 => 0, 1 => 1, 2 => 1, 3 => 2, 4 => 1, 5 => 0, 6 => 0, 7 => 0, 8 => 0}
-  Which tells us that we have {3, 2} == two fishes that have 3 days before 
-  they produce 3 baby-fishes. I want to pad age buckets to have a full 
+  %{0 => 0, 1 => 1, 2 => 1, 3 => 2, 
+  4 => 1, 5 => 0, 6 => 0, 7 => 0, 8 => 0}
+  
+  Which tells us that we have 
+  {3, 2} == two fishes that have 
+  3 days before they produce 3 baby-fishes. 
+  I want to pad age buckets to have a full 
   picture of the population per age group.
-  Therefore the %{5 => 0, 6 => 0, 7 => 0, 8 => 0} bit
+  Therefore we need to add the 
+  %{5 => 0, 6 => 0, 7 => 0, 8 => 0} bit
   """
   def population(input) do
     0..8
@@ -183,9 +194,12 @@ defmodule Fish do
   ...
 
   @doc"""
-  The easiest part, as our data structure has the answer ready
+  The easiest part, as our data 
+  structure has the answer ready
   """
-  def select_parents(population), do: Map.get(population, 0, 0)
+  def select_parents(population) do 
+    Map.get(population, 0, 0)
+  end  
 
 end
 ```
@@ -208,22 +222,31 @@ defmodule Fish do
   ...
 
   @doc"""
-  I'm going to do all "generation moving forward" actions in one
-  place. It should really be called "evolve(population)" but 
-  I'm bad at naming things until it's too late. 
+  I'm going to keep all "generation 
+  moving forward" actions in one 
+  place. It should really be called 
+  "evolve(population)" but I'm bad 
+  at naming things until it's too late. 
   """
   def procreate(population) do
-    # get the parents as they also represent the number of children
-    # as per "One baby fish per parent per week" policy.
+    # get the parents as they 
+    # also represent the number 
+    # of children as per "One baby 
+    # fish per parent per week" policy.
     parents = select_parents(population)
 
     population
     |> Enum.map(fn
-      {age, size} when age == 0 -> {8, size}  # baby making part
-      {age, size} -> {age - 1, size}          # everyone is getting older part
+      # baby making part
+      {age, size} when age == 0 -> 
+        {8, size}  
+      # everyone is getting older part
+      {age, size} -> 
+        {age - 1, size}          
     end)
     |> Map.new()
-    |> Map.update(6, 0, &(&1 + parents))      # parents get a week long rest
+    # parents get a week long rest
+    |> Map.update(6, 0, &(&1 + parents))      
   end
 
 end
@@ -249,10 +272,15 @@ defmodule Fish do
   end
 
   @doc"""
-  Stop once we have no days/generations left.
-  Othervise, go on, fish, frolic all you like! 
+  Stop once we have no 
+  days/generations left.
+  Othervise, go on, fish, 
+  frolic all you like! 
   """
-  def run(population, 0), do: count(population)
+  def run(population, 0) do 
+    count(population)
+  end
+
   def run(population, days) do
     run(procreate(population), days - 1)
   end
@@ -271,9 +299,6 @@ defmodule Fish do
   @doc"""
   I want represent population as a
   collection of {age, size} buckets. 
-  Where age == the number of days until the fish
-  creates a new lanternfish.
-
   Then it will have all the info that
   I need to:
   - select_parents
@@ -281,11 +306,16 @@ defmodule Fish do
 
   Example:
   Fish.population([3, 4, 3, 1, 2])
-  %{0 => 0, 1 => 1, 2 => 1, 3 => 2, 4 => 1, 5 => 0, 6 => 0, 7 => 0, 8 => 0}
-  Which tells us that we have {3, 2} == two fishes that have 3 days before 
-  they produce 3 baby-fishes. I want to pad age buckets to have a full 
+  %{0 => 0, 1 => 1, 2 => 1, 3 => 2, 
+  4 => 1, 5 => 0, 6 => 0, 7 => 0, 8 => 0}
+  
+  Which tells us that we have 
+  {3, 2} == two fishes that have 
+  3 days before they produce 3 baby-fishes. 
+  I want to pad age buckets to have a full 
   picture of the population per age group.
-  Therefore the %{5 => 0, 6 => 0, 7 => 0, 8 => 0} bit
+  Therefore we need to add the 
+  %{5 => 0, 6 => 0, 7 => 0, 8 => 0} bit
   """
   def population(input) do
     0..8
@@ -295,27 +325,39 @@ defmodule Fish do
   end
 
   @doc"""
-  The easiest part, as our data structure has the answer ready
+  The easiest part, as our data 
+  structure has the answer ready
   """
-  def select_parents(population), do: Map.get(population, 0, 0)
+  def select_parents(population) do 
+    Map.get(population, 0, 0)
+  end  
 
   @doc"""
-  I'm going to do all "generation moving forward" actions in one
-  place. It should really be called "evolve(population)" but 
-  I'm bad at naming things until it's too late. 
+  I'm going to keep all "generation 
+  moving forward" actions in one 
+  place. It should really be called 
+  "evolve(population)" but I'm bad 
+  at naming things until it's too late. 
   """
   def procreate(population) do
-    # get the parents == they also represent the number of children
-    # as per "One baby fish per parent per week" policy.
+    # get the parents as they 
+    # also represent the number 
+    # of children as per "One baby 
+    # fish per parent per week" policy.
     parents = select_parents(population)
 
     population
     |> Enum.map(fn
-      {age, size} when age == 0 -> {8, size}  # baby making part
-      {age, size} -> {age - 1, size}          # everyone is getting older part
+      # baby making part
+      {age, size} when age == 0 -> 
+        {8, size}  
+      # everyone is getting older part
+      {age, size} -> 
+        {age - 1, size}          
     end)
     |> Map.new()
-    |> Map.update(6, 0, &(&1 + parents))      # parents get a week long rest
+    # parents get a week long rest
+    |> Map.update(6, 0, &(&1 + parents))      
   end
 
   @doc"""
@@ -328,14 +370,18 @@ defmodule Fish do
   end
 
   @doc"""
-  Stop once we have no days/generations left.
-  Othervise, go on, fish, frolic all you like! 
+  Stop once we have no 
+  days/generations left.
+  Othervise, go on, fish, 
+  frolic all you like! 
   """
-  def run(population, 0), do: count(population)
+  def run(population, 0) do 
+    count(population)
+  end
+
   def run(population, days) do
     run(procreate(population), days - 1)
   end
-
 end
 ```
 

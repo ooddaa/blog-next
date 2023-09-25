@@ -1,7 +1,10 @@
-import { Libre_Franklin } from 'next/font/google'
 import MantineHeader, { links } from '@/app/components/MantineHeader';
+import localFont from 'next/font/local'
 
-const font = Libre_Franklin({ subsets: ["latin"], weight: ["400", "500", "700", "900"] })
+const font = localFont({
+  src: '../../public/fonts/LibreFranklin.woff2',
+  display: 'swap',
+})
 
 export default function BlogLayout({ children }: { children: React.ReactNode }) {
   return (

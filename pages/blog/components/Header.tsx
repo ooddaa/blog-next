@@ -1,8 +1,11 @@
 import React from "react";
-import { Span, resolveMonth, humanizeDate } from "@/app/toolbox";
-import { Libre_Franklin } from "next/font/google";
+import { Span, humanizeDate } from "@/app/toolbox";
+import localFont from 'next/font/local'
 
-const header_font = Libre_Franklin({ subsets: ["latin"] });
+const header_font = localFont({
+  src: '../../../public/fonts/LibreFranklin.woff2',
+  display: 'swap',
+})
 
 interface BlogHeaderProps {
   title: string;

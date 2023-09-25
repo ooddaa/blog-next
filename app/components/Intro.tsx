@@ -11,16 +11,16 @@ export default function Intro() {
       <div className="w-full">
         <div className="pb-2">
           <ul className="py-4">
-            <li><GradientSpan from="red" to="orange">Business Developer</GradientSpan></li>
-            <li><GradientSpan from="orange" to="yellow">Software Engineer</GradientSpan></li>
-            <li><GradientSpan from="yellow" to="green">Entrepreneur</GradientSpan></li>
-            <li><GradientSpan from="green" to="blue">Full time dad</GradientSpan></li>
-            <li><GradientSpan from="blue" to="purple">Grappler</GradientSpan></li>
+            <li><GradientSpan from="red" to="orange">software Engineer</GradientSpan></li>
+            <li><GradientSpan from="orange" to="yellow">entrepreneur</GradientSpan></li>
+            <li><GradientSpan from="yellow" to="green">full time dad</GradientSpan></li>
+            <li><GradientSpan from="green" to="blue">grappler</GradientSpan></li>
+            <li><GradientSpan from="blue" to="purple">reader</GradientSpan></li>
           </ul>
         </div>
         <div className="tracking-wide">
         <div className="pb-2">
-          I get a kick out of finding out how things work, usually by breaking them up 😂
+          I get a kick out of finding out how things work, usually by breaking thing up and trying to rebuild them 😂
         </div>
         <div className="pb-2">
           whilst keeping records and writing things down so I don&apos;t forget

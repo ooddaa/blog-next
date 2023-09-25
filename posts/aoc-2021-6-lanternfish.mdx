@@ -1,0 +1,358 @@
+---
+id: 12
+title: "Advent Of Code: 2021, Day 6"
+subtitle: "--- Day 6: Lanternfish ---"
+date: 20230615
+timeToRead: 5min
+author: Dmitry "Oda" Vikhorev
+version: 0.2
+tags: [
+  "advent of code",
+  "Elixir",
+  "LiveBook",
+  "genetic algorithms",
+  "algorithms",
+]
+---
+
+<TLDR>
+<WebLink href="https://adventofcode.com/2021/day/6" alt="link to Lanternfish problem">Lanternfish</WebLink> grow exponentially! As does any population
+  that just procreates over and over. They must be immortal or something... 
+
+  One of the approaches for this task is to use a **genetic algorithm**. Genetic algorithms evolve a population over a number of generations. 
+</TLDR>
+  
+## Introduction
+
+I'll be honest with you, genetic algorithms are not something I ever expected to use in my day-to-day Elixir. <WebLink href="https://www.youtube.com/watch?v=NWXSiZ-vi-o" alt="link to youtube talk">But this awesome talk by Sean Moriarity</WebLink> introduced me to the concept and I immediately ordered Sean's book: <WebLink href="https://www.amazon.co.uk/Genetic-Algorithms-Elixir-Problems-Evolution/dp/168050794X/ref=sr_1_1?crid=3E31871QHHXAX&keywords=Sean+Moriarity&qid=1686837419&sprefix=sean+moriarty%2Caps%2C137&sr=8-1" alt="link to Amazon">Genetic Algorithms in Elixir: Solve Problems Using Evolution</WebLink>.
+<PB4/>
+I mean, who wouldn't want Mother Nature to help you out with Advent Of Code, for example? Yep!
+<PB8/>
+
+### Part 1
+
+As always, I solved the first part of the puzzle, the most straightforward and naïve way possible - with a list. 
+Here's the rough idea:
+<PB4/>
+```elixir
+# set initial conditions
+# define logic to increment each fish each day
+# repeat N of epochs, growing the list 
+```
+<PB4/>
+It worked, as the resulting list had to be iterated over only 80 times. Quite manageable for a LiveBook session.
+<PB4/>
+Surely enough *Part 2* made it WAY harder 😂, and my naïve algo did not even finish.
+<PB8/>
+
+### Part 2
+
+Why is it still going?? 🤔 I asked myself after 10/20/60sec of waiting. Ah I see, that pesky <Code>exponential</Code> in front of <Code>growth</Code>. 
+Lol, nope 😁. Alright, what do we have here? 
+<PB8/>
+
+## The actual problem
+Well it turns out that tracking each individual unit of the population (aka 🐟) by assigning it a position in a list is not what we want here at all. Even if prepending elements to lists is an <Code>O(1)</Code> operation in Elixir, searching the list is still <Code>O(n)</Code>. And since the list will start growing at <Code>O(n^**x**)</Code> at some point, the whole thing escalate to a crazy exponential time complexity. And I'm still figuring out how to assess the **x**. 
+<PB4/>
+
+## Insight 1
+What we want is to reduce the units of work done. Ie to make **x** as small as possible, ideally all the way to 0. Since most work is done because of searching the list (insertion is cheap), we will gain the most by focusing on a datastructure that has O(1) lookup cost. A <WebLink href="https://en.wikipedia.org/wiki/Hash_table">hash table/hashmap/map</WebLink> that is. 
+<PB4/>
+
+## Insight 2
+Now we need to figure out how to make a hashmap useful for our case. We need to reduce dimensionality of our problem: stop focusing on each fish and focus on groups with similar attributes. As the only attribute we are tracking there is *age*, let's track the age groups.
+<PB4/>
+```elixir
+# our map represents ages as keys 
+# and size of the age population as value
+# %{ age => group_size }
+``` 
+<PB4/>
+Important note: our <Code>age is age_before_fish_becomes_a_parent_age</Code>, so we will be decrementing it. In line with the puzzle's description.
+<PB4/>
+## Insight 3
+I've mentioned <Code>population</Code>, <Code>iteration</Code> and <Code>growing</Code> which sounds like a use case to implement a genetic algorithm.
+
+<PB8/>
+
+## Genetic algorithm
+
+>Genetic algorithms work via transformations on populations of chromosomes over some number of generations.
+<PB4/>
+In our case: 
+```elixir
+chormosome = each {age, size}  bucket
+population of chromosomes = map of 9 {age, size} buckets
+transformations = change age, change size (produce children)
+number of generations = days
+```
+<PB8/>
+
+### Steps
+Our map describes all the fish civilization at a point in time. Hence we are going to
+plug our map into genetic algorithm to define the population. 
+<PB4/>
+The steps are:
+<PB4/>
+```elixir
+create_population(input)
+|> evaluate()
+|> select_parents()
+|> procreate()
+|> repeat()
+```
+<PB4/>
+
+Which translates into a skeleton module:
+<PB4/>
+```elixir
+defmodule Fish do
+  @moduledoc """
+
+  """
+  def population(input) do
+    # our %{ age => group_size } map goes in here as input
+  end
+
+  def select_parents(population) do
+    # who is going to produce children
+  end
+
+  def procreate(population) do
+    # happy Birthday everyone! 
+    # record birth certificates etc
+  end
+
+  def count(population) do
+    # we need a final answer to be an integer
+  end
+
+  def run(population, days) do
+    # run, Nature, run!
+    # do another cycle if needed
+  end
+end
+```
+<PB8/>
+<PB8/>
+
+## Solution
+
+Once I have a skeleton of the solution (which I am sure is gonna work, because Mother Nature said so), I just throw myself against the keyboard until the test input answer matches. 
+
+<PB8/>
+### 1. Population
+Step one: define a population.
+<PB4/>
+```elixir
+defmodule Fish do
+
+  @doc"""
+  I want represent population as a
+  collection of {age, size} buckets. 
+  Then it will have all the info that
+  I need to:
+  - select_parents
+  - procreate
+
+  Example:
+  Fish.population([3, 4, 3, 1, 2])
+  %{0 => 0, 1 => 1, 2 => 1, 3 => 2, 4 => 1, 5 => 0, 6 => 0, 7 => 0, 8 => 0}
+  Which tells us that we have {3, 2} == two fishes that have 3 days before 
+  they produce 3 baby-fishes. I want to pad age buckets to have a full 
+  picture of the population per age group.
+  Therefore the %{5 => 0, 6 => 0, 7 => 0, 8 => 0} bit
+  """
+  def population(input) do
+    0..8
+    |> Enum.map(&{&1, 0})
+    |> Map.new()
+    |> Map.merge(Enum.frequencies(input))
+  end
+
+end
+```
+<PB8/>
+
+### 2. Select Parents
+Step two: find out how many parents we will work with. In our case it's easy - just pick the {"0"} age bucket (0 days left to have the baby).
+<PB4/>
+```elixir
+defmodule Fish do
+
+  ...
+
+  @doc"""
+  The easiest part, as our data structure has the answer ready
+  """
+  def select_parents(population), do: Map.get(population, 0, 0)
+
+end
+```
+
+<PB8/>
+### 3. Procreate!!
+I decided to lump a bunch of things together here because 
+I think of them as happening all at once and they all constitute one <Code>transition</Code> 
+between old and new states:
+<ul>
+  <li><Code>add children</Code></li>
+  <li><Code>age population</Code></li>
+  <li><Code>reset parents</Code></li>
+</ul>
+<PB4/>
+
+```elixir
+defmodule Fish do
+
+  ...
+
+  @doc"""
+  I'm going to do all "generation moving forward" actions in one
+  place. It should really be called "evolve(population)" but 
+  I'm bad at naming things until it's too late. 
+  """
+  def procreate(population) do
+    # get the parents as they also represent the number of children
+    # as per "One baby fish per parent per week" policy.
+    parents = select_parents(population)
+
+    population
+    |> Enum.map(fn
+      {age, size} when age == 0 -> {8, size}  # baby making part
+      {age, size} -> {age - 1, size}          # everyone is getting older part
+    end)
+    |> Map.new()
+    |> Map.update(6, 0, &(&1 + parents))      # parents get a week long rest
+  end
+
+end
+```
+<PB8 />
+
+### 4. Count and run
+Fuf, hopefully we have not run into a pesky <Code>n+1</Code> problem here, so let's wrap up with counting and termination criteria. 
+<PB4/>
+
+```elixir
+defmodule Fish do
+
+  ...
+
+  @doc"""
+  Easy-peasy, count the fish!
+  """
+  def count(population) do
+    population
+    |> Map.values()
+    |> Enum.sum()
+  end
+
+  @doc"""
+  Stop once we have no days/generations left.
+  Othervise, go on, fish, frolic all you like! 
+  """
+  def run(population, 0), do: count(population)
+  def run(population, days) do
+    run(procreate(population), days - 1)
+  end
+
+end
+```
+<PB8/>
+
+### The whole thing
+Also on my <WebLink href="https://github.com/ooddaa/advent_of_code/blob/main/2021/elixir/day-06/day-06.livemd" alt="link to Github website">Github</WebLink>.
+<PB4/>
+
+```elixir
+defmodule Fish do
+
+  @doc"""
+  I want represent population as a
+  collection of {age, size} buckets. 
+  Where age == the number of days until the fish
+  creates a new lanternfish.
+
+  Then it will have all the info that
+  I need to:
+  - select_parents
+  - procreate
+
+  Example:
+  Fish.population([3, 4, 3, 1, 2])
+  %{0 => 0, 1 => 1, 2 => 1, 3 => 2, 4 => 1, 5 => 0, 6 => 0, 7 => 0, 8 => 0}
+  Which tells us that we have {3, 2} == two fishes that have 3 days before 
+  they produce 3 baby-fishes. I want to pad age buckets to have a full 
+  picture of the population per age group.
+  Therefore the %{5 => 0, 6 => 0, 7 => 0, 8 => 0} bit
+  """
+  def population(input) do
+    0..8
+    |> Enum.map(&{&1, 0})
+    |> Map.new()
+    |> Map.merge(Enum.frequencies(input))
+  end
+
+  @doc"""
+  The easiest part, as our data structure has the answer ready
+  """
+  def select_parents(population), do: Map.get(population, 0, 0)
+
+  @doc"""
+  I'm going to do all "generation moving forward" actions in one
+  place. It should really be called "evolve(population)" but 
+  I'm bad at naming things until it's too late. 
+  """
+  def procreate(population) do
+    # get the parents == they also represent the number of children
+    # as per "One baby fish per parent per week" policy.
+    parents = select_parents(population)
+
+    population
+    |> Enum.map(fn
+      {age, size} when age == 0 -> {8, size}  # baby making part
+      {age, size} -> {age - 1, size}          # everyone is getting older part
+    end)
+    |> Map.new()
+    |> Map.update(6, 0, &(&1 + parents))      # parents get a week long rest
+  end
+
+  @doc"""
+  Easy-peasy, count the fish!
+  """
+  def count(population) do
+    population
+    |> Map.values()
+    |> Enum.sum()
+  end
+
+  @doc"""
+  Stop once we have no days/generations left.
+  Othervise, go on, fish, frolic all you like! 
+  """
+  def run(population, 0), do: count(population)
+  def run(population, days) do
+    run(procreate(population), days - 1)
+  end
+
+end
+```
+
+<PB8/>
+### Conclusion
+This gave me answer in no time, as all this algo does is adding groups of fish and creating a few maps along the way. 
+<PB4/>
+*Time complexity:* O(9) as all we do is to access each of 9 keys, and do addition/substraction
+*Space complexity:* O(1) as we only create a simple map to deal with the problem. 
+<PB4/>
+
+That's an improvement! What it definitely doesn't do is creating loooooooong lists, iterating over them, incrementing each element. 
+<PB4/>
+
+Instead, it works with <Code>populations</Code>, groupped by age, evolving them over a number of generations. Each population is very efficiently represented as a collection of <Code>{"{age, size}"}</Code> buckets. These tuples are perfect as they can be worked with by Enum and Map modules with no fuzz at all. 
+<PB4/>
+
+To sum up, the genetic algorithm approach helps to clearly state the problem and offers an intuitive step-by-step progression that we all know and owe to Mother Nature herself.
+
+

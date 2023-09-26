@@ -1,0 +1,100 @@
+---
+id: 22
+title: Using Mantine Prism to highlight code
+subtitle: Mantine pwns! S1E1
+author: Dmitry "Oda" Vikhorev
+date: 20220402
+timeToRead: 3min
+version: 0.2
+tags: ["Mantine", "CSS-in-JS", "sytled components", "React"]
+---
+<TLDR>
+  First thing that I discovered after starting this blog is that it is
+  not exactly easy to present a code snippet so that it doesn't look
+  ugly af. And I consider myself an **anti-ugly-af-guy** most of the
+  time.
+<PB4/>
+Hence I found a beautiful React Component Library created by amazing <WebLink href="https://github.com/rtivital">Vitaly Rtishchev</WebLink> called
+<WebLink href="https://mantine.dev">Mantine!</WebLink>
+
+</TLDR>
+        
+## Bliss
+  Before Mantine Prism I had to figure out how to highlight my code snippets. It turned out to be quite a pain. 
+<PB4/>
+To get something like this:
+
+<pre>
+  <code>
+      <span style={{ color: "green" }}>
+      </span>
+      <br />
+      <span style={{ color: "blue" }}>const</span> a = 1;
+      <br />
+      <span style={{ color: "blue" }}>function</span>{" "}<span style={{ color: "orange" }}>fun</span>() {`{`}
+      <span style={{ color: "blue" }}> let</span> smth = 0;
+      <span style={{ color: "purple" }}> return</span> smth;
+      {`}`}
+  </code>
+</pre>
+<PB4/>
+
+Which underhood looks pretty ugly and laboursome: 
+<pre>
+  <code>
+  {`<pre>
+  <code>
+      <span style={{ color: "green" }}>
+      </span>
+      <br />
+      <span style={{ color: "blue" }}>
+        const </span> a = 1;
+      <br />
+      <span style={{ color: "blue" }}>
+        function
+      </span>{" "}
+      <span style={{ color: "orange" }}>
+        fun</span>() 
+      <span style={{ color: "blue" }}>
+       let</span> smth = 0;
+      <span style={{ color: "purple" }}> 
+      return</span> smth;
+  </code>
+</pre>`}
+</code>
+</pre>
+
+## Reinvent the wheel?
+As a driven (and not always for the good reasons) engineer, my first 
+reaction to this was to quickly slap together a tool to turn my ugly code 
+snippets into my beautiful swan code snippets. 
+<PB4/>
+*Thank god I did't do it!*
+<PB4/>
+Becase now I can just use a <Code>{"<Prism />"}</Code> component from
+  <WebLink href="https://mantine.dev/others/prism/">Mantine Prism</WebLink> to
+  effortlessly make JS/TS code look good. Voilà:  
+<PB4/>
+<Prism language="tsx">{`const a = 1;
+  function fun(): number {
+   let smth = 0;
+   return smth;
+  }`}</Prism>
+<PB4/>
+Or use <Code>colorScheme="dark"</Code> to make it dark like
+<WebLink href="https://www.imdb.com/name/nm3211470/">Rober Eggers's</WebLink> movies:
+<PB8/>
+
+<JS colorScheme="dark">
+  {`const a = 1;
+  function fun(): number {
+   let smth = 0;
+   return smth;
+  }`}
+</JS>
+<PB8/>
+
+### Isn't it lovely? 💥
+
+<PB8/>
+*PS* I'm still figuring out how to highlight Elixir code. But that's for another post.

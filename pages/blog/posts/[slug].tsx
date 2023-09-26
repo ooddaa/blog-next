@@ -1,5 +1,6 @@
 import fs from "fs";
 import matter from "gray-matter";
+import { Prism } from "@mantine/prism";
 import { MDXRemote, MDXRemoteSerializeResult } from "next-mdx-remote";
 import { serialize } from "next-mdx-remote/serialize";
 import rehypePrettyCode from "rehype-pretty-code";
@@ -17,6 +18,7 @@ import {
   H2,
   H3,
   Bold,
+  JS,
   SpongeBob,
   WebLink,
   Span,
@@ -54,6 +56,13 @@ const components = {
   Span,
   Image,
   Link,
+  Prism,
+  JS,
+  codesnippet: `const a = 1;
+  function fun() {
+   let smth = 0;
+   return smth;
+  }`
 };
 
 export default function PostPage({

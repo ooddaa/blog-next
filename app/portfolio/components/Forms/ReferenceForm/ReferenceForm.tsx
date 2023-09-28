@@ -3,7 +3,7 @@ import React, { FormEvent, useState, ChangeEvent } from "react";
 import { Global } from "@emotion/react";
 import { mq, styles, utils } from "./styles/styleSystem";
 import InputField from "./InputField";
-import CustomSelect from "./CustomSelect";
+import CustomSelect from "../../CustomSelect/CustomSelect";
 import {
   DataModel,
   UseFormInputResult,
@@ -688,6 +688,7 @@ function ReferenceForm() {
 }
 
 export default ReferenceForm;
+export const referenceForm = {component: <ReferenceForm/>, description: "A Reference Form for a user to submit their referees/guarantors."}
 
 function useFormInput(
   initialValue: string,

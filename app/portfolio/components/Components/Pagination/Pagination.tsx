@@ -31,7 +31,7 @@ interface Pages {
   pages: number;
 }
 
-function Pagination({ pages }: Pages): JSX.Element {
+function Pagination({ pages }: Pages = {pages: 20}): JSX.Element {
   // const pagesArr = [...Array(20).keys()].slice(1)
   const pagesArr = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18]
 
@@ -87,4 +87,4 @@ function Pagination({ pages }: Pages): JSX.Element {
   );
 }
 
-export default Pagination;
+export const pagination = { component : <Pagination pages={20}/>, description: (<div>Pagination component.</div>)}

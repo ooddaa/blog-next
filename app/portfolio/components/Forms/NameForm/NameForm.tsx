@@ -1,14 +1,16 @@
 /** @jsxImportSource @emotion/react */
 import React, { ChangeEvent, FormEvent, useState } from "react";
-import { Global, css } from "@emotion/react";
-import { styles, formStyles } from "../themes/light";
-// import CustomSelect from "../ReferenceForm/CustomSelect";
+import { styles, formStyles } from "../../themes/light";
+import CustomSelect from "../../CustomSelect/CustomSelect";
 
 const maxWidth = 450;
 const minWidth = 350;
 const minHeight = 200;
 
 const localStyles = {
+  topMargin: {
+    marginTop: styles.spacing[32],
+  },
   main: {
     maxWidth: `${maxWidth}px`,
     minWidth: `${minWidth}px`,
@@ -32,7 +34,6 @@ const localStyles = {
 
 const selectStyles = {
   control: {
-    // width: "400px",
     height: styles.spacing[36],
     borderRadius: styles["border-radius"].primary,
     border: `1px solid ${styles.colors["border-primary"]}`,
@@ -135,33 +136,10 @@ function NameForm() {
   };
 
   return (
-    <div>
-      {/* <Global
-        styles={{
-          "*": {
-            margin: "0",
-            padding: "0",
-            boxSizing: "border-box",
-          },
-          body: {
-            height: "100vh",
-            backgroundColor: `${styles.colors["bg-primary"]}`,
-            fontFamily: "Inter, sans-serif",
-          },
-          "#root": {
-            height: "100%",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          },
-          ".failedValidation": {
-            border: "1px red solid !important",
-          },
-        }}
-      /> */}
+    <div css={localStyles.topMargin}>
       <main
-        className="solaris-form"
-        test-id="__solaris-form"
+        className="personal-form"
+        test-id="__personal-form"
         css={localStyles.main}
       >
         <div className="title" css={localStyles.title}>
@@ -170,8 +148,8 @@ function NameForm() {
         <form action="submit" onSubmit={handleSubmit}>
           
           <div
-            className="solaris-form--name"
-            test-id="__solaris-form--name"
+            className="personal-form--name"
+            test-id="__personal-form--name"
             css={formStyles.general}
           >
             <label css={formStyles.label}>Name:</label>
@@ -186,8 +164,8 @@ function NameForm() {
           </div>
 
           <div
-            className="solaris-form--dob"
-            test-id="__solaris-form--dob"
+            className="personal-form--dob"
+            test-id="__personal-form--dob"
             css={formStyles.general}
           >
             <label css={formStyles.label}>Date of birth:</label>
@@ -206,7 +184,7 @@ function NameForm() {
           ></Divider>
 
           <div
-            className="solaris-form--addr"
+            className="personal-form--addr"
             css={{
               display: "grid",
               "grid-template-columns": "1fr",
@@ -219,8 +197,8 @@ function NameForm() {
             }}
           >
             <div
-              className="solaris-form--addr-main"
-              test-id="__solaris-form--addr-main"
+              className="personal-form--addr-main"
+              test-id="__personal-form--addr-main"
               css={formStyles.general}
             >
               <label css={formStyles.label}>Address:</label>
@@ -235,8 +213,8 @@ function NameForm() {
             </div>
 
             <div
-              className="solaris-form--addr-postcode"
-              test-id="__solaris-form--addr-postcode"
+              className="personal-form--addr-postcode"
+              test-id="__personal-form--addr-postcode"
               css={formStyles.general}
             >
               <label css={formStyles.label}>Postcode:</label>
@@ -255,14 +233,14 @@ function NameForm() {
 
           {/* SELECT */}
 
-          {/* <CustomSelect
+          <CustomSelect
             {...{
               ...selectProps,
               ...music.control,
               styles: selectStyles,
               disabled: submitted,
             }}
-          /> */}
+          />
 
           <Divider/>
 
@@ -270,8 +248,8 @@ function NameForm() {
 
           {submitted ? (
             <button
-              className="solaris-form--submitBtn"
-              test-id="__solaris-form--submitBtn"
+              className="personal-form--submitBtn"
+              test-id="__personal-form--submitBtn"
               type="submit"
               css={formStyles.submitBtnSuccess}
               disabled
@@ -280,8 +258,8 @@ function NameForm() {
             </button>
           ) : (
             <button
-              className="solaris-form--submitBtn"
-              test-id="__solaris-form--submitBtn"
+              className="personal-form--submitBtn"
+              test-id="__personal-form--submitBtn"
               type="submit"
               css={formStyles.submitBtn}
             >
@@ -290,10 +268,6 @@ function NameForm() {
           )}
         </form>
       </main>
-
-      {/* <div className="validationMsg">
-        {JSON.stringify(dob.validation.validationMsg)}
-      </div> */}
 
       {submitted && (
         <div className="success" test-id="__success">
@@ -306,7 +280,7 @@ function NameForm() {
   );
 }
 
-export default NameForm;
+export const nameForm = { component: <NameForm />, description: (<div>A form inspired by TailwindCSS style.</div>)};
 
 type Style = {
   [Property in keyof typeof styles]?: {
@@ -314,23 +288,17 @@ type Style = {
   };
 };
 interface DividerProps {
-  // styles: Style
-  // styles: any
   margins?: { top?: string; bottom?: string };
 }
 
-// function Divider({ styles }: DividerProps) {
 function Divider({ margins }: DividerProps) {
   return (
     <div
       className="Divider"
       css={{
         maxWidth: `${localStyles.main.maxWidth}px`,
-        // width: `${localStyles.main.width + 48}px`,
         height: "1px",
         backgroundColor: styles.colors["border-primary"],
-        // marginLeft: `-${styles.spacing[24]}`,
-        // marginRight: `-${styles.spacing[24]}`,
         marginTop: margins?.top || styles.spacing[24],
         marginBottom: margins?.bottom || styles.spacing[24],
       }}
@@ -390,7 +358,6 @@ export function useFormInput(
       | ChangeEvent<HTMLSelectElement>
       | { target: { type: string; value: string } }
   ) {
-    // console.log("e.type", e.target.type, e.target.value, e);
     /* I'd rather validate here, because it's less frustrating for user to see error immediately */
     if (e.target.type === "text") {
       // console.log('e.target.type === text')
@@ -414,7 +381,6 @@ export function useFormInput(
   function handleValueSubmit(value: string) {
     return function inner(e: FormEvent<HTMLInputElement>) {
       e.preventDefault();
-      // console.log("submitting : value", value);
     };
   }
 
@@ -431,6 +397,5 @@ export function useFormInput(
         this.isValidated = true;
       },
     },
-    // onSubmit: handleValueSubmit(value),
   };
 }

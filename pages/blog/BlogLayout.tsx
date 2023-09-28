@@ -1,4 +1,4 @@
-import MantineHeader, { links } from '@/app/components/MantineHeader';
+import { MantineHeader, links } from '@/app/components/MantineHeader';
 import localFont from 'next/font/local'
 
 const font = localFont({
@@ -9,7 +9,7 @@ const font = localFont({
 export default function BlogLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
-    <MantineHeader links={links}></MantineHeader>
+    <MantineHeader />
       <div className={[
         "wrapper", 
         font.className, 

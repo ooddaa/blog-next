@@ -37,7 +37,7 @@ export default function Header({
           </div>
         )}
         <div className="blog-post__header__author">
-          <div className="flex flex-col sm:flex-row pt-2 gap-2 sm:gap-8 justify-center items-center border-t text-sm sm:text-base text-slate-500">
+          <div className="flex flex-col sm:flex-row pt-2 gap-2 sm:gap-8 justify-center items-center border-t text-sm sm:text-base text-slate-500 ">
             <div className="flex flex-row gap-4 justify-start items-center">
               <div>
                 {" "}

@@ -1,6 +1,5 @@
 import fs from "fs";
 import matter from "gray-matter";
-import { Prism } from "@mantine/prism";
 import { MDXRemote, MDXRemoteSerializeResult } from "next-mdx-remote";
 import { serialize } from "next-mdx-remote/serialize";
 import rehypePrettyCode from "rehype-pretty-code";
@@ -18,14 +17,13 @@ import {
   H2,
   H3,
   Bold,
-  JS,
   SpongeBob,
   WebLink,
   Span,
   loadPosts,
   sortPosts,
 } from "@/app/toolbox";
-import Layout from "../components/layout";
+import PostLayout from "../components/PostLayout";
 import { postFilePaths, POSTS_PATH } from "../../../utils/mdxUtils";
 import { Blockquote, List } from "@mantine/core";
 import type { InferGetStaticPropsType, GetStaticProps } from "next";
@@ -56,13 +54,6 @@ const components = {
   Span,
   Image,
   Link,
-  Prism,
-  JS,
-  codesnippet: `const a = 1;
-  function fun() {
-   let smth = 0;
-   return smth;
-  }`
 };
 
 export default function PostPage({
@@ -71,7 +62,7 @@ export default function PostPage({
   nextPost,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
-    <Layout>
+    <PostLayout>
       <Header
         title={data.title}
         subtitle={data.subtitle}
@@ -85,7 +76,7 @@ export default function PostPage({
         <MDXRemote {...source} components={components as MDXComponents} />
       </main>
       <BlogNavigation previousPost={previousPost} nextPost={nextPost} />
-    </Layout>
+    </PostLayout>
   );
 }
 

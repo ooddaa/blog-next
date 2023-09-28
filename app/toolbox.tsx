@@ -1,8 +1,8 @@
 import Path from 'path'
 import matter from 'gray-matter'
 import React from "react";
-import { Text, createStyles } from "@mantine/core";
-import { Prism } from "@mantine/prism";
+import cx from "clsx";
+import { Text } from "@mantine/core";
 
 import type { Post } from "./types.d.ts";
 import { isString, isNumber, isArray } from "lodash";
@@ -118,9 +118,12 @@ interface PB {
 }
 
 
-/* https://mantine.dev/core/text/ */
+// /* https://mantine.dev/core/text/ */
 function Span({ children, ...props }: Partial<WrapperComponent> & Partial<Span>) {
   return (
+    // <>
+    //   {children}
+    // </>
     <Text component="span" {...props}>
       {children}
     </Text>
@@ -168,33 +171,10 @@ function GradientSpan({ children, from, to, ...props }: Partial<WrapperComponent
   );
 }
 
-function JS({ children, tailwindClasses, ...props }: any) {
-// function JS({ children, tailwindClasses, ...props }: Partial<WrapperComponent> & JS) {
-  const { cx } = createStyles(() => ({}))();
-  const defaultClasses = "pb-4";
-  return (
-    <Prism
-      className={cx(
-        tailwindClasses ? [defaultClasses, tailwindClasses] : defaultClasses
-      )}
-      
-      language="javascript"
-      withLineNumbers
-      {...props}
-    >
-      {children}
-    </Prism>
-  );
-}
-
-function JSDark({ children, tailwindClasses, ...props }: Partial<WrapperComponent> & TailwindClasses) {
-  return <JS colorScheme="dark" tailwindClasses={tailwindClasses} {...props}>{children}</JS>
-}
 
 
 
 function Emoji({ children, whitespace=true, style, classNames, ...rest }: Partial<WrapperComponent> & Partial<{whitespace: boolean, style: Object, classNames: string}>) {
-  const { cx } = createStyles(() => ({}))();
   return (
     <div
       className={cx("emoji", classNames)}
@@ -218,7 +198,6 @@ interface HProps {
 }
 
 const H3: React.FC<HProps> = ({ children, style, tailwindClasses, ...props }) => {
-  const { cx } = createStyles(() => ({}))();
   const defaultClasses = "font-bold text-2xl pb-4 tracking-tight";
   return (
     <h3
@@ -233,7 +212,6 @@ const H3: React.FC<HProps> = ({ children, style, tailwindClasses, ...props }) =>
   );
 };
 const H2: React.FC<HProps> = ({ children, style, tailwindClasses, ...props }) => {
-  const { cx } = createStyles(() => ({}))();
   const defaultClasses = "font-bold text-3xl pb-4 tracking-tight";
   return (
     <h2
@@ -248,7 +226,6 @@ const H2: React.FC<HProps> = ({ children, style, tailwindClasses, ...props }) =>
   );
 };
 const H1: React.FC<HProps> = ({ children, style, tailwindClasses, ...props }) => {
-  const { cx } = createStyles(() => ({}))();
   const defaultClasses = "font-bold text-4xl pb-4 tracking-tight";
   return (
     <h1
@@ -281,7 +258,6 @@ function TLDR({ children, ...props }: Partial<WrapperComponent>) {
 
 
 function P({ children, pb, tailwindClasses, ...props }: Partial<WrapperComponent> & TailwindClasses & Partial<PB>) {
-  const { cx } = createStyles(() => ({}))();
   const defaultClasses = `pb-${pb ?? 0}`;
   return (
     <div
@@ -326,7 +302,6 @@ function PB8({ children, tailwindClasses, ...props }: Partial<WrapperComponent> 
 }
 
 function M({ children, pb, tailwindClasses, ...props }: Partial<WrapperComponent> & TailwindClasses & PB) {
-  const { cx } = createStyles(() => ({}))();
   const defaultClasses = `pb-${pb ?? 0}`;
   return (
     <div
@@ -422,8 +397,6 @@ export {
   Bold,
   Super,
   GradientSpan,
-  JS,
-  JSDark,
   Emoji,
   H3,
   H2,

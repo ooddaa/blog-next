@@ -18,7 +18,6 @@ import { InferGetServerSidePropsType, GetServerSideProps } from "next";
  */
 export default function Blog({ posts }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const router = useRouter()
-  // console.log(router)
   const [highlightedTags, setHighlightedTags] = useState([]);
 
   // there may be a single/multiple tags in the url query
@@ -71,18 +70,18 @@ export default function Blog({ posts }: InferGetServerSidePropsType<typeof getSe
   }
 
   return (
-  <BlogContextProvider value={{ highlightedTags, setHighlightedTags, filterForSelectedTag, selectedTags }}>
-    <BlogLayout>
-      <div className="blog flex flex-col lg:flex-row relative bg-slate-50">
-        <div className="left basis-full pb-48 sm:basis-3/5  min-h-screen">
-          <BlogTOC posts={filteredPosts}/>
-        </div>   
-        <div className='right sticky top-0 w-full h-max sm:w-1/3 pt-12 sm:pt-24 mx-auto'>
-          <BlogTags tags={extractTagsFromPosts(posts)}/>
-        </div>
-      </div>
-    </BlogLayout>
-  </BlogContextProvider>
+      <BlogContextProvider value={{ highlightedTags, setHighlightedTags, filterForSelectedTag, selectedTags }}>
+        <BlogLayout>
+          <div className="blog flex flex-col lg:flex-row relative bg-slate-50 max-sm:pb-12">
+            <div className="left basis-full sm:pb-48 sm:basis-3/5  min-h-screen">
+              <BlogTOC posts={filteredPosts}/>
+            </div>   
+            <div className='right sticky top-0 w-full h-max sm:w-1/3 pt-12 max-sm:px-6 sm:pt-24 mx-auto'>
+              <BlogTags tags={extractTagsFromPosts(posts)}/>
+            </div>
+          </div>
+        </BlogLayout>
+      </BlogContextProvider>
   )
 }
 

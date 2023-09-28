@@ -10,7 +10,7 @@ export default function Workspace({ children }: WorkspaceProps) {
     <div className="portfolio-workspace">
       <WorkspaceLayout>
         <WorkspaceDescription>{children?.description}</WorkspaceDescription>
-        {children.component}
+        {children?.component}
       </WorkspaceLayout>
     </div>
   );

@@ -9,7 +9,7 @@ export default function Navbar({ innerWidth }: NavbarProps) {
   return (
     <div className="h-[300px] pt-12 lg:pt-48 lg:h-full w-full lg:w-1/2 bg-green-800/50 flex flex-col justify-center items-center lg:justify-start text-slate-900 relative">
       <div className="noise--img absolute top-0 left-0 w-full h-full -z-10"></div>
-      <div className="max-sm:min-h-[128px] pt-24 text-[36px] lg:text-[64px] font-bold lg:font-semibold flex flex-row justify-center items-center text-center"> 
+      <div className="max-sm:min-h-[128px] lg:pt-24 text-[36px] lg:text-[64px] font-bold lg:font-semibold flex flex-row justify-center items-center text-center"> 
         {innerWidth <= 600 ? "Dmitry Vikhorev" : "Dmitry 'Oda' Vikhorev"}
       </div>
 

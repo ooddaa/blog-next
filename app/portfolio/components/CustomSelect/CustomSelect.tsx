@@ -1,8 +1,8 @@
 /** @jsxImportSource @emotion/react */
-import React, { useState } from "react";
-import './styles/CustomSelect.css'
-import {styles} from "./styles/styleSystem"
-import { CustomSelectProps, Option } from './interfaces'
+import { useState } from "react";
+import './CustomSelect.module.css'
+import {styles} from "../Forms/ReferenceForm/styles/styleSystem"
+import { CustomSelectProps, Option } from '../Forms/ReferenceForm/interfaces'
 
 const defaultStyles = {
   control: {
@@ -154,3 +154,4 @@ function CustomSelect({ options, value, onChange, disabled, styles, testId }: Cu
 }
 
 export default CustomSelect;
+export const customSelect = { component: CustomSelect, description: (<div>Custom Select component.</div>)}

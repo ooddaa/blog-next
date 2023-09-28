@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
-import React, { ChangeEvent, MouseEvent, FormEvent, ChangeEventHandler, useRef, useState } from "react";
-import { styles, formStyles } from "../themes/light";
-import { Global, css } from "@emotion/react";
+import { ChangeEvent, MouseEvent, FormEvent, ChangeEventHandler, useRef, useState } from "react";
+import { styles, formStyles } from "../../themes/light";
+import { WebLink } from "@/app/toolbox";
 
 const localStyles = {
   main: {
@@ -44,7 +44,7 @@ const openEye = (
     className="h-6 w-6"
     fill="none"
     viewBox="0 0 24 24"
-    stroke="currentColor"
+    stroke={styles.colors["bg-primary"]}
     strokeWidth={2}
   >
     <path
@@ -83,10 +83,7 @@ function WelcomeBack({ title }: WelcomeBackProps) {
   }
 
   return (
-    <div className="flex flex-col justify-center items-center">
-<div className='p-6 mb-12 bg-white shadow rounded-md w-full text-lg/8'>
-      A welcome back form inspired by <a href="https://www.refactoringui.com/" className="text-sky-500 underline">Refactoring UI book</a>. 
-      </div>
+    <div className="flex flex-col justify-center items-center mt-12">
       <div className="welcome-back" css={localStyles.main}>
         <div className="welcome-back-title" css={localStyles.title}>
           {title}
@@ -119,11 +116,11 @@ function WelcomeBack({ title }: WelcomeBackProps) {
             <label css={localStyles.label}>
               Password
             </label>
-            <input 
-            type="password" 
-            {...password} 
-            css={localStyles.inputField} 
-            />
+              <input 
+                css={localStyles.inputField} 
+                type="password" 
+                {...password} 
+                />
           </div>
 
           <div
@@ -212,8 +209,10 @@ function WelcomeBack({ title }: WelcomeBackProps) {
 }
 
 const defaultWelcomeBack = () => WelcomeBack({ title: "Welcome Back!" });
+const DefaultWelcomeBack = () => WelcomeBack({ title: "Welcome Back!" });
 
 export default defaultWelcomeBack;
+export const welcomeBack = {component: < DefaultWelcomeBack />, description: (<div>Login form from the great <WebLink href="https://www.refactoringui.com/" alt="link to Refactoring UI">Refactoring UI book.</WebLink></div>)}
 
 function useTextInput(initValue: string): { value: { value: string, onChange: ChangeEventHandler<HTMLInputElement> } }  {
   const [value, setValue] = useState(initValue)

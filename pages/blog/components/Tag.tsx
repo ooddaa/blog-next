@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { Center, createStyles } from "@mantine/core";
+// import { Center } from "@mantine/core";
 import { isFunction } from "lodash";
 import { useBlogContext } from "@/contexts/blog-context";
+import cx from 'clsx'
 
 export interface Tag {
   tag: string, 
@@ -10,8 +11,6 @@ export interface Tag {
 }
 export default function Tag({ tag, classNames, handleClick }: Tag) {
   const { highlightedTags, filterForSelectedTag, selectedTags } = useBlogContext()
-  const useStyles = createStyles(() => ({}));
-  const { cx } = useStyles();
   const [clicked, setClicked] = useState(selectedTags.has(tag));
 
   function defaultHandleClick(e: React.MouseEvent<HTMLDivElement>) {
@@ -36,7 +35,7 @@ export default function Tag({ tag, classNames, handleClick }: Tag) {
   }
 
   return (
-    <Center
+    <div
       className={cx(
         classNames ??
           "p-2 pl-3 pr-3 h-auto w-max rounded-md text-sm transition delay-50 select-none hover:cursor-pointer hover:shadow-md",
@@ -46,6 +45,19 @@ export default function Tag({ tag, classNames, handleClick }: Tag) {
       onClick={isFunction(handleClick) ? handleClick : defaultHandleClick}
     >
       {tag}
-    </Center>
+</div>
   );
+  // return (
+  //   <Center
+  //     className={cx(
+  //       classNames ??
+  //         "p-2 pl-3 pr-3 h-auto w-max rounded-md text-sm transition delay-50 select-none hover:cursor-pointer hover:shadow-md",
+  //       highlightedTags?.includes(tag) && "bg-orchid-pink",
+  //       clicked && "bg-[#D0D6B3] shadow-md" 
+  //     )}
+  //     onClick={isFunction(handleClick) ? handleClick : defaultHandleClick}
+  //   >
+  //     {tag}
+  //   </Center>
+  // );
 }

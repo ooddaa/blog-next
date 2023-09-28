@@ -34,7 +34,7 @@ const data = [
   },
 ];
 
-export function AccordeonElement({ elm }) {
+export function AccordionElement({ elm }) {
   const [isOpen, toggleOpen] = useState(false);
 
   const chevronDown = (
@@ -72,40 +72,40 @@ export function AccordeonElement({ elm }) {
 
   return (
     <div
-      className={`accordeon__elm elm--${elm.id} ${isOpen ? "open" : "closed"}`}
+      className={`accordion__elm elm--${elm.id} ${isOpen ? "open" : "closed"}`}
     >
       <div className={`top-green-border`}></div>
-      <div className={`accordeon__head`}>
-        <div className="accordeon-left">
-          <div className={`accordeon__head--id ${isOpen && "text-green"}`}>
+      <div className={`accordion__head`}>
+        <div className="accordion-left">
+          <div className={`accordion__head--id ${isOpen && "text-green"}`}>
             {elm.id}
           </div>
-          <div className={`accordeon__head--text ${isOpen && "text-green"}`}>
+          <div className={`accordion__head--text ${isOpen && "text-green"}`}>
             {elm.header}
           </div>
         </div>
         <div className="right">
           <div
-            className="accordeon__head--btn"
+            className="accordion__head--btn"
             onClick={() => toggleOpen((val) => !val)}
           >
             {isOpen ? cross : chevronDown}
           </div>
         </div>
       </div>
-      <div className={`accordeon__body`}>{elm.body}</div>
+      <div className={`accordion__body`}>{elm.body}</div>
     </div>
   );
 }
 
-function Accordeon() {
+function Accordion() {
   return (
-    <div className="accordeon">
+    <div className="accordion mt-12">
       {data.map((elm, i) => (
-        <AccordeonElement key={elm.id} elm={elm}></AccordeonElement>
+        <AccordionElement key={elm.id} elm={elm}></AccordionElement>
       ))}
     </div>
   );
 }
 
-export default Accordeon;
+export const accordion = { component: <Accordion/>, description: (<div>Accordion component.</div>)}

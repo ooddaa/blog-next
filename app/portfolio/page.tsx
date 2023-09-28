@@ -2,33 +2,36 @@
 "use client";
 
 import { useState } from "react";
-import TableOfContents from "./components/TableOfContents";
+import TableOfContents from "./components/TableOfContents/TableOfContents";
 import Workspace from "./components/Workspace";
-import ReferenceForm from "./components/ReferenceForm/ReferenceForm";
-import CustomSelect from "./components/ReferenceForm/CustomSelect";
+import {referenceForm} from "./components/Forms/ReferenceForm/ReferenceForm";
+import CustomSelect, {customSelect} from "./components/CustomSelect/CustomSelect";
 import {ticTacToe} from "./components/TicTacToe/TicTacToe";
-import Accordion from "./components/Accordion/Accordion";
-import Carousel from "./components/Carousel/Carousel";
-import Pagination from "./components/Pagination/Pagination";
-import Table from "./components/Tables/Table1";
+import {forms} from "./components/Forms/Forms";
+import {accordion} from "./components/Components/Accordion/Accordion";
+import {carousel} from "./components/Components/Carousel/Carousel";
+import {pagination} from "./components/Components/Pagination/Pagination";
+import {table} from "./components/Components/Tables/Table1";
 import Resizable from "./components/Resizable/Resizable";
-import NameForm from "./components/NameForm/NameForm";
-import WelcomeBackForm from "./components/WelcomeBackForm/WelcomeBack";
-import {katcher} from "./components/Katcher/Katcher";
-import { styles as ReferenceFormStyles } from "./components/ReferenceForm/styles/styleSystem";
-import MantineHeader, {
+import {nameForm} from "./components/Forms/NameForm/NameForm";
+import {welcomeBack} from "./components/Forms/WelcomeBackForm/WelcomeBack";
+import {katcher} from "./components/Projects/Katcher/Katcher";
+import { styles as ReferenceFormStyles } from "./components/Forms/ReferenceForm/styles/styleSystem";
+import {
+  MantineHeader,
   HEADER_HEIGHT,
-  links as headerLinks,
 } from "../components/MantineHeader";
 import lorem from "./components/lorem";
-import { GradientSpan, PB4 } from "../toolbox";
 import {caves} from "./components/Caves/Caves";
+import { components } from "./components/Components/Components";
+import { projects } from "./components/Projects/Projects";
+import { katcherUserFlow } from "./components/Projects/Katcher/KatcherUserFlow";
 
 export type ComponentEntryValue = {component: JSX.Element, description: string | JSX.Element}
 type ComponentEntry = { [key: string]: ComponentEntryValue }
-const components: ComponentEntry = {
-  "Reference": {component: <ReferenceForm />, description: "A Reference Form for a user to submit their referees/guarantors."},
-  "Custom Select": {component: (
+const collection: ComponentEntry = {
+  "Reference": referenceForm,
+  "Custom select": {component: (<div className="mt-12">
     <CustomSelect
       value={"Portfolio"}
       options={[
@@ -38,12 +41,13 @@ const components: ComponentEntry = {
       ]}
       onChange={(e) => console.log(e.target.value)}
     />
-  ), description: ""},
+  </div>), description: customSelect.description},
   TicTacToe: ticTacToe,
-  Accordion: {component: <Accordion />, description: ""},
-  Carousel: {component: <Carousel />, description: ""},
-  Pagination: {component: <Pagination pages={20} />, description: ""},
-  Table: {component: <Table />, description: ""},
+  Forms: forms,
+  Accordion: accordion,
+  Carousel: carousel,
+  Pagination: pagination, 
+  Table: table,
   Resizable: {component: (
     <Resizable
       height={"400px"}
@@ -69,7 +73,7 @@ const components: ComponentEntry = {
         className="child--a"
         css={{
           padding: "20px",
-          backgroundColor: "#fde68a",
+          backgroundColor: "#fff",
         }}
       >
         {lorem}
@@ -80,48 +84,56 @@ const components: ComponentEntry = {
         className="child--b"
         css={{
           padding: "20px",
-          backgroundColor: "#fee2e2",
+          backgroundColor: "#fff",
         }}
       >
         {lorem}
       </div>
     </Resizable>
-  ), description: ""},
-  'Person details': {component: <NameForm />, description: ""},
-  "Welcome back": {component: <WelcomeBackForm />, description: ""},
+  ), description: (<div>A resizable split panes component.</div>)},
+  'Person details': nameForm,
+  "Welcome back": welcomeBack,
   Caves: caves,
-  Katcher: katcher
+  Katcher: katcher,
+  Components: components,
+  Projects: projects,
+  "User Registration Flow": katcherUserFlow
 };
 
 const links = [
   { label: "Caves", order: 1, new: true },
-  { label: "Katcher", order: 1, new: true },
+  { label: "Projects", order: 1, new: true},
+  { label: "Katcher", order: 2 },
+  { label: "User Registration Flow", order: 3},
+  { label: "Homi", order: 2 },
   { label: "TicTacToe", order: 1 },
   { label: "Forms", order: 1 },
   { label: "Reference", order: 2 },
   { label: "Person details", order: 2 },
   { label: "Welcome back", order: 2 },
   { label: "Custom select", order: 2 },
-  { label: "Accordion", order: 1 },
-  { label: "Carousel", order: 1 },
-  { label: "Pagination", order: 1 },
-  { label: "Table", order: 1 },
-  { label: "Resizable", order: 1 },
+  { label: "Components", order: 1 },
+  { label: "Accordion", order: 2 },
+  { label: "Carousel", order: 2 },
+  { label: "Pagination", order: 2 },
+  { label: "Table", order: 2 },
+  { label: "Resizable", order: 2 },
+  // { label: "Figma", order: 1 },
   // { label: "Desktop", link: "Desktop", order: 1 },
 ];
 
 export default function Portfolio() {
   const [currentComponent, setCurrentComponent] = useState<ComponentEntryValue>(
-    components["Caves"]
+    collection["Caves"]
   );
 
   const selectComponent = (componentName: string) => {
-    setCurrentComponent(components[componentName]);
+    setCurrentComponent(collection[componentName]);
   };
 
   return (
     <>
-      <MantineHeader links={headerLinks}></MantineHeader>
+      <MantineHeader />
 
       <div
         className="portfolio"

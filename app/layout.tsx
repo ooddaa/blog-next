@@ -1,4 +1,8 @@
+// import "@/app/globals.css"
 import './globals.css'
+import '@mantine/core/styles.css';
+import { MantineProvider, ColorSchemeScript } from '@mantine/core';
+
 import { Manrope } from 'next/font/google'
 
 const manrope = Manrope({ subsets: ['latin'] })
@@ -10,10 +14,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <ColorSchemeScript />
+      </head>
       <body className={manrope.className}>
-        {/* <div className="bg-[#f9fafc]"> */}
+        <MantineProvider>
           {children}
-          {/* </div> */}
+        </MantineProvider>
       </body>
     </html>
   )

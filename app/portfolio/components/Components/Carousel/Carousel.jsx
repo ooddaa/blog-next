@@ -96,4 +96,4 @@ function Carousel() {
   );
 }
 
-export default Carousel;
+export const carousel = { component: <Carousel/>, description: (<div>Carousel component.</div>)}

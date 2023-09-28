@@ -52,4 +52,4 @@ function Table1() {
   )
 }
 
-export default Table1
+export const table = { component: <Table1/>, description: (<div>Table component. HTML/CSS only</div>)}

@@ -49,7 +49,7 @@ function renderCave({
         y={0}
         width={_width}
         height={_height}
-        fill={fill || "#818cf8"}
+        fill={fill || "#fef08a"}
         rx={10}
         ry={10}
       />
@@ -115,7 +115,7 @@ function renderLine({
 }: Partial<RenderLineProps>): JSX.Element {
   const _stroke = stroke ? stroke : "#94a3b8";
   const _fill = fill ? fill : "#none";
-  const _strokeWidth = strokeWidth ? strokeWidth : 4;
+  const _strokeWidth = strokeWidth ? strokeWidth : 2;
   return (
     <line
       x1={from?.x}
@@ -201,89 +201,91 @@ export function renderCaveSystem(caveSystem: object): JSX.Element {
     }
   return (
     <div className="w-full flex flex-row gap-12 justify-between items-between">
-      <svg width={600} height={600}>
-        <Cave
-          position={{ x: side * 2.5, y: side * 0.5 }}
-          width={side * 3}
-          height={side}
-          label={"Start"}
-          fill="#a7f3d0"
-        >
-          <Line
-            from={{ x: side * 0.5, y: side }}
-            to={{ x: side * 0.5, y: side * 2.5 }}
-          />
-          <Line
-            from={{ x: side * 2.5, y: side }}
-            to={{ x: side * 2.5, y: side * 2.5 }}
-          />
-        </Cave>
+      <div className="mx-auto">
+        <svg width={600} height={600}>
+          <Cave
+            position={{ x: side * 2.5, y: side * 0.5 }}
+            width={side * 3}
+            height={side}
+            label={"Start"}
+            fill="#a7f3d0"
+          >
+            <Line
+              from={{ x: side * 0.5, y: side }}
+              to={{ x: side * 0.5, y: side * 2.5 }}
+            />
+            <Line
+              from={{ x: side * 2.5, y: side }}
+              to={{ x: side * 2.5, y: side * 2.5 }}
+            />
+          </Cave>
 
-        <Cave
-          position={{ x: side * 0.5, y: side * 2.5 }}
-          width={side}
-          height={side}
-          label={"c"}
-          fill="#e2e8f0"
-        >
-          <Line
-            from={{ x: side, y: side * 0.5 }}
-            to={{ x: side * 2.5, y: side * 0.5 }}
-          />
-        </Cave>
+          <Cave
+            position={{ x: side * 0.5, y: side * 2.5 }}
+            width={side}
+            height={side}
+            label={"c"}
+            fill="#e2e8f0"
+          >
+            <Line
+              from={{ x: side, y: side * 0.5 }}
+              to={{ x: side * 2.5, y: side * 0.5 }}
+            />
+          </Cave>
 
-        <Cave
-          position={{ x: side * 2.5, y: side * 2.5 }}
-          width={side}
-          height={side}
-          label={"A"}
-        >
-          <Line
-            from={{ x: side * 0.5, y: side }}
-            to={{ x: side * 0.5, y: side * 2.5 }}
-          />
-          <Line
-            from={{ x: side, y: side * 0.5 }}
-            to={{ x: side * 2.5, y: side * 0.5 }}
-          />
-        </Cave>
+          <Cave
+            position={{ x: side * 2.5, y: side * 2.5 }}
+            width={side}
+            height={side}
+            label={"A"}
+          >
+            <Line
+              from={{ x: side * 0.5, y: side }}
+              to={{ x: side * 0.5, y: side * 2.5 }}
+            />
+            <Line
+              from={{ x: side, y: side * 0.5 }}
+              to={{ x: side * 2.5, y: side * 0.5 }}
+            />
+          </Cave>
 
-        <Cave
-          position={{ x: side * 4.5, y: side * 2.5 }}
-          width={side}
-          height={side}
-          label={"b"}
-          fill="#e2e8f0"
-        >
-          <Line
-            from={{ x: side * 0.5, y: side }}
-            to={{ x: side * 0.5, y: side * 2.5 }}
-          />
-          <Line
-            from={{ x: side, y: side * 0.5 }}
-            to={{ x: side * 2.5, y: side * 0.5 }}
-          />
-        </Cave>
+          <Cave
+            position={{ x: side * 4.5, y: side * 2.5 }}
+            width={side}
+            height={side}
+            label={"b"}
+            fill="#e2e8f0"
+          >
+            <Line
+              from={{ x: side * 0.5, y: side }}
+              to={{ x: side * 0.5, y: side * 2.5 }}
+            />
+            <Line
+              from={{ x: side, y: side * 0.5 }}
+              to={{ x: side * 2.5, y: side * 0.5 }}
+            />
+          </Cave>
 
-        <Cave
-          position={{ x: side * 6.5, y: side * 2.5 }}
-          width={side}
-          height={side}
-          label={"d"}
-          fill="#e2e8f0"
-        >
-          {/* <Line from={{x: side, y: side * .5}} to={{x: side * 2.35, y: side * .5}} /> */}
-        </Cave>
+          <Cave
+            position={{ x: side * 6.5, y: side * 2.5 }}
+            width={side}
+            height={side}
+            label={"d"}
+            fill="#e2e8f0"
+          >
+            {/* <Line from={{x: side, y: side * .5}} to={{x: side * 2.35, y: side * .5}} /> */}
+          </Cave>
 
-        <Cave
-          position={{ x: side * 2.5, y: side * 4.5 }}
-          width={side * 3}
-          height={side}
-          label={"End"}
-          fill="#a7f3d0"
-        ></Cave>
-        {/* </Grid> */}
-      </svg>
+          <Cave
+            position={{ x: side * 2.5, y: side * 4.5 }}
+            width={side * 3}
+            height={side}
+            label={"End"}
+            fill="#a7f3d0"
+          ></Cave>
+          {/* </Grid> */}
+        </svg>
+      </div>
       {RenderPaths()}
     </div>
   );

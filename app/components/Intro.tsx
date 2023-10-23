@@ -1,6 +1,7 @@
 import React from 'react'
 import { useRouter } from 'next/navigation'
 import { GradientSpan } from '../toolbox'
+import { TypeAnimation } from 'react-type-animation';
 import Link from 'next/link'
 
 export default function Intro() {
@@ -9,14 +10,31 @@ export default function Intro() {
     <div className="w-full lg:w-1/2 flex flex-col justify-start items-center p-6 lg:p-24">
       {/* bio */}
       <div className="w-full">
-        <div className="pb-2">
-          <ul className="py-4">
+        <div className="pb-8">
+        <TypeAnimation
+            sequence={[
+              'Software Engineer',
+              1000, 
+              'Entrepreneur',
+              1000,
+              'Full Time Dad',
+              1000,
+              'Grappler',
+              1000
+            ]}
+            wrapper="span"
+            className='text-red-400'
+            speed={15}
+            style={{ fontSize: '2em', display: 'inline-block' }}
+            repeat={Infinity}
+          />
+          {/* <ul className="py-4">
             <li><GradientSpan from="red" to="orange">software engineer</GradientSpan></li>
             <li><GradientSpan from="orange" to="yellow">entrepreneur</GradientSpan></li>
             <li><GradientSpan from="yellow" to="green">full time dad</GradientSpan></li>
             <li><GradientSpan from="green" to="blue">grappler</GradientSpan></li>
             <li><GradientSpan from="blue" to="purple">reader</GradientSpan></li>
-          </ul>
+          </ul> */}
         </div>
         <div className="tracking-wide">
         <div className="pb-2">

@@ -1,5 +1,4 @@
 import { useState } from "react";
-// import { Center } from "@mantine/core";
 import { isFunction } from "lodash";
 import { useBlogContext } from "@/contexts/blog-context";
 import cx from 'clsx'

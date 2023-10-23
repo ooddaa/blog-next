@@ -1,6 +1,5 @@
 import React from 'react'
 import { useRouter } from 'next/navigation'
-import { GradientSpan } from '../toolbox'
 import { TypeAnimation } from 'react-type-animation';
 import Link from 'next/link'
 
@@ -28,13 +27,6 @@ export default function Intro() {
             style={{ fontSize: '2em', display: 'inline-block' }}
             repeat={Infinity}
           />
-          {/* <ul className="py-4">
-            <li><GradientSpan from="red" to="orange">software engineer</GradientSpan></li>
-            <li><GradientSpan from="orange" to="yellow">entrepreneur</GradientSpan></li>
-            <li><GradientSpan from="yellow" to="green">full time dad</GradientSpan></li>
-            <li><GradientSpan from="green" to="blue">grappler</GradientSpan></li>
-            <li><GradientSpan from="blue" to="purple">reader</GradientSpan></li>
-          </ul> */}
         </div>
         <div className="tracking-wide">
         <div className="pb-2">

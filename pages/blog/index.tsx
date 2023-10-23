@@ -51,7 +51,10 @@ export default function Blog({ posts }: InferGetServerSidePropsType<typeof getSe
 
   function removeTagFromQuery(tag: string): Tags {
     let {tags} = router.query
-    if (tags && isArray(tags)) return tags.splice(tags.indexOf(tag), 1)
+    if (tags && isArray(tags)) {
+      tags.splice(tags.indexOf(tag), 1)
+      return tags
+    }
     return []
   }
 

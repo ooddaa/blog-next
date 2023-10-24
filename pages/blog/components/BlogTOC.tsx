@@ -20,6 +20,7 @@ export default function BlogTOC({posts}: BlogTOCparams) {
             <div className="flex text-2xl text-slate-300 mb-8 w-full border-b justify-end">{year}</div>
             {groupByMonth(posts, "desc")
               .map(({month, posts}) => {
+                // console.log(month)
                 return <div key={month}>
                   <div className="text-xl text-slate-500 pb-4">{resolveMonth(month)}</div>
                   <div className="pb-12">
@@ -63,21 +64,22 @@ function groupByYear(posts: Post[], sortOrder: SortOrder = "desc"): YearlyPost[]
 }
 
 type MonthlyPost = {
-  month: string,
+  month: number,
   posts: Post[]
 }
 function groupByMonth(posts: Post[], sortOrder: SortOrder = "desc"): MonthlyPost[] {
   let groupped = groupBy(posts, ({data}) => parseMonth(data.date))
   return keys(groupped)
+  .map(Number)
   .sort(sortOrder == "asc" ? asc : desc)
   .map(month => ({ month, posts: groupped[month] }))
 }
 
-function asc(a: string, b: string) {
+function asc(a: number|string, b: number|string) {
   if (a >= b) return 1
   return -1 
 }
-function desc(a: string, b: string) { 
+function desc(a: number|string, b: number|string) { 
   return asc(b,a)
 }
 

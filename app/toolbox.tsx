@@ -340,13 +340,15 @@ function WebLink({ children, tailwindClasses, href, alt, ...props }: Partial<Wra
 
 const emptyObject = () => ({});
 
-function Code({ children, block, ...props }: Partial<WrapperComponent> & TailwindClasses & { block?: boolean}) {
+function Code({ children, block, px, py, ...props }: Partial<WrapperComponent> & TailwindClasses & { block?: boolean, px?: string, py?: string }) {
   return (
-    <Span className={`flex-inline justify-center items-center bg-gray-100 rounded px-2 py-1 text-base font-light text-gray-800 border ${block ? "block" : ""}`} {...props}>
+    <span className={`bg-gray-100 rounded text-base font-light text-gray-800 border ${block ? "block px-4 py-4" : "inline px-2 py-1"}`} {...props}>
       {children}
-    </Span>
+    </span>
   );
 }
+
+// function Pre({ children})
 
 function SpongeBob() {
   return <GradientSpan from="yellow" to="orange">SpongeBob</GradientSpan>

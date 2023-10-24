@@ -1,0 +1,209 @@
+---
+id: 11
+title: Design WhatsApp
+subtitle: aka real-time chat app
+author: Dmitry Vikhorev
+date: 20231020
+timeToRead: 5min
+version: 0.1
+tags: ["system design", "WebSockets", "consisten hashing", "message queues"]
+---
+
+<TLDR>
+Recently I have been preparing for System Design interviews. Here I will be publishing some of the solutions that I came up with during peer-2-peer interviews on <WebLink href="pramp.com">Pramp</WebLink>.
+</TLDR>
+<PB8/>
+# TASK: Design WhatsApp
+<PB8/>
+
+## Step 1: Understand the Problem Scope 
+I asked the <Code>following</Code> questions to understand what I needed to build and clarify functional requirements: 
+<PB4/>
+<Code block={true}>
+<ul>
+<li>- What are the specific features that we need to implement?</li>
+<li> - What types of chats we need to support (1-1, group)?</li>
+<li> - What types of media we should be able to handle (text, images, voice)?</li>
+<li> - Do we need to handle voice/video calls?</li>
+<li> - Anything else that we might be missing?</li>
+</ul>
+</Code>
+<PB8/>
+For the Non-functional requirements it's important to estimate how much work 
+the system should be able to perform to support functional requirements.
+<PB4/>
+Questions that make sense to ask here: 
+<PB4/>
+<Code block={true}>
+<ul>
+<li>- How many Total Users we have?</li>
+<li>- How many Daily Active Users we have?</li>
+<li>- How many messages/day (or per second) each user sends?</li>
+<li>- How long do we need to store the messages?</li> 
+<li>- In terms of availability of the system, how much is it important for the users - do they expect it being available for chat 24/7?</li>
+<li>- In terms of consistency of the data, how much is it important for the users to see the same messages at the same time?</li>
+</ul>
+</Code>
+<PB8/>
+### Results
+As my interviewer suggested, the system should be a bare bones one: only 1-to-1 real-time texting, focusing on backend only: 
+<PB4/>
+<Image
+  className="rounded mx-auto"
+  width={800}
+  height={800}
+  src="/whatsapp_functional.png"
+  alt=""
+/>
+<PB4/>
+Back-of-the-Envelope calculations looked like this:
+<PB4/>
+<Image
+  className="rounded mx-auto"
+  width={800}
+  height={800}
+  src="/whatsapp_bote.png"
+  alt=""
+/>
+<PB8/>
+
+## Step 2: Sketch a high-level design and get interviewer's buy-in. 
+At this step my goal is to lay out a coarse design of the system, trying to minimize the moving parts - we can always add more later. At this stage it is imperative not to overengineer things. 
+<PB4/>
+Once that is done, I ask my interviewer's opinion if this is something that we can work with, ie <Code>"yeah this looks good let's dive in"</Code> phrase. 
+<PB4/>
+Again, this should be VERY simple, just naïvely simple, to get the ball rolling. Focus on the most critical functionality to support the functional requirements (1-to-1 text chatting)
+<PB4/>
+<Image
+  className="rounded mx-auto"
+  width={800}
+  height={800}
+  src="/whatsapp_hld.png"
+  alt=""
+/>
+<PB4/>
+Here we have Sender sending message (M) to the Backend, which is responsible for 2 things: 
+<PB4/>
+<Code block={true}>
+<ul>
+<li>- relay messages from Sender to Receiver</li>
+<li>- save messages into a Data Base</li>
+</ul>
+</Code>
+<PB4/>
+Really simple.
+<PB8/>
+## Step 3. Deep dive
+At this point I ask the question: 
+<PB4/>
+<Code block={true}>What important functionality is not explained by High Level Architecture?</Code> 
+<PB4/>
+This gives me a list of points where to dive deeper.
+<PB4/> 
+<Code block={true}>
+<ul>
+<li> - lifecycle of a Message</li>
+<li> - how real-time communication works</li>
+<li> - how messages are stored</li>
+<li> - data model</li>
+</ul>
+</Code> 
+<PB4/> 
+It's a great timing to check with the interviewer, as he may want to discuss specific parts of the system. 
+<PB4/> 
+
+When there is a "go ahead" signal, I should tackle the most critical/difficult task first. This will get me more value per unit of brain work then beating around the bush. It will also show the interviewer that I <Code>value impact over amount of work</Code>.
+<PB4/>
+If I don't know which part of the system is most impactful, I ask interviewer's opinion, earn some points and moves the problem solving along. 
+<PB8/>
+
+### Backend
+My interviewer asked me to walk him through how backend was structured and how client interacted with it. This is what materialized as the result of the discussion: 
+<PB4/>
+<Image
+  className="rounded mx-auto"
+  width={800}
+  height={800}
+  src="/whatsapp_backend.png"
+  alt=""
+/>
+<PB8/>
+### Data model
+The question about what we store in the persistance layer naturally leads to drafting a data model: 
+<PB4/>
+<Image
+  className="rounded mx-auto"
+  width={800}
+  height={800}
+  src="/whatsapp_datamodel.png"
+  alt=""
+/>
+<PB4/>
+Again, the key principle here is <b>SIMPLE is GOOD</b>. No need to overcomplicate data model, it must make sense but without bells and whistles. 
+<PB8/>
+
+### Improving on the High Level Architecture 
+About 40 minutes in at this point, time to add more details to the HLA. 
+Keeping in mind the previous discussion, I added a layer of bare minimum components: 
+<PB4/>
+<Image
+  className="rounded mx-auto"
+  width={800}
+  height={800}
+  src="/whatsapp_lld.png"
+  alt=""
+/>
+<PB4/>
+In the process we discussed various details about the design decisions that I proposed:
+<PB4/>
+<Code block={true}>
+<ul>
+<li>- what kind of DB is MessageDB? (Key-Value store, read/write patterns, speed, simplicity etc)</li>
+<li>- how load balancing is performed? (round robin vs consistent hashing) </li>
+<li>- how Presence service works? (gossip protocol/heartbeats) </li>
+<li>- how would this scale? </li>
+<li>- ... </li>
+</ul>
+</Code>
+<PB8/>
+
+## Feedback
+My interviewer gave me the following feedback:
+<PB4/>
+<Code block={true}>
+<ul>
+<li>0. Timing.</li>
+<li>1. I should talk more about tradeoffs (KV vs SQL).</li>
+<li>2. In the wrap-up I should go back to the requirements and point out how they were implemented/supported by my my design.</li> 
+</ul>
+</Code>
+<PB8/>
+
+## Conclusion
+During the interview I was focusing on: 
+<PB4/>
+<Code block={true}>
+<ul>
+<li>0. <b>Simplicity</b>. I have a tendency to overengineer, especially when I'm in an interview (stress).</li>
+<li>1. <b>Attacking the most impactful problem first.</b> I have a tendency to procrastinate if I know that there is a hard problem ahead.</li>
+<li>2. <b>Speaking slower.</b></li>
+</ul>
+</Code>
+<PB4/>
+Another thing that I had to overcome was the fact that I had a pretty good prior idea of how WhatsApp was built, given my interest in Erlang/Elixir. This meant that I needed to abstract this knowledge and not rely on it too much. 
+<PB4/>
+The task was to build a generic real-time chat app, and I felt that using Erlang VM with all it's concurrency/networking/messaging primitives that were built exactly for this type of applications, would have been "cheating".
+<PB4/> 
+Although I did mention this to my interviewer and we had the common ground. 
+Which is the point of system design interviews.
+<PB8/>
+
+## Learning takeaways 
+<Code block={true}>
+<ul>
+<li>0. Listen with attention.</li>
+<li>1. Pause before answering, taking a deep breath.</li>
+<li>2. Start super-simple.</li>
+<li>3. Attack most impactful task first.</li> 
+</ul>
+</Code>

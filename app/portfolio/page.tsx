@@ -26,10 +26,12 @@ import {caves} from "./components/Caves/Caves";
 import { components } from "./components/Components/Components";
 import { projects } from "./components/Projects/Projects";
 import { katcherUserFlow } from "./components/Projects/Katcher/KatcherUserFlow";
+import { homi } from "./components/Projects/Homi/Homi";
 
 export type ComponentEntryValue = {component: JSX.Element, description: string | JSX.Element}
 type ComponentEntry = { [key: string]: ComponentEntryValue }
 const collection: ComponentEntry = {
+  "Homi": homi,
   "Reference": referenceForm,
   "Custom select": {component: (<div className="mt-12">
     <CustomSelect
@@ -124,7 +126,7 @@ const links = [
 
 export default function Portfolio() {
   const [currentComponent, setCurrentComponent] = useState<ComponentEntryValue>(
-    collection["Caves"]
+    collection["Homi"]
   );
 
   const selectComponent = (componentName: string) => {

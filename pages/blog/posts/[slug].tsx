@@ -111,6 +111,7 @@ export const getStaticProps: GetStaticProps<{
   const mdxSource = await serialize(content, {
     mdxOptions: {
       remarkPlugins: [],
+      // rehypePlugins: [],
       rehypePlugins: [[rehypePrettyCode, codeHighlightOptions]],
     },
     scope: data,

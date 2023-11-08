@@ -1,3 +1,5 @@
+const { warn } = require('console');
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -6,10 +8,10 @@ module.exports = {
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
-    screens: {
-      "mobile-horizonal": "680px" 
-    },
     extend: {
+      screens: {
+        "mobile-horizonal": "680px"
+      },
       colors: {
         "baby-powder": '#FBFAF6',
         "bg-primary-grey": "#E4EAF1", 

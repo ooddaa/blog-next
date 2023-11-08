@@ -2,8 +2,11 @@ import { FeatureItem } from "./_components/FeatureItem";
 import { Carousel } from "@mantine/carousel";
 
 function Homi() {
+  return <div>homi</div>
+}
+function Homic() {
   return (
-    <div className="w-full h-full">
+    <div className="max-mobile-horizonal:w-[200px] md:w-full h-full">
       <Carousel
         height={600}
       >

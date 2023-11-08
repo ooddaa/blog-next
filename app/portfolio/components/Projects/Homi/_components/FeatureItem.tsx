@@ -1,4 +1,5 @@
 import Image from "next/image"
+import { useMediaQuery } from "@mantine/hooks"
 
 interface FeatureItemProps {
   width?: number,
@@ -10,8 +11,8 @@ interface FeatureItemProps {
 }
 
 export const FeatureItem = ({ width = 308, height = 600, src, text, title, alt } : FeatureItemProps) => {
-  return (
-      
+  const isMobile = useMediaQuery("(max-width: 690px)")
+  return (      
       <div className="h-full flex flex-col md:flex-row items-center md:items-start max-sm:gap-16 pt-16 bg-white border">
           <main className="w-1/2 flex flex-col items-center justify-center md:items-start md:jusify-start space-y-4 max-md:pt-8 pl-16">
             <div className="text-xl text-slate-600 font-bold">
@@ -23,8 +24,8 @@ export const FeatureItem = ({ width = 308, height = 600, src, text, title, alt }
           </main>
         <Image
           src={src}
-          width={width}
-          height={height}
+          width={isMobile ? 200 : width}
+          height={isMobile ? 400 : height}
           alt={alt || title.toLowerCase().replace(" ", "-")}
         />
       </div>

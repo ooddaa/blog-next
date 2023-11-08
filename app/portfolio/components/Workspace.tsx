@@ -1,6 +1,6 @@
 import WorkspaceLayout from "./WorkspaceLayout";
 import WorkspaceDescription from "./WorkspaceDescription";
-import { ComponentEntryValue } from "../page";
+import { ComponentEntryValue } from "./collection";
 type WorkspaceProps = {
   children: ComponentEntryValue,
 }

@@ -61,22 +61,14 @@ export const collection: ComponentEntry = {
       }}
     >
       <div
-        className="child--a"
-        css={{
-         padding: "20px",
-          backgroundColor: "#fff",
-        }}
+        className="child--a p-[20px] bg-white"
       >
         {lorem}
         <br />
         {lorem}
       </div>
       <div
-        className="child--b"
-        css={{
-          padding: "20px",
-          backgroundColor: "#fff",
-        }}
+        className="child--b p-[20px] bg-white"
       >
         {lorem}
       </div>

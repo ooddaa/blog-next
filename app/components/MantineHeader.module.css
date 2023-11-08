@@ -36,7 +36,7 @@
   }
 
   &:active {
-    scale: .9;
+    scale: .98;
   }
 
   /* [data-mantine-color-scheme] &[data-active] {

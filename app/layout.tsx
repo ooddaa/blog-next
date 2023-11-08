@@ -1,6 +1,7 @@
 // import "@/app/globals.css"
 import './globals.css'
 import '@mantine/core/styles.css';
+import '@mantine/carousel/styles.css'
 import { MantineProvider, ColorSchemeScript } from '@mantine/core';
 import { Metadata } from 'next';
 import { Manrope } from 'next/font/google'

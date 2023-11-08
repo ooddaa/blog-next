@@ -16,6 +16,11 @@
   border-bottom-right-radius: var(--mantine-radius-sm);
   border-left: rem(2px) solid light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-4));
 
+  /* truncate line */
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+
   @mixin hover {
     background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6));
     cursor: pointer;

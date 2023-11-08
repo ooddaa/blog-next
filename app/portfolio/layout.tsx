@@ -7,18 +7,15 @@ export const metadata: Metadata = {
       {
         url: "/circles.png",
         href: "/circles.png",
-      }
-    ]
-  }
-}
+      },
+    ],
+  },
+};
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
-  return (
-<>          {children}
-</>
-  )
+  return <>{children}</>;
 }

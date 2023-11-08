@@ -6,6 +6,9 @@ module.exports = {
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
+    screens: {
+      "mobile-horizonal": "680px" 
+    },
     extend: {
       colors: {
         "baby-powder": '#FBFAF6',

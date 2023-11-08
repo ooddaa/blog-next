@@ -3,11 +3,11 @@ import { useMediaQuery } from "@mantine/hooks";
 import { ElementRef, useEffect, useRef } from "react";
 
 const links = [
-  { label: "Caves", order: 1, new: true },
   { label: "Projects", order: 1, new: true },
   { label: "Katcher", order: 2 },
   { label: "User Registration Flow", order: 3 },
   { label: "Homi", order: 2 },
+  { label: "Caves", order: 1 },
   { label: "TicTacToe", order: 1 },
   { label: "Forms", order: 1 },
   { label: "Reference", order: 2 },

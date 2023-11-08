@@ -10,7 +10,7 @@ import type { ComponentEntryValue } from "./components/collection";
 
 export default function Portfolio() {
   const [currentComponent, setCurrentComponent] = useState<ComponentEntryValue>(
-    collection["Homi"],
+    collection["Projects"],
   );
 
   const selectComponent = (componentName: string) => {

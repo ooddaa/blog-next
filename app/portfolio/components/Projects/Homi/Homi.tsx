@@ -1,14 +1,13 @@
 import { FeatureItem } from "./_components/FeatureItem";
 import { Carousel } from "@mantine/carousel";
-
-function Homi() {
-  return <div>homi</div>
-}
-function Homic() {
+import {useMediaQuery} from "@mantine/hooks" 
+function Homi() { 
+  const isMobile = useMediaQuery("(max-width: 768px)");
   return (
-    <div className="max-mobile-horizonal:w-[200px] md:w-full h-full">
+    <div className="w-full h-full">
       <Carousel
-        height={600}
+        height={isMobile ? 600 : 700}
+        slideSize="100%"
       >
         <Carousel.Slide key={0}>
           <FeatureItem
@@ -64,14 +63,15 @@ export const homi = {
       <div className="flex gap-4 flex-col divide-y px-8">
         <div className="space-y-4">
           <div className="text-orange-500 text-2xl font-bold">
-            <span className="text-3xl text-red-400">HOMI</span>{" "}
-            - unite and conquer!
+            <span className="text-3xl text-red-400">HOMI</span>
+            <br/>
+            unite and conquer!
           </div>
           <div className="text-slate-600 text-lg">
             Personal project - a mobile app to bring neighbours together.
           </div>
         </div>
-        <div className="flex flex-col md:flex-row gap-8 py-8">
+        <div className="flex flex-col md:flex-row gap-4 py-8">
           <div className="w-full md:w-1/2 space-y-4">
             <div>
               <b>Pain point:</b>{" "}
@@ -96,19 +96,19 @@ export const homi = {
               rights/obligations under their Leases, as well as their rights as
               Shareholders. Voting should be done in a form of a simple
               question: "Who do you vote for to be elected as Chairman of
-              Resident Association? (A,B,C)" + link to the RAD. By casting vote
-              they confirm they had read and agreed to the RAD.
+              Resident Association? (A,B,C)" + link to the Resident Association
+              Draft (hereinafter "RAD", 3 pages long). By casting a vote they
+              confirm having read and agreed to the RAD.
             </div>
           </div>
           <div className="w-full md:w-1/2 space-y-4">
             <div>
-              <b>Validation:</b>{" "}
+              <b>Testing:</b>{" "}
               WhatsApp group with ~25 members. Used mainly to vent about
               management company's actions. ~20% members active. No actions
               taken, no documents read/discussed (no evidence that anyone read
-              their Lease). Resident Association Draft (hereinafter "RAD", 3
-              pages long) is too long/difficult/not interesting to read and
-              vote.
+              their Lease). RAD is too long/difficult/not interesting to read
+              and vote.
             </div>
             <div>
               <b>Scaling:</b>{" "}
@@ -123,53 +123,52 @@ export const homi = {
   ),
 };
 
-
-        // <Carousel.Slide key={6}>
-        //   <FeatureItem
-        //     title="Meters"
-        //     text="Have access to your meter readings."
-        //     src="/homi/6.meters.png"
-        //   />
-        // </Carousel.Slide>
-        // <Carousel.Slide key={7}>
-        //   <FeatureItem
-        //     title="Inbox"
-        //     text="All chats look familiar, no more emails or paper mails."
-        //     src="/homi/7.inbox.png"
-        //   />
-        // </Carousel.Slide>
-        // <Carousel.Slide key={9}>
-        //   <FeatureItem
-        //     title="Mobile Consierge"
-        //     text="Your direct line to consierge services."
-        //     src="/homi/9.mobile-consierge.png"
-        //   />
-        // </Carousel.Slide>
-        // <Carousel.Slide key={10}>
-        //   <FeatureItem
-        //     title="Your Opinion Matters"
-        //     text="You can leave a message for any flat, without leaving your flat."
-        //     src="/homi/10.surveys.png"
-        //   />
-        // </Carousel.Slide>
-        // <Carousel.Slide key={11}>
-        //   <FeatureItem
-        //     title="Invoicing and Payments"
-        //     text="All invoices and payments to management company in one place."
-        //     src="/homi/11.invoicing-payments.png"
-        //   />
-        // </Carousel.Slide>
-        // <Carousel.Slide key={12}>
-        //   <FeatureItem
-        //     title="Management Reports"
-        //     text="Receive timely and comprehensive reports from the Management Company."
-        //     src="/homi/12.management-reports.png"
-        //   />
-        // </Carousel.Slide>
-        // <Carousel.Slide key={13}>
-        //   <FeatureItem
-        //     title="Pool Resources"
-        //     text="Leverage your community - pool resources to unlock greater value for all."
-        //     src="/homi/13.resource-pooling.png"
-        //   />
-        // </Carousel.Slide>
+// <Carousel.Slide key={6}>
+//   <FeatureItem
+//     title="Meters"
+//     text="Have access to your meter readings."
+//     src="/homi/6.meters.png"
+//   />
+// </Carousel.Slide>
+// <Carousel.Slide key={7}>
+//   <FeatureItem
+//     title="Inbox"
+//     text="All chats look familiar, no more emails or paper mails."
+//     src="/homi/7.inbox.png"
+//   />
+// </Carousel.Slide>
+// <Carousel.Slide key={9}>
+//   <FeatureItem
+//     title="Mobile Consierge"
+//     text="Your direct line to consierge services."
+//     src="/homi/9.mobile-consierge.png"
+//   />
+// </Carousel.Slide>
+// <Carousel.Slide key={10}>
+//   <FeatureItem
+//     title="Your Opinion Matters"
+//     text="You can leave a message for any flat, without leaving your flat."
+//     src="/homi/10.surveys.png"
+//   />
+// </Carousel.Slide>
+// <Carousel.Slide key={11}>
+//   <FeatureItem
+//     title="Invoicing and Payments"
+//     text="All invoices and payments to management company in one place."
+//     src="/homi/11.invoicing-payments.png"
+//   />
+// </Carousel.Slide>
+// <Carousel.Slide key={12}>
+//   <FeatureItem
+//     title="Management Reports"
+//     text="Receive timely and comprehensive reports from the Management Company."
+//     src="/homi/12.management-reports.png"
+//   />
+// </Carousel.Slide>
+// <Carousel.Slide key={13}>
+//   <FeatureItem
+//     title="Pool Resources"
+//     text="Leverage your community - pool resources to unlock greater value for all."
+//     src="/homi/13.resource-pooling.png"
+//   />
+// </Carousel.Slide>

@@ -1,4 +1,3 @@
-// import MantineHeader, { links } from '@/app/components/MantineHeader';
 import localFont from 'next/font/local'
 import { MantineHeader } from '@/app/components/MantineHeader'
 const font = localFont({
@@ -10,7 +9,7 @@ export default function PostLayout({ children }: { children: React.ReactNode }) 
   return (
     <>
     <MantineHeader />
-      <div className={["wrapper", font.className, "w-full max-sm:px-4 sm:w-2/5 pb-8 mx-auto text-base/6 sm:text-lg/8"].join(" ")}>{children}</div>
+      <div className={["wrapper", font.className, "w-full max-md:px-4 md:w-3/5 pb-8 mx-auto text-base/6 md:text-lg/8"].join(" ")}>{children}</div>
       <style jsx global>{`
         code {
           font-family: 'Menlo';

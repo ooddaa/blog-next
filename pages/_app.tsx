@@ -2,6 +2,7 @@
 // import '@/styles/globals.css'
 import '@/app/globals.css'
 import "@mantine/core/styles.css"
+import "./code-highlight.css"
 import { MantineProvider } from '@mantine/core'
 import { Suspense } from 'react'
 import type { AppProps } from 'next/app'

@@ -1,3 +1,28 @@
 [data-rehype-pretty-code-fragment] > pre {
   overflow: scroll;
 }
+
+code {
+  font-family: "Inter";
+  font-size: 12px;
+  line-height: 16px;
+}
+
+span > code > span > span {
+  font-family: "Inter";
+  font-size: 12px;
+  line-height: 16px;
+  padding: 4px;
+  background-color: #f9fafb;
+  color: #1e293b;
+}
+
+pre {
+  border-radius: 8px;
+  padding: 16px;
+  overflow: scroll;
+}
+
+[data-highlighted-chars] {
+  background-color: grey;
+}

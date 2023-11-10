@@ -1,12 +1,12 @@
 ---
 id: 19
-title: Storing texts as semantic graphs 1
-subtitle: to extract knowledge and learn
+title: Storing texts as semantic graphs
+subtitle: Part 1
 author: Dmitry Vikhorev
 date: 20220802
 timeToRead: 5min
 version: 0.1
-tags: ["NLP", Neo4j", semantic graphs", "conginitve linguistics"]
+tags: ["AI", "NLP", Neo4j", semantic graphs", "conginitve linguistics"]
 ---
 
 <TLDR>
@@ -21,14 +21,14 @@ a) <WebLink href="https://www.cambridge.org/core/books/an-introduction-to-word-g
 b) <WebLink href="https://www.manning.com/books/graph-powered-machine-learning">Graph-Powered Machine Learning</WebLink> by Alessandro Negro
 </TLDR>
 
-# 1. Understanding the problem
+## 1. Understanding the problem
 ### What's the unknown?
 How to store a text so that we can extract and generalise useful knowledge from it?
 <PB4/>
 
 ### What's the data?
 English texts of various lengths/topics etc. They are produced by real people and have the following lingustic structure: 
-<PB4/>
+<PB8/>
 <div className="w-full flex items-center justify-center">
 <Image src="/blog/granola/levels_of_linguistic_structure.png" width={300} height={300} />
 </div>
@@ -38,20 +38,20 @@ English texts of various lengths/topics etc. They are produced by real people an
 The data architecture must make explicit: 
 <PB4/>
 <Code block>
-a) the temporal structure;
+a) the temporal structure of the text;
 b) the syntactic structure of the text; 
 c) significant (meaningful) entities. 
-d) ...???
+d) relationships (aka meaning) among entities.
 </Code>
 <PB8/>
 
-# 2. Planning 
+## 2. Planning 
 The best way to expose relationships in a dataset is to build a graph out of them. This way we will be able to *a)* visualise the various structures that we want to expose and *b)* build the underlying data structures that we can traverse for our further analyses. 
 <PB4/>
 We will use Neo4j and write Cypher queries to test a simple example of a 4 sentence text stored as a graph.
 <PB8/>
 
-# 3. Execution
+## 3. Execution
 
 ### Where do we start?
 Let's start by exposing a simple temporal structure of the text. 
@@ -80,7 +80,7 @@ d) ...???
 </Code>
 <PB8/>
 
-# 4.Revision
+## 4. Revision
 We managed to store a text as a sequence of sentences each containing a sequence of words and punctuation marks. We stored it as a graph that has <Code>(Unit)-[:NEXT]->(Unit)</Code> structure. 
 <PB4/>
 We can use this basic skeleton as the foundation and extend the data architecture to support more advanced features: syntactic analysis and semantic analysis. 

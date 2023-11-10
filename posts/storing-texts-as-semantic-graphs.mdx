@@ -1,0 +1,88 @@
+---
+id: 19
+title: Storing texts as semantic graphs 1
+subtitle: to extract knowledge and learn
+author: Dmitry Vikhorev
+date: 20220802
+timeToRead: 5min
+version: 0.1
+tags: ["NLP", Neo4j", semantic graphs", "conginitve linguistics"]
+---
+
+<TLDR>
+A hobby project: to build a system that learns through conversation.
+I am playing with <WebLink href="https://discord.js.org/">Discord.js</WebLink> to build Discord bot, <WebLink href="https://spacy.io/">Spacy.io</WebLink> for NLP and <WebLink href="https://neo4j.com/">Neo4j</WebLink> to build Knowledge Graphs. 
+<br/>
+In the process I am reading two great books:
+
+a) <WebLink href="https://www.cambridge.org/core/books/an-introduction-to-word-grammar/1E5A02DD80F349284AA43599D825E93C">Word Grammar</WebLink> by Richard Hudson
+
+
+b) <WebLink href="https://www.manning.com/books/graph-powered-machine-learning">Graph-Powered Machine Learning</WebLink> by Alessandro Negro
+</TLDR>
+
+# 1. Understanding the problem
+### What's the unknown?
+How to store a text so that we can extract and generalise useful knowledge from it?
+<PB4/>
+
+### What's the data?
+English texts of various lengths/topics etc. They are produced by real people and have the following lingustic structure: 
+<PB4/>
+<div className="w-full flex items-center justify-center">
+<Image src="/blog/granola/levels_of_linguistic_structure.png" width={300} height={300} />
+</div>
+<PB8/>
+
+### What's the condition?
+The data architecture must make explicit: 
+<PB4/>
+<Code block>
+a) the temporal structure;
+b) the syntactic structure of the text; 
+c) significant (meaningful) entities. 
+d) ...???
+</Code>
+<PB8/>
+
+# 2. Planning 
+The best way to expose relationships in a dataset is to build a graph out of them. This way we will be able to *a)* visualise the various structures that we want to expose and *b)* build the underlying data structures that we can traverse for our further analyses. 
+<PB4/>
+We will use Neo4j and write Cypher queries to test a simple example of a 4 sentence text stored as a graph.
+<PB8/>
+
+# 3. Execution
+
+### Where do we start?
+Let's start by exposing a simple temporal structure of the text. 
+<PB4/>
+Any text written from left-right, or in any other consistent fasion is conveying its linear temporal structure (sentence has a beginning and end and proceeds from the beginning to the end).
+<PB4/>
+We will deal with purple "Morphology" level (ie words) first. This will give us the temporal structure.
+<PB8/>
+
+### What can we do?
+We can make this linear structure explicit by storing text as a sequence of meaningful units (for us these are words and punctuation marks) using <Code>(Unit)-[:NEXT]->(Unit)</Code> graph. 
+<PB4/>
+Here is an example of a 4 sentence text stored as a graph that exposes its temporal structure.
+This graph shows that the text (blue node) has 4 sentences (pink nodes), each sentence has words (red nodes). Words are connected by temporal relationships.  
+<PB4/>
+<Image src="/blog/granola/discord_bot1.png" width={800} height={600} />
+<PB8/>
+### What do we gain by doing it?
+By making temporal relationships explicit we will be able to:
+<PB4/>
+<Code block>
+a) check correctness of grammar 
+b) extract patterns
+c) improve information search
+d) ...???
+</Code>
+<PB8/>
+
+# 4.Revision
+We managed to store a text as a sequence of sentences each containing a sequence of words and punctuation marks. We stored it as a graph that has <Code>(Unit)-[:NEXT]->(Unit)</Code> structure. 
+<PB4/>
+We can use this basic skeleton as the foundation and extend the data architecture to support more advanced features: syntactic analysis and semantic analysis. 
+
+
